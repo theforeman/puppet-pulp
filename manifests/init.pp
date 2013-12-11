@@ -19,6 +19,9 @@
 # $consumers_ca_cert::        The CA cert that the consumer will use to
 #                             authenticate with the AMQP server.
 #
+# $consumers_ca_key::         The CA key that the consumer will use to authenticate
+#                             with the AMQP server.
+#
 # $consumers_crl::            Certificate revocation list for consumers which
 #                             are no valid (have had their client certs
 #                             revoked)
@@ -38,7 +41,7 @@
 #                             to false
 #
 # $reset_cache::              Boolean to flush the cache. Defaults to false
-
+#
 class pulp (
   $oauth_key = $pulp::params::oauth_key,
   $oauth_secret = $pulp::params::oauth_secret,
