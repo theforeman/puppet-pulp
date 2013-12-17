@@ -1,3 +1,4 @@
+# Pulp Master Certs configuration
 class pulp::parent::certs (
     $hostname = $::certs::node_fqdn,
     $generate = $::certs::generate,
@@ -20,7 +21,7 @@ class pulp::parent::certs (
     expiration  => $::certs::expiration,
     ca          => $ca,
     generate    => $generate,
-    regenerate    => $regenerate,
+    regenerate  => $regenerate,
     deploy      => $deploy,
   }
 
@@ -30,8 +31,8 @@ class pulp::parent::certs (
     } ~>
     # TODO: temporary until we switch to new modules for setting parent
     exec { 'reload-pulp':
-      command             => "service httpd reload",
-      path                => ["/sbin", "/usr/sbin", "/bin", "/usr/bin"],
+      command     => 'service httpd reload',
+      path        => ['/sbin', '/usr/sbin', '/bin', '/usr/bin'],
       refreshonly => true,
     }
   }

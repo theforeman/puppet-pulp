@@ -1,3 +1,8 @@
+#
+# == Class: pulp::child
+#
+# Install and configure Pulp node
+#
 class pulp::child (
     $parent_fqdn           = undef,
     $parent_qpid_scheme    = 'ssl',

@@ -1,3 +1,4 @@
+# Pulp Node Certs
 class pulp::child::certs (
     $hostname   = $::certs::node_fqdn,
     $generate   = $::certs::generate,

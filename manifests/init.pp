@@ -50,8 +50,8 @@ class pulp (
   $messaging_cacert = undef,
   $messaging_clientcert = undef,
 
-  $consumers_ca_cert = '/etc/pki/tls/certs/pulp_consumers_ca.crt',
-  $consumers_ca_key = undef,
+  $consumers_ca_cert = $consumers_ca_cert,
+  $consumers_ca_key = $consumers_ca_key,
   $consumers_crl = undef,
 
   $ssl_ca_cert = '/etc/pki/tls/certs/pulp_ssl_cert.crt',
@@ -67,11 +67,11 @@ class pulp (
 
   include apache
 
-  class { mongodb:
+  class { 'mongodb':
     logpath => '/var/lib/mongodb/mongodb.log',
-    dbpath => '/var/lib/mongodb',
+    dbpath  => '/var/lib/mongodb',
   }
-  class { qpid: }
+  class { 'qpid': }
 
   class { 'pulp::install':
     require => [Class['mongodb'], Class['qpid']]
