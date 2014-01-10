@@ -28,12 +28,6 @@ class pulp::parent::certs (
   if $deploy {
     key_bundle { $pulp::parent::certs::nodes_cert:
       cert => Cert["${pulp::parent::certs::hostname}-parent-cert"],
-    } ~>
-    # TODO: temporary until we switch to new modules for setting parent
-    exec { 'reload-pulp':
-      command     => 'service httpd reload',
-      path        => ['/sbin', '/usr/sbin', '/bin', '/usr/bin'],
-      refreshonly => true,
     }
   }
 }
