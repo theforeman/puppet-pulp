@@ -11,9 +11,9 @@
 # $messaging_url::            URL for the AMQP server that Pulp will use to
 #                             communicate with nodes.
 #
-# $messaging_cacert::         The CA cert to authenicate against the AMQP server.
+# $messaging_ca_cert:         The CA cert to authenicate against the AMQP server.
 #
-# $messaging_clientcert::     The client certificate signed by the CA cert
+# $messaging_client_cert::    The client certificate signed by the CA cert
 #                             above to authenticate.
 #
 # $consumers_ca_cert::        The CA cert that the consumer will use to
@@ -47,8 +47,8 @@ class pulp (
   $oauth_secret = $pulp::params::oauth_secret,
 
   $messaging_url = $pulp::params::messaging_url,
-  $messaging_cacert = undef,
-  $messaging_clientcert = undef,
+  $messaging_ca_cert = $pulp::params::messaging_ca_cert,
+  $messaging_client_cert = $pulp::params::messaging_client_cert,
 
   $consumers_ca_cert = $consumers_ca_cert,
   $consumers_ca_key = $consumers_ca_key,
@@ -70,9 +70,10 @@ class pulp (
   class { 'mongodb':
     logpath => '/var/lib/mongodb/mongodb.log',
     dbpath  => '/var/lib/mongodb',
-  }
-  class { 'qpid': }
-
+  } ~>
+  class { 'qpid':
+    ssl => true,
+  } ~>
   class { 'pulp::install':
     require => [Class['mongodb'], Class['qpid']]
   } ~>

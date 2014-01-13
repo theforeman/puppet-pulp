@@ -231,11 +231,11 @@ db_config: /etc/pulp/logging/db.cfg
 
 [messaging]
 url: <%= @messaging_url %>
-<% if @cacert -%>
-cacert: <%= @cacert %>
+<% if @messaging_ca_cert -%>
+cacert: <%= @messaging_ca_cert %>
 <% end -%>
-<% if @clientcert -%>
-clientcert: <%= @clientcert %>
+<% if @messaging_client_cert -%>
+clientcert: <%= @messaging_client_cert %>
 <% end -%>
 topic_exchange: 'amq.topic'
 install_timeout: 36h:3d

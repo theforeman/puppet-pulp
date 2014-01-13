@@ -5,6 +5,8 @@ class pulp::params {
   $oauth_secret = 'secret'
 
   $messaging_url = 'tcp://localhost:5672'
+  $messaging_ca_cert = '/usr/share/katello/candlepin-ca.crt'
+  $messaging_client_cert = '/etc/pki/pulp/qpid_client_striped.crt'
 
   $consumers_ca_cert = '/etc/pki/pulp/ca.crt'
   $consumers_ca_key = '/etc/pki/pulp/ca.key'
