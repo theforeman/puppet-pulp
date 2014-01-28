@@ -56,15 +56,15 @@ class pulp (
 
   $ssl_ca_cert = '/etc/pki/tls/certs/pulp_ssl_cert.crt',
 
+  $default_login = $pulp::params::default_login,
   $default_password = $pulp::params::default_password,
 
   $repo_auth = true,
 
   $reset_data = false,
   $reset_cache = false
-  ) inherits pulp::params {
 
-  $default_login = $pulp::params::default_login
+  ) inherits pulp::params {
 
   include apache
 
