@@ -64,10 +64,11 @@ class pulp (
   $reset_cache = false
   ) inherits pulp::params {
 
-  $default_login = $pulp::params::default_login
+  class { 'apache':
+    default_vhost => false
+  }
 
-  include apache
-
+  class { 'apache::mod::wsgi':} ~>
   class { 'mongodb':
     logpath => '/var/lib/mongodb/mongodb.log',
     dbpath  => '/var/lib/mongodb',
