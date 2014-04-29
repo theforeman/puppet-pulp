@@ -16,10 +16,6 @@ class pulp::child (
 
   class { 'pulp::child::install': } ~>
 
-  class { '::certs::pulp_child':
-    notify => [Class['pulp::config'], Service[httpd], Class['pulp::child::service']]
-  } ~>
-
   class { 'pulp::child::config': } ~>
 
   class { 'pulp::child::service': }
