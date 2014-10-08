@@ -30,6 +30,14 @@ class pulp::config {
     mode    => '0644',
   }
 
+  file {'/etc/httpd/conf.d/pulp_docker.conf':
+    ensure  => file,
+    content => template('pulp/etc/httpd/conf.d/pulp_docker.conf.erb'),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+  }
+
   file {'/etc/httpd/conf.d/pulp_puppet.conf':
     ensure  => file,
     content => template('pulp/etc/httpd/conf.d/pulp_puppet.conf.erb'),
@@ -65,6 +73,14 @@ class pulp::config {
   file {'/etc/pki/pulp/content/pulp-global-repo.ca':
       ensure => link,
       target => $pulp::consumers_ca_cert,
+  }
+
+  file {'/etc/pulp/server/plugins.conf.d/docker_importer.json':
+    ensure  => file,
+    content => template('pulp/docker_importer.json'),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
   }
 
   file {'/etc/pulp/server/plugins.conf.d/yum_importer.json':
