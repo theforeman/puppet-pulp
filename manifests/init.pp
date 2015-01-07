@@ -114,7 +114,7 @@ class pulp (
   }
   class { 'apache::mod::wsgi':} ~>
   class { 'mongodb':
-    logpath     => '/var/lib/mongodb/mongodb.log',
+    logpath     => '/var/log/mongodb/mongodb.log',
     dbpath      => '/var/lib/mongodb',
     pidfilepath => $mongodb_pidfilepath,
   } ~>
