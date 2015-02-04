@@ -57,6 +57,24 @@
 #
 # $qpid_ssl_cert_password_file  Location of the password file for the Qpid SSL cert
 #
+# $qpid_router::                Configure qpid dispatch router
+#                               type:boolean
+#
+# $qpid_router_hub::            This host should be a qpid dispatch router hub. If false,
+#                               configures as an inter-router connected to a hub
+#
+# $qpid_router_hub_addr::       Listener address for other dispatch routers
+#
+# $qpid_router_hub_port::       Listener port for other dispatch routers
+#
+# $qpid_router_agent_addr::     Listener address for goferd agents
+#
+# $qpid_router_agent_port::     Listener port for goferd agents
+#
+# $qpid_router_broker_addr::    Address of qpidd broker to connect to
+#
+# $qpid_router_broker_port::    Port of qpidd broker to connect to
+#
 # $user_groups::                Additional user groups to add the qpid user to
 #
 # $proxy_url::                  URL of the proxy server
@@ -98,6 +116,15 @@ class pulp (
   $qpid_ssl_cert_db = $pulp::params::qpid_ssl_cert_db,
   $qpid_ssl_cert_password_file = $pulp::params::qpid_ssl_cert_password_file,
 
+  $qpid_router             = $pulp::params::qpid_router,
+  $qpid_router_hub         = $pulp::params::qpid_router_hub,
+  $qpid_router_hub_addr    = $pulp::params::qpid_router_hub_addr,
+  $qpid_router_hub_port    = $pulp::params::qpid_router_hub_port,
+  $qpid_router_agent_addr  = $pulp::params::qpid_router_agent_addr,
+  $qpid_router_agent_port  = $pulp::params::qpid_router_agent_port,
+  $qpid_router_broker_addr = $pulp::params::qpid_router_broker_addr,
+  $qpid_router_broker_port = $pulp::params::qpid_router_broker_port,
+
   $proxy_url      = $pulp::params::proxy_url,
   $proxy_port     = $pulp::params::proxy_port,
   $proxy_username = $pulp::params::proxy_username,
@@ -116,6 +143,52 @@ class pulp (
   class { 'mongodb::globals':
     version => $::mongodb_version, # taken from the custom facts
   }
+
+
+  # Configure qpid dispatch router
+  if $qpid_router {
+    class {'qpid::router': }
+
+    qpid::router::ssl_profile {'router-ssl':
+      ca   => $messaging_ca_cert,
+      cert => $messaging_client_cert,
+      key  => $messaging_client_cert,
+    }
+
+    if $qpid_router_hub {
+      # Listen for other qpid dispatch routers
+      qpid::router::listener {'hub':
+        addr        => $qpid_router_hub_addr,
+        port        => $qpid_router_hub_port,
+        role        => 'inter-router',
+        ssl_profile => 'router-ssl',
+      }
+
+      # Connect dispatch router to the local qpid
+      qpid::router::connector {'broker':
+        addr        => $qpid_router_broker_addr,
+        port        => $qpid_router_broker_port,
+        ssl_profile => 'router-ssl',
+        role        => 'on-demand',
+      }
+    } else {
+      qpid::router::connector {'hub':
+        addr        => $qpid_router_hub_addr,
+        port        => $qpid_router_hub_port,
+        ssl_profile => 'router-ssl',
+        role        => 'inter-router',
+      }
+    }
+
+    # Listen for katello-agent clients
+    qpid::router::listener {'clients':
+      addr        => $qpid_router_agent_addr,
+      port        => $qpid_router_agent_port,
+      ssl_profile => 'router-ssl',
+    }
+
+  }
+
   class { 'apache::mod::wsgi':} ~>
   class { 'mongodb':
     logpath     => '/var/lib/mongodb/mongodb.log',
