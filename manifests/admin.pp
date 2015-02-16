@@ -69,6 +69,11 @@
 # $rpm::                           Install puppet extension
 #                                  type:boolean
 #
+# $puppet_upload_working_dir::     Directory where status files for in progress uploads will be stored
+#
+# $puppet_upload_chunk_size::      Maximum amount of data (in bytes) sent for an upload in a single request
+#                                  type:integer
+#
 class pulp::admin (
   $version            = $pulp::admin::params::version,
   $host               = $pulp::admin::params::host,
@@ -93,6 +98,8 @@ class pulp::admin (
   $nodes              = $pulp::admin::params::nodes,
   $python             = $pulp::admin::params::python,
   $rpm                = $pulp::admin::params::rpm,
+  $puppet_upload_working_dir = $pulp::admin::params::puppet_upload_working_dir,
+  $puppet_upload_chunk_size  = $pulp::admin::params::puppet_upload_chunk_size,
 ) inherits pulp::admin::params {
   class { 'pulp::admin::install': } ~>
   class { 'pulp::admin::config': }
