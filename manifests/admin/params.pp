@@ -23,4 +23,7 @@ class pulp::admin::params {
   $nodes              = false
   $python             = false
   $rpm                = false
+
+  $puppet_upload_working_dir = '~/.pulp/puppet-uploads'
+  $puppet_upload_chunk_size  = 1048576
 }
