@@ -37,7 +37,7 @@ class pulp::params {
 
   $osreleasemajor = regsubst($::operatingsystemrelease, '^(\d+)\..*$', '\1')
 
-  case $::operatingsystem {
+  case $::osfamily{
     'RedHat': {
       case $osreleasemajor {
         '6': {
@@ -47,9 +47,6 @@ class pulp::params {
           $pulp_workers_template = 'systemd_pulp_workers'
         }
       }
-    }
-    'Fedora': {
-      $pulp_workers_template = 'systemd_pulp_workers'
     }
     default: {
       fail("${::hostname}: This module does not support osfamily ${::operatingsystem}")
