@@ -14,12 +14,58 @@ class pulp::config {
     mode   => '0755';
   }
 
-  file {'/etc/pulp/server.conf':
-    ensure  => file,
-    content => template('pulp/etc/pulp/server.conf.erb'),
-    owner   => 'apache',
-    group   => 'apache',
-    mode    => '0600',
+  apache::vhost { 'pulp-https':
+    priority            => '05',
+    docroot             => '/srv/pulp',
+    port                => 443,
+    servername          => [$::fqdn],
+    serveraliases       => [$::hostname],
+    ssl                 => true,
+    ssl_cert            => $pulp::consumers_ca_cert,
+    ssl_key             => $pulp::consumers_ca_key,
+    ssl_ca              => $pulp::consumers_ca_cert,
+    ssl_verify_client   => 'optional',
+    ssl_protocol        => ' all -SSLv2',
+    ssl_options         => '+StdEnvVars +ExportCertData',
+    ssl_verify_depth    => '3',
+    wsgi_process_group  => 'pulp',
+    wsgi_application_group     => 'pulp',
+    wsgi_daemon_process => 'pulp user=apache group=apache processes=1 threads=8 display-name=%{GROUP}',
+    wsgi_pass_authorization    => 'On',
+    wsgi_import_script  => '/srv/pulp/webservices.wsgi',
+    wsgi_import_script_options => {
+      'process-group'     => 'pulp',
+      'application-group' => 'pulp'
+    },
+    wsgi_script_aliases => {
+      '/pulp/api' => '/srv/pulp/webservices.wsgi'
+    },
+    directories         => [
+      {
+        'path'     => 'webservices.wsgi',
+        'provider' => 'files',
+      },
+      {
+        'path'     => '/srv/pulp',
+        'provider' => 'directory',
+      },
+      {
+        'path'     => '/pulp/static',
+        'provider' => 'location',
+      }
+    ],
+    aliases             => [
+      {
+        alias           => '/pulp/static',
+        path            => '/var/lib/pulp/static',
+        options         => ['Indexes'],
+        custom_fragment => 'SSLRequireSSL'
+      }
+    ],
+    options             => ['SymLinksIfOwnerMatch'],
+    custom_fragment     => '# allow older yum clients to connect, see bz 647828
+  SSLInsecureRenegotiation on
+  AddDefaultCharset UTF-8'
   }
 
   file {'/etc/httpd/conf.d/pulp.conf':
@@ -151,3 +197,4 @@ class pulp::config {
     }
   }
 }
+
