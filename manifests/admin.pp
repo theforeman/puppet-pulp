@@ -54,19 +54,19 @@
 # $wrap_width::                    The number of characters written before wrapping to the next line.
 #                                  type:integer
 #
-# $puppet::                        Install puppet extension
+# $enable_puppet::                 Install puppet extension
 #                                  type:boolean
 #
-# $docker::                        Install puppet extension
+# $enable_docker::                 Install puppet extension
 #                                  type:boolean
 #
-# $nodes::                         Install puppet extension
+# $enable_nodes::                  Install puppet extension
 #                                  type:boolean
 #
-# $python::                        Install puppet extension
+# $enable_python::                 Install puppet extension
 #                                  type:boolean
 #
-# $rpm::                           Install puppet extension
+# $enable_rpm::                    Install puppet extension
 #                                  type:boolean
 #
 # $puppet_upload_working_dir::     Directory where status files for in progress uploads will be stored
@@ -93,14 +93,24 @@ class pulp::admin (
   $enable_color       = $pulp::admin::params::enable_color,
   $wrap_to_terminal   = $pulp::admin::params::wrap_to_terminal,
   $wrap_width         = $pulp::admin::params::wrap_width,
-  $puppet             = $pulp::admin::params::puppet,
-  $docker             = $pulp::admin::params::docker,
-  $nodes              = $pulp::admin::params::nodes,
-  $python             = $pulp::admin::params::python,
-  $rpm                = $pulp::admin::params::rpm,
+  $enable_puppet      = $pulp::admin::params::enable_puppet,
+  $enable_docker      = $pulp::admin::params::enable_docker,
+  $enable_nodes       = $pulp::admin::params::enable_nodes,
+  $enable_python      = $pulp::admin::params::enable_python,
+  $enable_rpm         = $pulp::admin::params::enable_rpm,
   $puppet_upload_working_dir = $pulp::admin::params::puppet_upload_working_dir,
   $puppet_upload_chunk_size  = $pulp::admin::params::puppet_upload_chunk_size,
 ) inherits pulp::admin::params {
+  validate_bool($enable_puppet)
+  validate_bool($enable_docker)
+  validate_bool($enable_nodes)
+  validate_bool($enable_python)
+  validate_bool($enable_rpm)
+
+  validate_bool($verify_ssl)
+  validate_bool($enable_color)
+  validate_bool($wrap_to_terminal)
+
   class { 'pulp::admin::install': } ~>
   class { 'pulp::admin::config': }
 }
