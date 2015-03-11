@@ -1,15 +1,16 @@
 # Pulp Master Params
 class pulp::params {
+  $version = 'installed'
 
   $oauth_key = 'pulp'
   $oauth_secret = 'secret'
 
-  $messaging_url = 'tcp://localhost:5672'
+  $messaging_url = "tcp://${::fqdn}:5672"
   $messaging_ca_cert = undef
   $messaging_client_cert = undef
 
-  $broker_url = "qpid://${::fqdn}:5671"
-  $broker_use_ssl = true
+  $broker_url = "qpid://${::fqdn}:5672"
+  $broker_use_ssl = false
 
   $consumers_ca_cert = '/etc/pki/pulp/ca.crt'
   $consumers_ca_key = '/etc/pki/pulp/ca.key'
@@ -17,16 +18,10 @@ class pulp::params {
 
   $consumers_crl = undef
 
-  $qpid_ssl = true
-  $qpid_ssl_cert_db = '/etc/pki/example/nssdb'
-  $qpid_ssl_cert_password_file = '/etc/pki/example/nssdb/nss_db_password-file'
-
   $default_login = 'admin'
   $default_password = cache_data('pulp_password', random_password(32))
 
   $repo_auth = true
-
-  $user_groups = []
 
   $proxy_url      = undef
   $proxy_port     = undef
@@ -34,6 +29,12 @@ class pulp::params {
   $proxy_password = undef
 
   $num_workers = min($::processorcount, 8)
+
+  $message_broker = 'qpid'
+
+  $enable_docker = false
+  $enable_rpm    = true
+  $enable_puppet = false
 
   $osreleasemajor = regsubst($::operatingsystemrelease, '^(\d+)\..*$', '\1')
 
