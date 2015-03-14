@@ -134,15 +134,6 @@ class pulp::config {
     }
   }
 
-  exec {'migrate_pulp_db':
-    command   => 'pulp-manage-db && touch /var/lib/pulp/init.flag',
-    creates   => '/var/lib/pulp/init.flag',
-    path      => '/bin:/usr/bin',
-    logoutput => 'on_failure',
-    user      => 'apache',
-    require   => [Service[mongodb], Service[qpidd], File['/etc/pulp/server.conf']],
-  }
-
   if $pulp::consumers_crl {
     exec { 'setup-crl-symlink':
       command     => "/usr/bin/openssl x509 -in '${pulp::consumers_ca_cert}' -hash -noout | /usr/bin/xargs -I{} /bin/ln -sf '${pulp::consumers_crl}' '/etc/pki/pulp/content/{}.r0'",
