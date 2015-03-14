@@ -94,10 +94,6 @@ If your most recent release breaks compatibility or requires particular steps fo
       }
     
       class { 'pulp':
-        default_password      => 'admin',
-        version               => 'latest',
-        ssl_verify_client     => 'optional_no_ca',
-        enable_puppet         => true,
         messaging_url         => "ssl://${::fqdn}:5671",
         messaging_ca_cert     => $ca_cert,
         messaging_client_cert => $cert,
@@ -105,16 +101,7 @@ If your most recent release breaks compatibility or requires particular steps fo
         broker_use_ssl        => true,
       }
     
-      class { 'pulp::admin':
-        verify_ssl    => false,
-        version       => 'latest',
-        enable_puppet => true,
-      }
-    
       class { 'pulp::consumer':
-        verify_ssl           => false,
-        version              => 'latest',
-        enable_puppet        => true,
         messaging_scheme     => 'ssl',
         messaging_host       => $::fqdn,
         messaging_port       => 5671,
