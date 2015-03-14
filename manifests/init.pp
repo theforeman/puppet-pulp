@@ -118,6 +118,8 @@ class pulp (
     $mongodb_pidfilepath = '/var/run/mongodb/mongodb.pid'
   }
 
+  include pulp::migrate_db
+
   class { 'mongodb::globals':
     version => $::mongodb_version, # taken from the custom facts
   }
@@ -147,4 +149,7 @@ class pulp (
   Service['httpd']
   ->
   Class[pulp]
+
+  Class['pulp::install'] ~> Exec['migrate_pulp_db'] ~> Class['pulp::service']
+  Class['pulp::config']  ~> Exec['migrate_pulp_db'] ~> Class['pulp::service']
 }
