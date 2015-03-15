@@ -278,12 +278,11 @@ class pulp (
   include pulp::database
   include pulp::broker
 
-  if $enable_child_node {
+  if $enable_child_node and  !defined(Class['pulp::agent']) {
     class { 'pulp::agent': version => $version }
   }
 
-  class { 'pulp::install':
-  } ~>
+  class { 'pulp::install': } ~>
   class { 'pulp::config': } ~>
   class { 'pulp::service': } ~>
   Service['httpd'] ->

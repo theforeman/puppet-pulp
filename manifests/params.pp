@@ -13,7 +13,7 @@ class pulp::params {
   $db_verify_ssl = true
   $db_ca_path = '/etc/pki/tls/certs/ca-bundle.crt'
 
-  $server_name = $::fqdn
+  $server_name = downcase($::fqdn)
   $key_url = '/pulp/gpg'
   $ks_url = '/pulp/ks'
   $default_login = 'admin'

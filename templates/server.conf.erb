@@ -35,8 +35,8 @@
 #                    of the connection.
 
 [database]
-name: <%= scope['pulp::node_certificate'] %>
-seeds: <%= scope['pulp::node_certificate'] %>
+name: <%= scope['pulp::db_name'] %>
+seeds: <%= scope['pulp::db_seeds'] %>
 <% if scope['pulp::db_username'] != :undef -%>
 username: <%= scope['pulp::db_username'] %>
 <% end -%>
