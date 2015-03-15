@@ -35,16 +35,22 @@
 #                    of the connection.
 
 [database]
-# name: pulp_database
-# seeds: localhost:27017
-# username:
-# password:
-# replica_set:
-# ssl: false
-# ssl_keyfile:
-# ssl_certfile:
-# verify_ssl: true
-# ca_path: /etc/pki/tls/certs/ca-bundle.crt
+name: <%= scope['pulp::node_certificate'] %>
+seeds: <%= scope['pulp::node_certificate'] %>
+<% if scope['pulp::db_username'] != :undef -%>
+username: <%= scope['pulp::db_username'] %>
+<% end -%>
+<% if scope['pulp::db_password'] != :undef -%>
+password: <%= scope['pulp::db_password'] %>
+<% end -%>
+<% if scope['pulp::db_replica_set'] != :undef -%>
+replica_set: <%= scope['pulp::db_replica_set'] %>
+<% end -%>
+ssl: <%= scope['pulp::db_ssl'] %>
+ssl_keyfile: <%= scope['pulp::db_ssl_keyfile'] %>
+ssl_certfile: <%= scope['pulp::db_ssl_certfile'] %>
+verify_ssl: <%= scope['pulp::db_verify_ssl'] %>
+ca_path: <%= scope['pulp::db_ca_path'] %>
 
 
 # = Server =
@@ -61,13 +67,13 @@
 # log_level:        The desired logging level. Options are: CRITICAL, ERROR, WARNING, INFO, DEBUG,
 #                   and NOTSET. Pulp will default to INFO.
 [server]
-server_name: <%= (has_variable?("fqdn") ? @fqdn : @hostname).downcase %>
-# key_url: /pulp/gpg
-# ks_url: /pulp/ks
-default_login: <%= @default_login %>
-default_password: <%= @default_password %>
-# debugging_mode: false
-# log_level: INFO
+server_name: <%= scope['pulp::server_name'] %>
+key_url: <%= scope['pulp::key_url'] %>
+ks_url: <%= scope['pulp::ks_url'] %>
+default_login: <%= scope['pulp::default_login'] %>
+default_password: <%= scope['pulp::default_password'] %>
+debugging_mode: <%= scope['pulp::debugging_mode'] %>
+log_level: <%= scope['pulp::log_level'] %>
 
 
 # = Authentication =
@@ -80,8 +86,8 @@ default_password: <%= @default_password %>
 #   The RSA public key used for authentication.
 
 [authentication]
-# rsa_key = /etc/pki/pulp/rsa.key
-# rsa_pub = /etc/pki/pulp/rsa_pub.key
+rsa_key = <%= scope['pulp::rsa_key'] %>
+rsa_pub = <%= scope['pulp::rsa_pub'] %>
 
 
 # = Security =
@@ -108,12 +114,12 @@ default_password: <%= @default_password %>
 #
 
 [security]
-cacert:  <%= @consumers_ca_cert %>
-cakey:   <%= @consumers_ca_key %>
-ssl_ca_certificate: <%= @ssl_ca_cert %>
-# user_cert_expiration: 7
-# consumer_cert_expiration: 3650
-# serial_number_path: /var/lib/pulp/sn.dat
+cacert: <%= scope['pulp::consumers_ca_cert'] %>
+cakey: <%= scope['pulp::consumers_ca_key'] %>
+ssl_ca_certificate: <%= scope['pulp::ssl_ca_cert'] %>
+user_cert_expiration: <%= scope['pulp::user_cert_expiration'] %>
+consumer_cert_expiration: <%= scope['pulp::consumer_cert_expiration'] %>
+serial_number_path: <%= scope['pulp::serial_number_path'] %>
 
 
 # -- Advanced Configuration ---------------------------------------------------
@@ -126,7 +132,7 @@ ssl_ca_certificate: <%= @ssl_ca_cert %>
 #     than this will be purged; set to -1 to disable
 
 [consumer_history]
-# lifetime: 180
+lifetime: <%= scope['pulp::consumer_history_lifetime'] %>
 
 
 # = Data Reaping =
@@ -154,14 +160,14 @@ ssl_ca_certificate: <%= @ssl_ca_cert %>
 # task_result_history: float; time in days to store task results history
 
 [data_reaping]
-# reaper_interval: 0.25
-# archived_calls: 0.5
-# consumer_history: 60
-# repo_sync_history: 60
-# repo_publish_history: 60
-# repo_group_publish_history: 60
-# task_status_history: 7
-# task_result_history: 3
+reaper_interval: 0.25
+archived_calls: 0.5
+consumer_history: 60
+repo_sync_history: 60
+repo_publish_history: 60
+repo_group_publish_history: 60
+task_status_history: 7
+task_result_history: 3
 
 
 # = LDAP =
@@ -209,9 +215,9 @@ ssl_ca_certificate: <%= @ssl_ca_cert %>
 #     authentication
 
 [oauth]
-enabled: true
-oauth_key: <%= @oauth_key %>
-oauth_secret: <%= @oauth_secret %>
+enabled: <%= scope['pulp::oauth_enabled'] %>
+oauth_key: <%= scope['pulp::oauth_key'] %>
+oauth_secret: <%= scope['pulp::oauth_secret'] %>
 
 
 # = Messaging =
@@ -251,16 +257,16 @@ oauth_secret: <%= @oauth_secret %>
 #
 
 [messaging]
-url: <%= @messaging_url %>
-<% if @messaging_ca_cert -%>
-cacert: <%= @messaging_ca_cert %>
+url: <%= scope['pulp::messaging_url'] %>
+transport: <%= scope['pulp::messaging_transport'] %>
+auth_enabled: <%= scope['pulp::messaging_auth_enabled'] %>
+<% if scope['pulp::messaging_ca_cert'] -%>
+cacert: <%= scope['pulp::messaging_ca_cert'] %>
 <% end -%>
-<% if @messaging_client_cert -%>
-clientcert: <%= @messaging_client_cert %>
+<% if scope['pulp::messaging_client_cert'] -%>
+clientcert: <%= scope['pulp::messaging_client_cert'] %>
 <% end -%>
-transport: qpid
-auth_enabled: true
-# topic_exchange: 'amq.topic'
+topic_exchange: '<%= scope['pulp::oauth_enabled'] %>'
 
 
 # = Asynchronous Tasks =
@@ -294,14 +300,14 @@ auth_enabled: true
 #
 
 [tasks]
-broker_url: <%= @broker_url %>
-celery_require_ssl: <%= @broker_use_ssl %>
-<% if @messaging_ca_cert -%>
-cacert: <%= @messaging_ca_cert %>
+broker_url: <%= scope['pulp::broker_url'] %>
+celery_require_ssl: <%= scope['pulp::broker_use_ssl'] %>
+<% if scope['pulp::messaging_ca_cert'] -%>
+cacert: <%= scope['pulp::messaging_ca_cert'] %>
 <% end -%>
-<% if @messaging_client_cert -%>
-keyfile: <%= @messaging_client_cert %>
-certfile: <%= @messaging_client_cert %>
+<% if scope['pulp::messaging_client_cert'] -%>
+keyfile: <%= scope['pulp::messaging_client_cert'] %>
+certfile: <%= scope['pulp::messaging_client_cert'] %>
 <% end -%>
 
 
@@ -324,7 +330,7 @@ certfile: <%= @messaging_client_cert %>
 # enabled: boolean controls whether or not emails will be sent
 
 [email]
-# host: localhost
-# port: 25
-# from: no-reply@your.domain
-# enabled: false
+host: <%= scope['pulp::email_host'] %>
+port: <%= scope['pulp::email_port'] %>
+from: <%= scope['pulp::email_from'] %>
+enabled: <%= scope['pulp::email_enabled'] %>
