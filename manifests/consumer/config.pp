@@ -9,6 +9,14 @@ class pulp::consumer::config {
   }
 
   if $pulp::consumer::enable_rpm {
+    file { '/etc/yum/pluginconf.d/pulp-profile-update.conf':
+      ensure  => 'file',
+      content => template('pulp/pulp-profile-update.conf.erb'),
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+    }
+
     file { '/etc/pulp/agent/conf.d/bind.conf':
       ensure  => 'file',
       content => template('pulp/agent_bind.conf.erb'),

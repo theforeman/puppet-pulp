@@ -1,6 +1,6 @@
 # Pulp Consumer Install Packages
 class pulp::consumer::install {
-  package { ['pulp-consumer-client', 'pulp-agent']:
+  package { ['pulp-consumer-client']:
     ensure => $pulp::consumer::version,
   }
 
