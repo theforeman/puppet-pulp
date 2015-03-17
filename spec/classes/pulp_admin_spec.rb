@@ -3,6 +3,11 @@ require 'spec_helper'
 describe 'pulp::admin' do
   context 'on RedHat' do
     context 'install class without parameters' do
+      let :facts do
+      {
+        :fqdn => 'localhost',
+      } end
+
       it { should contain_class('pulp::admin::install') }
       it { should contain_class('pulp::admin::config') }
       it { should contain_class('pulp::admin::params') }
@@ -39,7 +44,7 @@ describe 'pulp::admin' do
 
     context 'install with puppet param' do
       let(:params) do {
-          'puppet' => true,
+          'enable_puppet' => true,
         } end
 
       it { should contain_package('pulp-puppet-admin-extensions').with_ensure('installed') }
@@ -56,15 +61,15 @@ describe 'pulp::admin' do
 
     context 'install with docker param' do
       let(:params) do {
-          'docker' => true,
+          'enable_docker' => true,
         } end
 
       it { should contain_package('pulp-docker-admin-extensions').with_ensure('installed') }
     end
 
-    context 'install with puppet nodes' do
+    context 'install with nodes param' do
       let(:params) do {
-          'nodes' => true,
+          'enable_nodes' => true,
         } end
 
       it { should contain_package('pulp-nodes-admin-extensions').with_ensure('installed') }
@@ -72,7 +77,7 @@ describe 'pulp::admin' do
 
     context 'install with python param' do
       let(:params) do {
-          'python' => true,
+          'enable_python' => true,
         } end
 
       it { should contain_package('pulp-python-admin-extensions').with_ensure('installed') }
@@ -80,7 +85,7 @@ describe 'pulp::admin' do
 
     context 'install with rpm param' do
       let(:params) do {
-          'rpm' => true,
+          'enable_rpm' => true,
         } end
 
       it { should contain_package('pulp-rpm-admin-extensions').with_ensure('installed') }
