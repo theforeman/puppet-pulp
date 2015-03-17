@@ -3,148 +3,291 @@
 # Install and configure pulp
 #
 # === Parameters:
+#  $version::                   pulp package version, it's passed to ensure parameter of package resource
+#                               can be set to specific version number, 'latest', 'present' etc.
 #
-# $oauth_key::                  The oauth key; defaults to pulp
+#  $db_name::                   name of the database to use
 #
-# $oauth_secret::               The oauth secret; defaults to secret
+#  $db_seeds::                  comma-separated list of hostname:port of database replica seed hosts
 #
-# $messaging_url::              URL for the AMQP server that Pulp will use to
-#                               communicate with nodes.
+#  $db_username::               The user name to use for authenticating to the MongoDB server
 #
-# $messaging_ca_cert:           The CA cert to authenicate against the AMQP server.
+#  $db_password::               The password to use for authenticating to the MongoDB server
 #
-# $messaging_client_cert::      The client certificate signed by the CA cert
-#                               above to authenticate.
+#  $db_replica_set::            and set this value to the name of replica set configured in MongoDB,
+#                               if one is in use
 #
-# $broker_url::                 URL for the Celery broker that Pulp will use to
-#                               queue tasks.
+#  $db_ssl::                    If True, create the connection to the server using SSL.
 #
-# $broker_use_ssl::             Set to true if deploying broker for Celery with SSL.
+#  $db_ssl_keyfile::            A path to the private keyfile used to identify the local connection against
+#                               mongod. If included with the certfile then only the ssl_certfile is needed.
 #
-# $consumers_ca_cert::          The path to the CA cert that will be used to sign customer
-#                               and admin identification certificates
+#  $db_ssl_certfile::           The certificate file used to identify the local connection against mongod.
 #
-# $consumers_ca_key::           The private key for the CA cert
+#  $db_verify_ssl::             Specifies whether a certificate is required from the other side of the
+#                               connection, and whether it will be validated if provided. If it is true, then
+#                               the ssl_ca_certs parameter must point to a file of CA certificates used to
+#                               validate the connection.
 #
-# $ssl_ca_cert::                Full path to the CA certificate used to sign the Pulp
+#  $db_ca_path::                The ca_certs file contains a set of concatenated “certification authority”
+#                               certificates, which are used to validate certificates passed from the other end
+#                               of the connection.
+#
+#  $server_name::               hostname the admin client and consumers should use when accessing
+#                               the server; if not specified, this is defaulted to the server's hostname
+#
+#  $key_url::                   
+#
+#  $ks_url::                    
+#
+#  $default_login::             default admin username of the Pulp server; this user will be
+#                               the first time the server is started
+#
+#  $default_password::          default password for admin when it is first created; this
+#                               should be changed once the server is operational
+#
+#  $debugging_mode::            boolean; toggles Pulp's debugging capabilities
+#
+#  $log_level::                 The desired logging level. Options are: CRITICAL, ERROR, WARNING, INFO, DEBUG,
+#                               and NOTSET. Pulp will default to INFO.
+#
+#  $rsa_key::                   The RSA private key used for authentication.
+#
+#  $rsa_pub::                   The RSA public key used for authentication.
+#
+#  $consumers_ca_cert::         full path to the CA certificate that will be used to sign consumer
+#                               and admin identification certificates; this must match the value of
+#                               SSLCACertificateFile in /etc/httpd/conf.d/pulp.conf
+#
+#  $consumers_ca_key::          path to the private key for the above CA certificate
+#
+#  $ssl_ca_cert::               full path to the CA certificate used to sign the Pulp
 #                               server's SSL certificate; consumers will use this to verify the
 #                               Pulp server's SSL certificate during the SSL handshake
 #
-# $consumers_crl::              Certificate revocation list for consumers which
+#  $user_cert_expiration::      number of days a user certificate is valid
+#
+#  $consumer_cert_expiration::  number of days a consumer certificate is valid
+#
+#  $serial_number_path::        
+#
+#  $consumer_history_lifetime:: number of days to store consumer events; events older
+#                               than this will be purged; set to -1 to disable
+#
+#  $oauth_enabled::             boolean; controls whether OAuth authentication is enabled
+#
+#  $oauth_key::                 string; key to enable OAuth style authentication
+#
+#  $oauth_secret::              string; shared secret that can be used for OAuth style
+#                               authentication
+#
+#  $messaging_url::             the url used to contact the broker: <protocol>://<host>:<port>/<virtual-host>
+#                               Supported <protocol>  values are 'tcp' or 'ssl' depending on if SSL should be used or not.
+#                               The <virtual-host> is optional, and is only applicable to RabbitMQ broker environments.
+#
+#  $messaging_transport::       The type of broker you are connecting to. The default is 'qpid'. For RabbitMQ,
+#                               'rabbitmq' should be used.
+#
+#  $messaging_auth_enabled::    Message authentication enabled flag. The default is 'true' which enables authentication.
+#                               To disable authentication, use 'false'.
+#
+#  $messaging_ca_cert::         Absolute path to PEM encoded CA certificate file, used by Pulp to validate the identity
+#                               of the broker using SSL.
+#
+#  $messaging_client_cert::     Absolute path to PEM encoded file containing both the private key and
+#                               certificate Pulp should present to the broker to be authenticated by the broker.
+#
+#  $messaging_topic_exchange::  The name of the exchange to use. The exchange must be a topic exchange. The
+#                               default is 'amq.topic', which is a default exchange that is guaranteed to exist on a Qpid broker.
+#
+#  $broker_url::                A URL to a broker that Celery can use to queue tasks: qpid://<username>:<password>@<hostname>:<port>/
+#
+#  $broker_use_ssl::            Require SSL if set to 'true', otherwise do not require SSL.
+#
+#  $email_host::                host name of the MTA pulp should relay through
+#
+#  $email_port::                destination port to connect on
+#
+#  $email_from::                the "From" address of each email the system sends
+#
+#  $email_enabled::             boolean controls whether or not emails will be sent
+#
+#  $consumers_crl::             Certificate revocation list for consumers which
 #                               are no valid (have had their client certs
 #                               revoked)
 #
-# $ssl_ca_cert::                The SSL cert that will be used by Pulp to
-#                               verify the connection
-#
-# $default_login::              Initial login; defaults to admin
-#
-# $default_password::           Initial password; defaults to 32 character randomly generated password
-#
-# $repo_auth::                  Boolean to determine whether repos managed by
-#                               pulp will require authentication. Defaults
-#                               to true
-#
-# $reset_data::                 Boolean to reset the data in MongoDB. Defaults
+#  $reset_data::                Boolean to reset the data in MongoDB. Defaults
 #                               to false
-#
-# $reset_cache::                Boolean to flush the cache. Defaults to false
-#
-# $qpid_ssl::                   Enable SSL in qpid or not
 #                               type:boolean
 #
-# $qpid_ssl_cert_db             The location of the Qpid SSL cert database
+#  $reset_cache::               Boolean to flush the cache. Defaults to false
+#                               type:boolean
 #
-# $qpid_ssl_cert_password_file  Location of the password file for the Qpid SSL cert
+#  $ssl_verify_client::         Enforce use of SSL authentication for yum repos access
 #
-# $user_groups::                Additional user groups to add the qpid user to
+#  $repo_auth::                 Boolean to determine whether repos managed by
+#                               pulp will require authentication. Defaults
+#                               to true
+#                               type:boolean
 #
-# $proxy_url::                  URL of the proxy server
+#  $proxy_url::                 URL of the proxy server
 #
-# $proxy_port::                 Port the proxy is running on
+#  $proxy_port::                Port the proxy is running on
+#                               type:integer
 #
-# $proxy_username::             Proxy username for authentication
+#  $proxy_username::            Proxy username for authentication
 #
-# $proxy_password::             Proxy password for authentication
+#  $proxy_password::            Proxy password for authentication
 #
-# $num_workers::                Number of Pulp workers to use
+#  $num_workers::               Number of Pulp workers to use
 #                               defaults to number of processors and maxs at 8
+#                               type:integer
+#
+#  $enable_rpm::                Boolean to enable rpm plugin. Defaults
+#                               to true
+#                               type:boolean
+#
+#  $enable_docker::             Boolean to enable docker plugin. Defaults
+#                               to false
+#                               type:boolean
+#
+#  $enable_puppet::             Boolean to enable puppet plugin. Defaults
+#                               to false
+#                               type:boolean
+#
+#  $enable_parent_node::        Boolean to enable pulp parent nodes. Defaults
+#                               to false
+#                               type:boolean
+#
+#  $enable_child_node::         Boolean to enable pulp child nodes. Defaults
+#                               to false
+#                               type:boolean
+#
+# $enable_http::                Boolean to enable http access to rpm repos. Defaults
+#                               to false
+#                               type:boolean
+#
+#
+#  $broker_manage::             Boolean to install and configure the qpid or rabbitmq broker.
+#                               Defaults to false
+#                               type:boolean
+#
+#  $db_manage::                 Boolean to install and configure the mongodb. Defaults
+#                               to false
+#                               type:boolean
+#
+#  $node_certificate::          The absolute path to the node SSL certificate
+#
+#  $node_verify_ssl::           
+#
+#  $node_server_ca_cert::       
+#
+#  $node_oauth_effective_user:: 
+#
+#  $node_oauth_key::            The oauth key used to authenticate to the parent node
+#
+#  $node_oauth_secret::         The oauth secret used to authenticate to the parent node
 #
 class pulp (
+  $version                   = $pulp::params::version,
+  $db_name                   = $pulp::params::db_name,
+  $db_seeds                  = $pulp::params::db_seeds,
+  $db_username               = $pulp::params::db_username,
+  $db_password               = $pulp::params::db_password,
+  $db_replica_set            = $pulp::params::db_replica_set,
+  $db_ssl                    = $pulp::params::db_ssl,
+  $db_ssl_keyfile            = $pulp::params::db_ssl_keyfile,
+  $db_ssl_certfile           = $pulp::params::db_ssl_certfile,
+  $db_verify_ssl             = $pulp::params::db_verify_ssl,
+  $db_ca_path                = $pulp::params::db_ca_path,
+  $server_name               = $pulp::params::server_name,
+  $key_url                   = $pulp::params::key_url,
+  $ks_url                    = $pulp::params::ks_url,
+  $default_login             = $pulp::params::default_login,
+  $default_password          = $pulp::params::default_password,
+  $debugging_mode            = $pulp::params::debugging_mode,
+  $log_level                 = $pulp::params::log_level,
+  $rsa_key                   = $pulp::params::rsa_key,
+  $rsa_pub                   = $pulp::params::rsa_pub,
+  $consumers_ca_cert         = $pulp::params::consumers_ca_cert,
+  $consumers_ca_key          = $pulp::params::consumers_ca_key,
+  $ssl_ca_cert               = $pulp::params::ssl_ca_cert,
+  $user_cert_expiration      = $pulp::params::user_cert_expiration,
+  $consumer_cert_expiration  = $pulp::params::consumer_cert_expiration,
+  $serial_number_path        = $pulp::params::serial_number_path,
+  $consumer_history_lifetime = $pulp::params::consumer_history_lifetime,
+  $oauth_enabled             = $pulp::params::oauth_enabled,
+  $oauth_key                 = $pulp::params::oauth_key,
+  $oauth_secret              = $pulp::params::oauth_secret,
+  $messaging_url             = $pulp::params::messaging_url,
+  $messaging_transport       = $pulp::params::messaging_transport,
+  $messaging_auth_enabled    = $pulp::params::messaging_auth_enabled,
+  $messaging_ca_cert         = $pulp::params::messaging_ca_cert,
+  $messaging_client_cert     = $pulp::params::messaging_client_cert,
+  $messaging_topic_exchange  = $pulp::params::messaging_topic_exchange,
+  $broker_url                = $pulp::params::broker_url,
+  $broker_use_ssl            = $pulp::params::broker_use_ssl,
+  $email_host                = $pulp::params::email_host,
+  $email_port                = $pulp::params::email_port,
+  $email_from                = $pulp::params::email_from,
+  $email_enabled             = $pulp::params::email_enabled,
+  $consumers_crl             = $pulp::params::consumers_crl,
+  $reset_data                = $pulp::params::reset_data,
+  $reset_cache               = $pulp::params::reset_cache,
+  $ssl_verify_client         = $pulp::params::ssl_verify_client,
+  $repo_auth                 = $pulp::params::repo_auth,
+  $proxy_url                 = $pulp::params::proxy_url,
+  $proxy_port                = $pulp::params::proxy_port,
+  $proxy_username            = $pulp::params::proxy_username,
+  $proxy_password            = $pulp::params::proxy_password,
+  $num_workers               = $pulp::params::num_workers,
+  $enable_docker             = $pulp::params::enable_docker,
+  $enable_rpm                = $pulp::params::enable_rpm,
+  $enable_puppet             = $pulp::params::enable_puppet,
+  $enable_parent_node        = $pulp::params::enable_parent_node,
+  $enable_child_node         = $pulp::params::enable_child_node,
+  $enable_http               = $pulp::params::enable_http,
+  $broker_manage             = $pulp::params::broker_manage,
+  $db_manage                 = $pulp::params::db_manage,
+  $node_certificate          = $pulp::params::node_certificate,
+  $node_verify_ssl           = $pulp::params::node_verify_ssl,
+  $node_server_ca_cert       = $pulp::params::node_server_ca_cert,
+  $node_oauth_effective_user = $pulp::params::node_oauth_effective_user,
+  $node_oauth_key            = $pulp::params::node_oauth_key,
+  $node_oauth_secret         = $pulp::params::node_oauth_secret,
+) inherits pulp::params {
+  validate_bool($repo_auth)
+  validate_bool($reset_data)
+  validate_bool($reset_cache)
 
-  $oauth_key = $pulp::params::oauth_key,
-  $oauth_secret = $pulp::params::oauth_secret,
-
-  $messaging_url = $pulp::params::messaging_url,
-  $messaging_ca_cert = $pulp::params::messaging_ca_cert,
-  $messaging_client_cert = $pulp::params::messaging_client_cert,
-
-  $broker_url = $pulp::params::broker_url,
-  $broker_use_ssl = $pulp::params::broker_use_ssl,
-
-  $consumers_ca_cert = $pulp::params::consumers_ca_cert,
-  $consumers_ca_key = $pulp::params::consumers_ca_key,
-  $ssl_ca_cert = $pulp::params::ssl_ca_cert,
-
-  $consumers_crl = $pulp::params::consumers_crl,
-
-  $ssl_ca_cert = $pulp::params::ssl_ca_cert,
-
-  $default_password = $pulp::params::default_password,
-
-  $repo_auth = true,
-
-  $reset_data = false,
-  $reset_cache = false,
-
-  $qpid_ssl = $pulp::params::qpid_ssl,
-  $qpid_ssl_cert_db = $pulp::params::qpid_ssl_cert_db,
-  $qpid_ssl_cert_password_file = $pulp::params::qpid_ssl_cert_password_file,
-
-  $proxy_url      = $pulp::params::proxy_url,
-  $proxy_port     = $pulp::params::proxy_port,
-  $proxy_username = $pulp::params::proxy_username,
-  $proxy_password = $pulp::params::proxy_password,
-
-  $num_workers = $pulp::params::num_workers,
-
-  ) inherits pulp::params {
+  validate_bool($enable_docker)
+  validate_bool($enable_rpm)
+  validate_bool($enable_puppet)
+  validate_bool($enable_http)
+  validate_bool($db_manage)
+  validate_bool($broker_manage)
+  validate_bool($enable_parent_node)
+  validate_bool($enable_child_node)
 
   include ::apache
+  include ::apache::mod::wsgi
+  include ::apache::mod::ssl
+  include ::mongodb::client
+  include ::qpid::client
 
-  if (versioncmp($::mongodb_version, '2.6.5') >= 0) {
-    $mongodb_pidfilepath = '/var/run/mongodb/mongod.pid'
-  } else {
-    $mongodb_pidfilepath = '/var/run/mongodb/mongodb.pid'
+  include pulp::database
+  include pulp::broker
+
+  if $enable_child_node and  !defined(Class['pulp::agent']) {
+    class { 'pulp::agent': version => $version }
   }
 
-  class { 'mongodb::globals':
-    version => $::mongodb_version, # taken from the custom facts
-  }
-  class { 'apache::mod::wsgi':} ~>
-  class { 'mongodb':
-    logpath     => '/var/lib/mongodb/mongodb.log',
-    dbpath      => '/var/lib/mongodb',
-    pidfilepath => $mongodb_pidfilepath,
-  } ~>
-  class { 'qpid':
-    ssl                    => $qpid_ssl,
-    ssl_cert_db            => $qpid_ssl_cert_db,
-    ssl_cert_password_file => $qpid_ssl_cert_password_file,
-    ssl_cert_name          => 'broker',
-    user_groups            => $pulp::user_groups
-  } ~>
-  # Make sure we install the mongodb client, used by service-wait to check
-  # that the server is up.
-  class {'::mongodb::client':} ~>
-  class { 'pulp::install':
-    require => [Class['mongodb'], Class['qpid']]
-  } ~>
-  class { 'pulp::config':
-    require => [Class['mongodb'], Class['qpid']]
-  } ~>
+  class { 'pulp::install': } ~>
+  class { 'pulp::config': } ~>
   class { 'pulp::service': } ~>
-  Service['httpd']
-  ->
+  Service['httpd'] ->
   Class[pulp]
+
+  Class['mongodb::client'] -> Class['pulp::config']
+  Class['qpid::client'] -> Class['pulp::service']
 }

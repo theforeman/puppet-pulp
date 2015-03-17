@@ -13,12 +13,6 @@
 # granted to use or replicate Red Hat trademarks that are incorporated
 # in this software or its documentation.
 
-AddType application/x-pkcs7-crl .crl
-AddType application/x-x509-ca-cert .crt
-
-# allow older yum clients to connect, see bz 647828
-SSLInsecureRenegotiation on
-
 # -- HTTPS Repositories ---------
 Alias /pulp/repos /var/www/pub/yum/https/repos
 
@@ -26,11 +20,9 @@ Alias /pulp/repos /var/www/pub/yum/https/repos
 Alias /pulp/exports /var/www/pub/yum/https/exports
 
 <Directory /var/www/pub/yum/https>
-
     WSGIAccessScript /srv/pulp/repo_auth.wsgi
-
     SSLRequireSSL
-    SSLVerifyClient require
+    SSLVerifyClient <%= scope['pulp::ssl_verify_client'] %>
     SSLVerifyDepth 2
     SSLOptions +StdEnvVars +ExportCertData +FakeBasicAuth
     Options FollowSymLinks Indexes
@@ -41,15 +33,14 @@ Alias /pulp/exports /var/www/pub/yum/https/exports
     Options FollowSymLinks Indexes
 </Directory>
 
+
 # -- HTTPS ISOS
 Alias /pulp/isos /var/www/pub/https/isos
 
 <Directory /var/www/pub/https/isos>
-
     WSGIAccessScript /srv/pulp/repo_auth.wsgi
-
     SSLRequireSSL
-    SSLVerifyClient require
+    SSLVerifyClient <%= scope['pulp::ssl_verify_client'] %>
     SSLVerifyDepth 2
     SSLOptions +StdEnvVars +ExportCertData +FakeBasicAuth
     Options FollowSymLinks Indexes

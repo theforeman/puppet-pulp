@@ -33,5 +33,4 @@ class pulp::service {
     hasrestart => true,
     status     => 'service pulp_resource_manager status | grep "node resource_manager"',
   }
-
 }

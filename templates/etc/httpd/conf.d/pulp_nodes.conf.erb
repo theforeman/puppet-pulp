@@ -28,7 +28,7 @@ Alias /pulp/nodes/https/repos /var/www/pulp/nodes/https/repos
 <Directory /var/www/pulp/nodes/https/repos >
   Options FollowSymLinks Indexes
   SSLRequireSSL
-  SSLVerifyClient require
+  SSLVerifyClient <%= scope['pulp::ssl_verify_client'] %>
   SSLVerifyDepth  5
   SSLOptions +FakeBasicAuth
   SSLRequire %{SSL_CLIENT_S_DN_O} eq "PULP" and %{SSL_CLIENT_S_DN_OU} eq "NODES"
