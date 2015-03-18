@@ -1,8 +1,16 @@
 # Pulp Installation Packages
 class pulp::install {
+  package { ['pulp-server', 'pulp-selinux', 'pulp-nodes-parent']: ensure => $pulp::version, }
 
-  package{ ['pulp-server', 'pulp-selinux', 'pulp-docker-plugins', 'pulp-rpm-plugins', 'pulp-puppet-plugins', 'pulp-nodes-parent']:
-    ensure => installed,
+  if $pulp::enable_rpm {
+    package { ['pulp-rpm-plugins']: ensure => $pulp::version, }
   }
 
+  if $pulp::enable_docker {
+    package { ['pulp-docker-plugins']: ensure => $pulp::version, }
+  }
+
+  if $pulp::enable_puppet {
+    package { ['pulp-puppet-plugins']: ensure => $pulp::version, }
+  }
 }
