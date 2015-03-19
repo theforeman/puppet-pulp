@@ -2,8 +2,12 @@
 # == Class: pulp::agent
 #
 # Install and configure Pulp agent
-#
-class pulp::agent ($version) {
+# Private class
+class pulp::agent ($version, $messaging_transport) {
+  if $messaging_transport == 'rabbitmq' {
+    package { 'python-gofer-amqp': ensure => $version }
+  }
+
   package { ['pulp-agent', 'gofer']: ensure => $version } ->
   service { 'goferd':
     ensure     => running,
@@ -11,8 +15,4 @@ class pulp::agent ($version) {
     hasstatus  => true,
     hasrestart => true
   }
-
-  File['/etc/pulp/server.conf'] ~> Service['goferd']
-  Class['pulp::config'] ~> Service['goferd']
-  Class['pulp::consumer::config'] ~> Service['goferd']
 }
