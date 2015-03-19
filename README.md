@@ -28,6 +28,87 @@ If your most recent release breaks compatibility or requires particular steps fo
 
 ##Usage
 
+###Qpid and ssl using puppet certificates
+
+      $ca_cert = '/etc/pki/pulp/qpid/ca.pem'
+      $cert = '/etc/pki/pulp/qpid/client.pem'
+    
+      exec { 'make nss dir':
+        command => '/bin/mkdir -p /etc/pki/pulp/qpid',
+        creates => '/etc/pki/pulp/qpid'
+      }
+    
+      file { $ca_cert:
+        source  => "${::settings::ssldir}/certs/ca.pem",
+        owner   => 'root',
+        group   => 'apache',
+        mode    => '0640',
+        require => Exec['make nss dir'],
+        notify  => [Class['pulp::service'], Service['qpidd']],
+      }
+    
+      concat { $cert:
+        ensure  => present,
+        owner   => 'root',
+        group   => 'apache',
+        mode    => '0640',
+        require => Exec['make nss dir'],
+        notify  => [Class['pulp::service'], Service['qpidd']],
+      }
+    
+      concat::fragment { 'public_cert':
+        target => $cert,
+        source => "${::settings::ssldir}/certs/${::clientcert}.pem",
+        order  => '01'
+      }
+    
+      concat::fragment { 'private_cert':
+        target => $cert,
+        source => "${::settings::ssldir}/private_keys/${::clientcert}.pem",
+        order  => '02'
+      }
+    
+      nssdb::create { 'qpidd':
+        owner_id => 'qpidd',
+        group_id => 'qpidd',
+        password => 'test_pass',
+        cacert   => "${::settings::ssldir}/certs/ca.pem",
+        basedir  => '/etc/pki/pulp/qpid',
+        require  => Exec['make nss dir'],
+      } ->
+      nssdb::add_cert_and_key { 'qpidd':
+        nickname => 'broker',
+        cert     => "${::settings::ssldir}/certs/${::clientcert}.pem",
+        key      => "${::settings::ssldir}/private_keys/${::clientcert}.pem",
+        basedir  => '/etc/pki/pulp/qpid',
+        notify   => [Class['pulp::service'], Service['qpidd']],
+      }
+    
+      class { 'qpid':
+        ssl                    => true,
+        ssl_cert_db            => '/etc/pki/pulp/qpid/qpidd',
+        ssl_cert_password_file => '/etc/pki/pulp/qpid/qpidd/password.conf',
+        ssl_cert_name          => 'broker',
+        user_groups            => [],
+        require                => Nssdb::Add_cert_and_key['qpidd'],
+      }
+    
+      class { 'pulp':
+        messaging_url         => "ssl://${::fqdn}:5671",
+        messaging_ca_cert     => $ca_cert,
+        messaging_client_cert => $cert,
+        broker_url            => "qpid://${::fqdn}:5671",
+        broker_use_ssl        => true,
+      }
+    
+      class { 'pulp::consumer':
+        messaging_scheme     => 'ssl',
+        messaging_host       => $::fqdn,
+        messaging_port       => 5671,
+        messaging_cacert     => $ca_cert,
+        messaging_clientcert => $cert,
+      }
+
 ##Reference
 
 ##Limitations
