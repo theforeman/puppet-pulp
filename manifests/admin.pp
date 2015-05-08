@@ -111,6 +111,6 @@ class pulp::admin (
   validate_bool($enable_color)
   validate_bool($wrap_to_terminal)
 
-  class { 'pulp::admin::install': } ~>
-  class { 'pulp::admin::config': }
+  class { '::pulp::admin::install': } ~>
+  class { '::pulp::admin::config': }
 }
