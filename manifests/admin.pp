@@ -57,16 +57,16 @@
 # $enable_puppet::                 Install puppet extension
 #                                  type:boolean
 #
-# $enable_docker::                 Install puppet extension
+# $enable_docker::                 Install docker extension
 #                                  type:boolean
 #
-# $enable_nodes::                  Install puppet extension
+# $enable_nodes::                  Install nodes extension
 #                                  type:boolean
 #
-# $enable_python::                 Install puppet extension
+# $enable_python::                 Install python extension
 #                                  type:boolean
 #
-# $enable_rpm::                    Install puppet extension
+# $enable_rpm::                    Install rpm extension
 #                                  type:boolean
 #
 # $puppet_upload_working_dir::     Directory where status files for in progress uploads will be stored
