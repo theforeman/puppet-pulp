@@ -140,9 +140,9 @@ class pulp::consumer (
   $package_profile_enabled   = $pulp::consumer::params::package_profile_enabled,
   $package_profile_verbose   = $pulp::consumer::params::package_profile_verbose,
 ) inherits pulp::consumer::params {
-  include pulp::child::service
+  include ::pulp::child::service
 
-  class { 'pulp::consumer::install': } ->
-  class { 'pulp::consumer::config': } ~>
+  class { '::pulp::consumer::install': } ->
+  class { '::pulp::consumer::config': } ~>
   Service['goferd']
 }
