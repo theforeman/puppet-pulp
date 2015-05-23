@@ -140,9 +140,16 @@ class pulp::consumer (
   $package_profile_enabled   = $pulp::consumer::params::package_profile_enabled,
   $package_profile_verbose   = $pulp::consumer::params::package_profile_verbose,
 ) inherits pulp::consumer::params {
-  include ::pulp::child::service
+  validate_bool($enable_puppet)
+  validate_bool($enable_nodes)
+  validate_bool($enable_rpm)
+
+  validate_bool($verify_ssl)
+  validate_bool($reboot_permit)
+  validate_bool($enable_color)
+  validate_bool($wrap_to_terminal)
 
   class { '::pulp::consumer::install': } ->
   class { '::pulp::consumer::config': } ~>
-  Service['goferd']
+  class { '::pulp::consumer::service': }
 }

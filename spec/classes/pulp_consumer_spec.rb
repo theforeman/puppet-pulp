@@ -11,6 +11,7 @@ describe 'pulp::consumer' do
       it { should contain_class('pulp::consumer::install') }
       it { should contain_class('pulp::consumer::config') }
       it { should contain_class('pulp::consumer::params') }
+      it { should contain_class('pulp::consumer::service') }
 
       it { should contain_package('pulp-consumer-client').with_ensure('installed') }
       it { should contain_package('pulp-rpm-consumer-extensions').with_ensure('installed') }
