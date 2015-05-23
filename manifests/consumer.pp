@@ -149,15 +149,7 @@ class pulp::consumer (
   validate_bool($enable_color)
   validate_bool($wrap_to_terminal)
 
-  if !defined(Class['pulp::agent']) {
-    class { 'pulp::agent':
-      version             => $version,
-      messaging_transport => $messaging_transport,
-    }
-  }
-
   class { 'pulp::consumer::install': } ->
-  class { 'pulp::consumer::config': }
-
-  Class['pulp::consumer::config'] ~> Service['goferd']
+  class { 'pulp::consumer::config': } ~>
+  class { 'pulp::consumer::service': }
 }
