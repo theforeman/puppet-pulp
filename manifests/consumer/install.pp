@@ -2,7 +2,7 @@
 class pulp::consumer::install {
   if $pulp::consumer::messaging_transport == 'rabbitmq' {
     package { 'python-gofer-amqp':
-      ensure => $pulp::consumer::version,
+      ensure => $pulp::consumer::version
     }
   }
 

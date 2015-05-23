@@ -4,6 +4,6 @@ class pulp::consumer::service {
     ensure     => running,
     enable     => true,
     hasstatus  => true,
-    hasrestart => true
+    hasrestart => true,
   }
 }
