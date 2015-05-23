@@ -1,10 +1,11 @@
 # Pulp Master Configuration
 class pulp::config {
-
-  exec {'selinux_pulp_manage_puppet':
-    command => 'semanage boolean -m --on pulp_manage_puppet',
-    path    => '/sbin:/usr/sbin:/bin:/usr/bin',
-    onlyif  => 'getsebool pulp_manage_puppet | grep off',
+  if $pulp::enable_puppet {
+    exec {'selinux_pulp_manage_puppet':
+      command => 'semanage boolean -m --on pulp_manage_puppet',
+      path    => '/sbin:/usr/sbin:/bin:/usr/bin',
+      onlyif  => 'getsebool pulp_manage_puppet | grep off',
+    }
   }
 
   file {'/var/lib/pulp/packages':
@@ -20,46 +21,6 @@ class pulp::config {
     owner   => 'apache',
     group   => 'apache',
     mode    => '0600',
-  }
-
-  file {'/etc/httpd/conf.d/pulp.conf':
-    ensure  => file,
-    content => template('pulp/etc/httpd/conf.d/pulp.conf.erb'),
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-  }
-
-  file {'/etc/httpd/conf.d/pulp_docker.conf':
-    ensure  => file,
-    content => template('pulp/etc/httpd/conf.d/pulp_docker.conf.erb'),
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-  }
-
-  file {'/etc/httpd/conf.d/pulp_puppet.conf':
-    ensure  => file,
-    content => template('pulp/etc/httpd/conf.d/pulp_puppet.conf.erb'),
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-  }
-
-  file {'/etc/httpd/conf.d/pulp_rpm.conf':
-    ensure  => file,
-    content => template('pulp/etc/httpd/conf.d/pulp_rpm.conf.erb'),
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-  }
-
-  file {'/etc/httpd/conf.d/pulp_nodes.conf':
-    ensure  => file,
-    content => template('pulp/etc/httpd/conf.d/pulp_nodes.conf.erb'),
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
   }
 
   file {'/etc/pulp/repo_auth.conf':

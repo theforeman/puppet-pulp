@@ -1,5 +1,6 @@
 # Pulp Master Params
 class pulp::params {
+  $manage_httpd = true
 
   $oauth_key = 'pulp'
   $oauth_secret = 'secret'
@@ -13,7 +14,18 @@ class pulp::params {
 
   $consumers_ca_cert = '/etc/pki/pulp/ca.crt'
   $consumers_ca_key = '/etc/pki/pulp/ca.key'
+  $https_cert  = $consumers_ca_cert
+  $https_key   = $consumers_ca_key
   $ssl_ca_cert = '/etc/pki/pulp/ssl_ca.crt'
+  $enable_http = false
+  $ssl_verify_client = 'require'
+
+  $enable_rpm = true
+  $enable_docker = false
+  $enable_puppet = false
+  $enable_python = false
+  $enable_parent_node = false
+  $enable_child_node = false
 
   $consumers_crl = undef
 
