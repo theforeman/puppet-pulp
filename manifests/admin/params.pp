@@ -1,7 +1,7 @@
 # Pulp Admin Params
 class pulp::admin::params {
   $version            = 'installed'
-  $host               = 'localhost'
+  $host               = $::fqdn
   $port               = 443
   $api_prefix         = '/pulp/api'
   $verify_ssl         = true
@@ -18,11 +18,11 @@ class pulp::admin::params {
   $enable_color       = true
   $wrap_to_terminal   = false
   $wrap_width         = 80
-  $puppet             = false
-  $docker             = false
-  $nodes              = false
-  $python             = false
-  $rpm                = false
+  $enable_puppet      = false
+  $enable_docker      = false
+  $enable_nodes       = false
+  $enable_python      = false
+  $enable_rpm         = true
 
   $puppet_upload_working_dir = '~/.pulp/puppet-uploads'
   $puppet_upload_chunk_size  = 1048576
