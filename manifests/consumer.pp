@@ -149,7 +149,7 @@ class pulp::consumer (
   validate_bool($enable_color)
   validate_bool($wrap_to_terminal)
 
-  class { 'pulp::consumer::install': } ->
-  class { 'pulp::consumer::config': } ~>
-  class { 'pulp::consumer::service': }
+  class { '::pulp::consumer::install': } ->
+  class { '::pulp::consumer::config': } ~>
+  class { '::pulp::consumer::service': }
 }
