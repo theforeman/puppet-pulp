@@ -32,7 +32,21 @@ If your most recent release breaks compatibility or requires particular steps fo
 
 ##Limitations
 
-* EL6 (RHEL6 / CentOS 6)
+* EL6,7 (RHEL6,7 / CentOS 6,7)
+
+##Pulp consumer
+
+###Installation:
+
+    include pulp::consumer
+
+###Register consumer:
+The provider doesn't support yet updating notes or description.
+
+    pulp_register{$::fqdn:
+    	user => 'admin',
+    	pass => 'admin'
+    }
 
 ##Development
 

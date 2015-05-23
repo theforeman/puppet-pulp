@@ -20,12 +20,12 @@
 #   CA certificates (with openssl-style hashed symlinks, one certificate per file).
 
 [server]
-host: <%= scope.lookupvar('pulp::admin::host') %>
-port: <%= scope.lookupvar('pulp::admin::port') %>
-api_prefix: <%= scope.lookupvar('pulp::admin::api_prefix') %>
-verify_ssl: <%= scope.lookupvar('pulp::admin::verify_ssl') %>
-ca_path: <%= scope.lookupvar('pulp::admin::ca_path') %>
-upload_chunk_size: <%= scope.lookupvar('pulp::admin::upload_chunk_size') %>
+host: <%= scope['pulp::admin::host'] %>
+port: <%= scope['pulp::admin::port'] %>
+api_prefix: <%= scope['pulp::admin::api_prefix'] %>
+verify_ssl: <%= scope['pulp::admin::verify_ssl'] %>
+ca_path: <%= scope['pulp::admin::ca_path'] %>
+upload_chunk_size: <%= scope['pulp::admin::upload_chunk_size'] %>
 
 
 # Client settings.
@@ -33,7 +33,7 @@ upload_chunk_size: <%= scope.lookupvar('pulp::admin::upload_chunk_size') %>
 # role: The client role.
 
 [client]
-role: <%= scope.lookupvar('pulp::admin::role') %>
+role: <%= scope['pulp::admin::role'] %>
 
 
 # The location of resources on the file system.
@@ -49,10 +49,10 @@ role: <%= scope.lookupvar('pulp::admin::role') %>
 #   Directory where status files for in progress uploads will be stored
 
 [filesystem]
-extensions_dir: <%= scope.lookupvar('pulp::admin::extensions_dir') %>
-id_cert_dir: <%= scope.lookupvar('pulp::admin::id_cert_dir') %>
-id_cert_filename: <%= scope.lookupvar('pulp::admin::id_cert_filename') %>
-upload_working_dir: <%= scope.lookupvar('pulp::admin::upload_working_dir') %>
+extensions_dir: <%= scope['pulp::admin::extensions_dir'] %>
+id_cert_dir: <%= scope['pulp::admin::id_cert_dir'] %>
+id_cert_filename: <%= scope['pulp::admin::id_cert_filename'] %>
+upload_working_dir: <%= scope['pulp::admin::upload_working_dir'] %>
 
 
 # Client logging.
@@ -63,8 +63,8 @@ upload_working_dir: <%= scope.lookupvar('pulp::admin::upload_working_dir') %>
 #   If present, the raw REST responses will be logged to the given file.
 
 [logging]
-filename: <%= scope.lookupvar('pulp::admin::log_filename') %>
-call_log_filename: <%= scope.lookupvar('pulp::admin::call_log_filename') %>
+filename: <%= scope['pulp::admin::log_filename'] %>
+call_log_filename: <%= scope['pulp::admin::call_log_filename'] %>
 
 
 # Admin client output.
@@ -81,7 +81,7 @@ call_log_filename: <%= scope.lookupvar('pulp::admin::call_log_filename') %>
 #   The number of characters written before wrapping to the next line.
 
 [output]
-poll_frequency_in_seconds: <%= scope.lookupvar('pulp::admin::poll_frequency_in_seconds') %>
-enable_color: <%= scope.lookupvar('pulp::admin::enable_color') %>
-wrap_to_terminal: <%= scope.lookupvar('pulp::admin::wrap_to_terminal') %>
-wrap_width: <%= scope.lookupvar('pulp::admin::wrap_width') %>
+poll_frequency_in_seconds: <%= scope['pulp::admin::poll_frequency_in_seconds'] %>
+enable_color: <%= scope['pulp::admin::enable_color'] %>
+wrap_to_terminal: <%= scope['pulp::admin::wrap_to_terminal'] %>
+wrap_width: <%= scope['pulp::admin::wrap_width'] %>
