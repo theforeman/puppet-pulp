@@ -1,6 +1,12 @@
 # Pulp Consumer Install Packages
 class pulp::consumer::install {
-  package { ['pulp-consumer-client', 'pulp-agent']:
+  if $pulp::consumer::messaging_transport == 'rabbitmq' {
+    package { 'python-gofer-amqp':
+      ensure => $pulp::consumer::version,
+    }
+  }
+
+  package { ['pulp-consumer-client', 'pulp-agent', 'gofer']:
     ensure => $pulp::consumer::version,
   }
 
