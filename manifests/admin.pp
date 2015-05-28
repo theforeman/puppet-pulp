@@ -54,19 +54,19 @@
 # $wrap_width::                    The number of characters written before wrapping to the next line.
 #                                  type:integer
 #
-# $enable_puppet::                 Install puppet extension
+# $enable_puppet::                 Install puppet extension. Defaults to false.
 #                                  type:boolean
 #
-# $enable_docker::                 Install docker extension
+# $enable_docker::                 Install docker extension. Defaults to false.
 #                                  type:boolean
 #
-# $enable_nodes::                  Install nodes extension
+# $enable_nodes::                  Install nodes extension. Defaults to false.
 #                                  type:boolean
 #
-# $enable_python::                 Install python extension
+# $enable_python::                 Install python extension. Defaults to false.
 #                                  type:boolean
 #
-# $enable_rpm::                    Install rpm extension
+# $enable_rpm::                    Install rpm extension. Defaults to true.
 #                                  type:boolean
 #
 # $puppet_upload_working_dir::     Directory where status files for in progress uploads will be stored
@@ -75,29 +75,29 @@
 #                                  type:integer
 #
 class pulp::admin (
-  $version            = $pulp::admin::params::version,
-  $host               = $pulp::admin::params::host,
-  $port               = $pulp::admin::params::port,
-  $api_prefix         = $pulp::admin::params::api_prefix,
-  $verify_ssl         = $pulp::admin::params::verify_ssl,
-  $ca_path            = $pulp::admin::params::ca_path,
-  $upload_chunk_size  = $pulp::admin::params::upload_chunk_size,
-  $role               = $pulp::admin::params::role,
-  $extensions_dir     = $pulp::admin::params::extensions_dir,
-  $id_cert_dir        = $pulp::admin::params::id_cert_dir,
-  $id_cert_filename   = $pulp::admin::params::id_cert_filename,
-  $upload_working_dir = $pulp::admin::params::upload_working_dir,
-  $log_filename       = $pulp::admin::params::log_filename,
-  $call_log_filename  = $pulp::admin::params::call_log_filename,
+  $version                   = $pulp::admin::params::version,
+  $host                      = $pulp::admin::params::host,
+  $port                      = $pulp::admin::params::port,
+  $api_prefix                = $pulp::admin::params::api_prefix,
+  $verify_ssl                = $pulp::admin::params::verify_ssl,
+  $ca_path                   = $pulp::admin::params::ca_path,
+  $upload_chunk_size         = $pulp::admin::params::upload_chunk_size,
+  $role                      = $pulp::admin::params::role,
+  $extensions_dir            = $pulp::admin::params::extensions_dir,
+  $id_cert_dir               = $pulp::admin::params::id_cert_dir,
+  $id_cert_filename          = $pulp::admin::params::id_cert_filename,
+  $upload_working_dir        = $pulp::admin::params::upload_working_dir,
+  $log_filename              = $pulp::admin::params::log_filename,
+  $call_log_filename         = $pulp::admin::params::call_log_filename,
   $poll_frequency_in_seconds = $pulp::admin::params::poll_frequency_in_seconds,
-  $enable_color       = $pulp::admin::params::enable_color,
-  $wrap_to_terminal   = $pulp::admin::params::wrap_to_terminal,
-  $wrap_width         = $pulp::admin::params::wrap_width,
-  $enable_puppet      = $pulp::admin::params::enable_puppet,
-  $enable_docker      = $pulp::admin::params::enable_docker,
-  $enable_nodes       = $pulp::admin::params::enable_nodes,
-  $enable_python      = $pulp::admin::params::enable_python,
-  $enable_rpm         = $pulp::admin::params::enable_rpm,
+  $enable_color              = $pulp::admin::params::enable_color,
+  $wrap_to_terminal          = $pulp::admin::params::wrap_to_terminal,
+  $wrap_width                = $pulp::admin::params::wrap_width,
+  $enable_puppet             = $pulp::admin::params::enable_puppet,
+  $enable_docker             = $pulp::admin::params::enable_docker,
+  $enable_nodes              = $pulp::admin::params::enable_nodes,
+  $enable_python             = $pulp::admin::params::enable_python,
+  $enable_rpm                = $pulp::admin::params::enable_rpm,
   $puppet_upload_working_dir = $pulp::admin::params::puppet_upload_working_dir,
   $puppet_upload_chunk_size  = $pulp::admin::params::puppet_upload_chunk_size,
 ) inherits pulp::admin::params {
