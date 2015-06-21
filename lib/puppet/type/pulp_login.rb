@@ -18,11 +18,19 @@ Puppet::Type.newtype(:pulp_login) do
     defaultto :present
   end
 
+  newparam(:name, :namevar => true) do
+    desc "name"
+  end
+
   newparam(:user) do
-    defaultto 'admin'
+    desc "Username for pulp authentication"
+    defaultto do
+      @resource[:name]
+    end
   end
 
   newparam(:pass) do
+    desc "Password for pulp authentication"
     defaultto 'admin'
   end
 
