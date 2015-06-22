@@ -125,8 +125,8 @@ class pulp (
   class { 'mongodb::globals':
     version => $::mongodb_version, # taken from the custom facts
   }
-  class { 'apache::mod::wsgi':} ~>
-  class { 'mongodb':
+  class { '::apache::mod::wsgi':} ~>
+  class { '::mongodb':
     logpath     => "${mongodb_path}/mongodb.log",
     dbpath      => $mongodb_path,
     pidfilepath => $mongodb_pidfilepath,
