@@ -2,7 +2,7 @@ require 'pp'
 Puppet::Type.type(:pulp_login).provide(:pulp_admin) do
   desc "Login/logout a pulp user"
 
-  commands :pulp_admin => '/bin/pulp-admin'
+  commands :pulp_admin => '/usr/bin/pulp-admin'
   def exists?
     # always force relogin with the proper user
     pulp_admin('logout')
