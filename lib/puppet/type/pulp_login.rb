@@ -2,6 +2,10 @@ Puppet::Type.newtype(:pulp_login) do
   @doc = <<-EOT
   EOT
 
+  autorequire(:file) do
+    ['/etc/pulp/admin/admin.conf']
+  end
+
   ensurable do
     desc <<-EOS
       Login/Logout a pulp user.
