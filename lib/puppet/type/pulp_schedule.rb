@@ -5,6 +5,10 @@ Puppet::Type.newtype(:pulp_schedule) do
     doc 
   EOT
 
+  autorequire(:file) do
+    ['/etc/pulp/admin/admin.conf']
+  end
+
   ensurable do
     desc <<-EOS
       Create/Remove pulp repo schedules.
