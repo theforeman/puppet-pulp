@@ -2,6 +2,10 @@ Puppet::Type.newtype(:pulp_register) do
   @doc = <<-EOT
   EOT
 
+  autorequire(:service) do
+    ['goferd']
+  end
+
   ensurable do
     desc <<-EOS
       Register/unregister a pulp consumer.
