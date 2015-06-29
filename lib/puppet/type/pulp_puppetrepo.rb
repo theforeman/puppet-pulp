@@ -2,6 +2,11 @@ Puppet::Type.newtype(:pulp_puppetrepo) do
   @doc = <<-EOT
     doc 
   EOT
+
+  autorequire(:file) do
+    ['/etc/pulp/admin/admin.conf']
+  end
+
   def munge_boolean(value)
     case value
     when true, "true", :true
