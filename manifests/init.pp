@@ -28,6 +28,10 @@
 #
 # $consumers_ca_key::           The private key for the CA cert
 #
+# $https_cert::                 apache public certificate for ssl
+#
+# $https_key::                  apache private certificate for ssl
+#
 # $ssl_ca_cert::                Full path to the CA certificate used to sign the Pulp
 #                               server's SSL certificate; consumers will use this to verify the
 #                               Pulp server's SSL certificate during the SSL handshake
@@ -52,6 +56,8 @@
 #
 # $reset_cache::                Boolean to flush the cache. Defaults to false
 #
+# $ssl_verify_client::          Enforce use of SSL authentication for yum repos access
+#
 # $qpid_ssl::                   Enable SSL in qpid or not
 #                               type:boolean
 #
@@ -72,6 +78,38 @@
 # $num_workers::                Number of Pulp workers to use
 #                               defaults to number of processors and maxs at 8
 #
+# $enable_rpm::                 Boolean to enable rpm plugin. Defaults
+#                               to true
+#                               type:boolean
+#
+# $enable_docker::              Boolean to enable docker plugin. Defaults
+#                               to false
+#                               type:boolean
+#
+# $enable_puppet::              Boolean to enable puppet plugin. Defaults
+#                               to false
+#                               type:boolean
+#
+# $enable_python::              Boolean to enable python plugin. Defaults
+#                               to false
+#                               type:boolean
+#
+# $enable_parent_node::         Boolean to enable pulp parent nodes. Defaults
+#                               to false
+#                               type:boolean
+#
+# $enable_child_node::          Boolean to enable pulp child nodes. Defaults
+#                               to false
+#                               type:boolean
+#
+# $enable_http::                Boolean to enable http access to rpm repos. Defaults
+#                               to false
+#                               type:boolean
+#
+# $manage_httpd::               Boolean to install and configure the httpd server. Defaults
+#                               to true
+#                               type:boolean
+#
 class pulp (
 
   $oauth_key = $pulp::params::oauth_key,
@@ -88,6 +126,8 @@ class pulp (
 
   $consumers_ca_cert = $pulp::params::consumers_ca_cert,
   $consumers_ca_key = $pulp::params::consumers_ca_key,
+  $https_cert                = $pulp::params::https_cert,
+  $https_key                 = $pulp::params::https_key,
   $ssl_ca_cert = $pulp::params::ssl_ca_cert,
 
   $consumers_crl = $pulp::params::consumers_crl,
@@ -101,6 +141,7 @@ class pulp (
   $reset_data = false,
   $reset_cache = false,
 
+  $ssl_verify_client         = $pulp::params::ssl_verify_client,
   $qpid_ssl = $pulp::params::qpid_ssl,
   $qpid_ssl_cert_db = $pulp::params::qpid_ssl_cert_db,
   $qpid_ssl_cert_password_file = $pulp::params::qpid_ssl_cert_password_file,
@@ -112,9 +153,22 @@ class pulp (
 
   $num_workers = $pulp::params::num_workers,
 
-  ) inherits pulp::params {
+  $enable_docker             = $pulp::params::enable_docker,
+  $enable_rpm                = $pulp::params::enable_rpm,
+  $enable_puppet             = $pulp::params::enable_puppet,
+  $enable_python             = $pulp::params::enable_python,
+  $enable_parent_node        = $pulp::params::enable_parent_node,
+  $enable_child_node         = $pulp::params::enable_child_node,
+  $enable_http               = $pulp::params::enable_http,
+  $manage_httpd              = $pulp::params::manage_httpd,
 
-  include ::apache
+  ) inherits pulp::params {
+  validate_bool($enable_docker)
+  validate_bool($enable_rpm)
+  validate_bool($enable_puppet)
+  validate_bool($enable_python)
+  validate_bool($enable_http)
+  include ::pulp::apache
 
   if (versioncmp($::mongodb_version, '2.6.5') >= 0) {
     $mongodb_pidfilepath = '/var/run/mongodb/mongod.pid'
@@ -125,7 +179,6 @@ class pulp (
   class { '::mongodb::globals':
     version => $::mongodb_version, # taken from the custom facts
   }
-  class { '::apache::mod::wsgi':} ~>
   class { '::mongodb':
     logpath     => "${mongodb_path}/mongodb.log",
     dbpath      => $mongodb_path,
