@@ -13,6 +13,9 @@
 # $messaging_url::              URL for the AMQP server that Pulp will use to
 #                               communicate with nodes.
 #
+# $messaging_transport::        The type of broker you are connecting to. The default is 'qpid'.
+#                               For RabbitMQ, 'rabbitmq' should be used.
+#
 # $messaging_ca_cert:           The CA cert to authenicate against the AMQP server.
 #
 # $messaging_client_cert::      The client certificate signed by the CA cert
@@ -50,9 +53,6 @@
 # $repo_auth::                  Boolean to determine whether repos managed by
 #                               pulp will require authentication. Defaults
 #                               to true
-#
-# $reset_data::                 Boolean to reset the data in MongoDB. Defaults
-#                               to false
 #
 # $reset_cache::                Boolean to flush the cache. Defaults to false
 #
@@ -110,6 +110,14 @@
 #                               to true
 #                               type:boolean
 #
+# $manage_broker::             Boolean to install and configure the qpid or rabbitmq broker.
+#                               Defaults to false
+#                               type:boolean
+#
+# $manage_db::                 Boolean to install and configure the mongodb. Defaults
+#                               to false
+#                               type:boolean
+#
 class pulp (
 
   $oauth_key = $pulp::params::oauth_key,
@@ -118,6 +126,7 @@ class pulp (
   $mongodb_path = $pulp::params::mongodb_path,
 
   $messaging_url = $pulp::params::messaging_url,
+  $messaging_transport       = $pulp::params::messaging_transport,
   $messaging_ca_cert = $pulp::params::messaging_ca_cert,
   $messaging_client_cert = $pulp::params::messaging_client_cert,
 
@@ -138,7 +147,6 @@ class pulp (
 
   $repo_auth = true,
 
-  $reset_data = false,
   $reset_cache = false,
 
   $ssl_verify_client         = $pulp::params::ssl_verify_client,
@@ -152,6 +160,8 @@ class pulp (
   $proxy_password = $pulp::params::proxy_password,
 
   $num_workers = $pulp::params::num_workers,
+  $manage_broker             = $pulp::params::manage_broker,
+  $manage_db                 = $pulp::params::manage_db,
 
   $enable_docker             = $pulp::params::enable_docker,
   $enable_rpm                = $pulp::params::enable_rpm,
@@ -168,40 +178,17 @@ class pulp (
   validate_bool($enable_puppet)
   validate_bool($enable_python)
   validate_bool($enable_http)
-  include ::pulp::apache
+  validate_bool($manage_db)
+  validate_bool($manage_broker)
 
-  if (versioncmp($::mongodb_version, '2.6.5') >= 0) {
-    $mongodb_pidfilepath = '/var/run/mongodb/mongod.pid'
-  } else {
-    $mongodb_pidfilepath = '/var/run/mongodb/mongodb.pid'
-  }
+  include ::apache
+  include ::mongodb::client
 
-  class { '::mongodb::globals':
-    version => $::mongodb_version, # taken from the custom facts
-  }
-  class { '::mongodb':
-    logpath     => "${mongodb_path}/mongodb.log",
-    dbpath      => $mongodb_path,
-    pidfilepath => $mongodb_pidfilepath,
-  } ~>
-  class { '::qpid':
-    ssl                    => $qpid_ssl,
-    ssl_cert_db            => $qpid_ssl_cert_db,
-    ssl_cert_password_file => $qpid_ssl_cert_password_file,
-    ssl_cert_name          => 'broker',
-    user_groups            => $pulp::user_groups,
-  } ~>
-  # Make sure we install the mongodb client, used by service-wait to check
-  # that the server is up.
-  class {'::mongodb::client':} ~>
-  class { '::pulp::install':
-    require => [Class['mongodb'], Class['qpid']],
-  } ~>
-  class { '::pulp::config':
-    require => [Class['mongodb'], Class['qpid']],
-  } ~>
+  include ::pulp::broker
+  include ::pulp::database
+  class { '::pulp::install': } ->
+  class { '::pulp::config': } ~>
   class { '::pulp::service': } ~>
-  Service['httpd']
-  ->
+  Service['httpd'] ->
   Class[pulp]
 }

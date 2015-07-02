@@ -8,6 +8,7 @@ class pulp::params {
   $mongodb_path = '/var/lib/mongodb'
 
   $messaging_url = 'tcp://localhost:5672'
+  $messaging_transport = 'qpid'
   $messaging_ca_cert = undef
   $messaging_client_cert = undef
 
@@ -30,6 +31,9 @@ class pulp::params {
   $enable_child_node = false
 
   $consumers_crl = undef
+
+  $manage_db = true
+  $manage_broker = true
 
   $qpid_ssl = true
   $qpid_ssl_cert_db = '/etc/pki/example/nssdb'
