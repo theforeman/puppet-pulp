@@ -6,6 +6,12 @@ class pulp::consumer::install {
     }
   }
 
+  if $pulp::consumer::messaging_transport == 'qpid' {
+    package { 'python-gofer-qpid':
+      ensure => $pulp::consumer::version,
+    }
+  }
+
   package { ['pulp-consumer-client', 'pulp-agent', 'gofer']:
     ensure => $pulp::consumer::version,
   }
