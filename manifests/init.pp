@@ -181,9 +181,8 @@ class pulp (
   validate_bool($manage_db)
   validate_bool($manage_broker)
 
-  include ::apache
   include ::mongodb::client
-
+  include ::pulp::apache
   include ::pulp::broker
   include ::pulp::database
   class { '::pulp::install': } ->
