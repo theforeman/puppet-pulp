@@ -12,6 +12,7 @@ class pulp::broker {
     Service[$broker_service] -> Service['pulp_celerybeat']
     Service[$broker_service] -> Service['pulp_workers']
     Service[$broker_service] -> Service['pulp_resource_manager']
+    Service[$broker_service] -> Exec['migrate_pulp_db']
   } else {
     if $pulp::messaging_transport == 'qpid' {
       package { 'qpid-tools': ensure => installed } -> Class['pulp::service']
