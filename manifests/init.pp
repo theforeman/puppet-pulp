@@ -183,8 +183,8 @@ class pulp (
 
   include ::mongodb::client
   include ::pulp::apache
-  include ::pulp::broker
   include ::pulp::database
+  include ::pulp::broker
   class { '::pulp::install': } ->
   class { '::pulp::config': } ~>
   class { '::pulp::service': } ~>
