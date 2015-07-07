@@ -1,4 +1,5 @@
 # Pulp Master Configuration
+# Private class
 class pulp::config {
   if $pulp::enable_puppet {
     exec {'selinux_pulp_manage_puppet':
@@ -23,6 +24,7 @@ class pulp::config {
     mode    => '0600',
   }
 
+  if $pulp::enable_rpm {
   file {'/etc/pulp/repo_auth.conf':
     ensure  => file,
     content => template('pulp/etc/pulp/repo_auth.conf.erb'),
@@ -30,12 +32,14 @@ class pulp::config {
     group   => 'root',
     mode    => '0644',
   }
+  }
 
   file {'/etc/pki/pulp/content/pulp-global-repo.ca':
       ensure => link,
-      target => $pulp::consumers_ca_cert,
+      target => $pulp::ca_cert,
   }
 
+  if $pulp::enable_docker {
   file {'/etc/pulp/server/plugins.conf.d/docker_importer.json':
     ensure  => file,
     content => template('pulp/docker_importer.json'),
@@ -43,7 +47,9 @@ class pulp::config {
     group   => 'root',
     mode    => '0644',
   }
+  }
 
+  if $pulp::enable_rpm {
   file {'/etc/pulp/server/plugins.conf.d/yum_importer.json':
     ensure  => file,
     content => template('pulp/yum_importer.json'),
@@ -51,7 +57,9 @@ class pulp::config {
     group   => 'root',
     mode    => '0644',
   }
+  }
 
+  if $pulp::enable_puppet {
   file {'/etc/pulp/server/plugins.conf.d/puppet_importer.json':
     ensure  => file,
     content => template('pulp/puppet_importer.json'),
@@ -59,13 +67,16 @@ class pulp::config {
     group   => 'root',
     mode    => '0644',
   }
+  }
 
+  if $pulp::enable_rpm {
   file {'/etc/pulp/server/plugins.conf.d/iso_importer.json':
     ensure  => file,
     content => template('pulp/iso_importer.json'),
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
+  }
   }
 
   file { '/etc/default/pulp_workers':
@@ -89,7 +100,7 @@ class pulp::config {
 
   if $pulp::consumers_crl {
     exec { 'setup-crl-symlink':
-      command     => "/usr/bin/openssl x509 -in '${pulp::consumers_ca_cert}' -hash -noout | /usr/bin/xargs -I{} /bin/ln -sf '${pulp::consumers_crl}' '/etc/pki/pulp/content/{}.r0'",
+      command     => "/usr/bin/openssl x509 -in '${pulp::ca_cert}' -hash -noout | /usr/bin/xargs -I{} /bin/ln -sf '${pulp::consumers_crl}' '/etc/pki/pulp/content/{}.r0'",
       logoutput   => 'on_failure',
       refreshonly => true,
     }
