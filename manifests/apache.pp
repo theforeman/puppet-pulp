@@ -25,7 +25,7 @@ class pulp::apache {
       ssl                        => true,
       ssl_cert                   => $pulp::https_cert,
       ssl_key                    => $pulp::https_key,
-      ssl_ca                     => $pulp::ca_cert,
+      ssl_ca                     => $pulp::ssl_ca_cert,
       ssl_verify_client          => 'optional',
       ssl_protocol               => ' all -SSLv2',
       ssl_options                => '+StdEnvVars +ExportCertData',
@@ -39,9 +39,9 @@ class pulp::apache {
         'process-group'     => 'pulp',
         'application-group' => 'pulp',
       },
-      wsgi_script_aliases        => {
-        '/pulp/api' => '/srv/pulp/webservices.wsgi',
-      },
+      wsgi_script_aliases        => merge(
+        {'/pulp/api'=>'/srv/pulp/webservices.wsgi'},
+        $pulp::additional_wsgi_scripts),
       directories                => [
         {
           'path'     => 'webservices.wsgi',
@@ -93,6 +93,10 @@ class pulp::apache {
 
     if $pulp::enable_python {
       pulp::apache_plugin { 'python': }
+    }
+
+    if $pulp::enable_ostree {
+      pulp::apache_plugin { 'ostree': }
     }
 
     if $pulp::enable_parent_node {

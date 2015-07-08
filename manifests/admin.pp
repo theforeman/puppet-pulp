@@ -66,6 +66,9 @@
 # $enable_python::                 Install python extension. Defaults to false.
 #                                  type:boolean
 #
+# $enable_ostree::                 Install ostree extension. Defaults to false.
+#                                  type:boolean
+#
 # $enable_rpm::                    Install rpm extension. Defaults to true.
 #                                  type:boolean
 #
@@ -97,6 +100,7 @@ class pulp::admin (
   $enable_docker             = $pulp::admin::params::enable_docker,
   $enable_nodes              = $pulp::admin::params::enable_nodes,
   $enable_python             = $pulp::admin::params::enable_python,
+  $enable_ostree             = $pulp::admin::params::enable_ostree,
   $enable_rpm                = $pulp::admin::params::enable_rpm,
   $puppet_upload_working_dir = $pulp::admin::params::puppet_upload_working_dir,
   $puppet_upload_chunk_size  = $pulp::admin::params::puppet_upload_chunk_size,
@@ -105,6 +109,7 @@ class pulp::admin (
   validate_bool($enable_docker)
   validate_bool($enable_nodes)
   validate_bool($enable_python)
+  validate_bool($enable_ostree)
   validate_bool($enable_rpm)
 
   validate_bool($verify_ssl)

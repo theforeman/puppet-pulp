@@ -22,6 +22,7 @@ class pulp::admin::params {
   $enable_docker      = false
   $enable_nodes       = false
   $enable_python      = false
+  $enable_ostree      = false
   $enable_rpm         = true
 
   $puppet_upload_working_dir = '~/.pulp/puppet-uploads'

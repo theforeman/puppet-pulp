@@ -107,6 +107,12 @@
 #
 # $consumer_cert_expiration::   number of days a consumer certificate is valid
 #
+# $disabled_authenticators::    List of repo authenticators to disable.
+#                               type:array
+#
+# $additional_wsgi_scripts::    Hash of additional paths and WSGI script locations for Pulp vhost
+#                               type:hash
+#
 # $reset_cache::                Boolean to flush the cache. Defaults to false
 #                               type:boolean
 #
@@ -162,6 +168,10 @@
 #                               type:boolean
 #
 # $enable_python::              Boolean to enable python plugin. Defaults
+#                               to false
+#                               type:boolean
+#
+# $enable_ostree::              Boolean to enable ostree plugin. Defaults
 #                               to false
 #                               type:boolean
 #
@@ -259,6 +269,7 @@ class pulp (
   $enable_rpm                = $pulp::params::enable_rpm,
   $enable_puppet             = $pulp::params::enable_puppet,
   $enable_python             = $pulp::params::enable_python,
+  $enable_ostree             = $pulp::params::enable_ostree,
   $enable_parent_node        = $pulp::params::enable_parent_node,
   $enable_http               = $pulp::params::enable_http,
   $manage_broker             = $pulp::params::manage_broker,
@@ -271,19 +282,24 @@ class pulp (
   $node_oauth_effective_user = $pulp::params::node_oauth_effective_user,
   $node_oauth_key            = $pulp::params::node_oauth_key,
   $node_oauth_secret         = $pulp::params::node_oauth_secret,
+  $disabled_authenticators   = $pulp::params::disabled_authenticators,
+  $additional_wsgi_scripts   = $pulp::params::additional_wsgi_scripts,
 ) inherits pulp::params {
-  validate_bool($repo_auth)
-  validate_bool($reset_cache)
   validate_bool($enable_docker)
   validate_bool($enable_rpm)
   validate_bool($enable_puppet)
   validate_bool($enable_python)
+  validate_bool($enable_ostree)
   validate_bool($enable_http)
   validate_bool($manage_db)
   validate_bool($manage_broker)
   validate_bool($manage_httpd)
   validate_bool($manage_plugins_httpd)
   validate_bool($enable_parent_node)
+  validate_bool($repo_auth)
+  validate_bool($reset_cache)
+  validate_array($disabled_authenticators)
+  validate_hash($additional_wsgi_scripts)
 
   include ::mongodb::client
   include ::pulp::apache

@@ -29,6 +29,12 @@ class pulp::admin::install {
     }
   }
 
+  if $pulp::admin::enable_ostree {
+    package { 'pulp-ostree-admin-extensions':
+      ensure => $pulp::admin::version,
+    }
+  }
+
   if $pulp::admin::enable_rpm {
     package { 'pulp-rpm-admin-extensions':
       ensure => $pulp::admin::version,

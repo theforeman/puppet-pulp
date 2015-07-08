@@ -1,3 +1,5 @@
+# This file is managed by puppet. Changes may be overridden!
+
 [main]
 enabled: <%= @repo_auth ? "true" : "false" %>
 log_failed_cert: true
@@ -10,6 +12,13 @@ max_num_certs_in_chain: 100
 # performance impact, so don't do that unless you need per-repo CAs. It is true by default to
 # maintain backwards compatibility.
 verify_ssl: false
+
+# If set, this disables specific repo auth plugins. More than one plugin can be
+# specified in the form of "plugin1,plugin2,plugin3".
+# disabled_authenticators = oid_validation
+<% if @disabled_authenticators and ! @disabled_authenticators.empty? -%>
+disabled_authenticators =  <%= @disabled_authenticators.compact.join(',') %>
+<% end -%>
 
 [repos]
 cert_location: /etc/pki/pulp/content
