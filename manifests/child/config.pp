@@ -3,7 +3,7 @@ class pulp::child::config {
 
   file { '/etc/pulp/nodes.conf':
     ensure  => 'file',
-    content => template('pulp/etc/pulp/nodes.conf.erb'),
+    content => template('pulp/nodes.conf.erb'),
   }
 
   include ::apache
