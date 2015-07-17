@@ -60,7 +60,7 @@
 #                               the ssl_ca_certs parameter must point to a file of CA certificates used to
 #                               validate the connection.
 #
-# $db_ca_path::                 The ca_certs file contains a set of concatenated “certification authority”
+# $db_ca_path::                 The ca_certs file contains a set of concatenated "certification authority"
 #                               certificates, which are used to validate certificates passed from the other end
 #                               of the connection.
 #
