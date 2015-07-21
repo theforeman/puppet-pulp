@@ -1,3 +1,5 @@
+[![Puppet Forge](http://img.shields.io/puppetforge/v/katello/pulp.svg)](https://forge.puppetlabs.com/katello/pulp)
+[![Build Status](https://travis-ci.org/Katello/puppet-pulp.svg?branch=master)](https://travis-ci.org/Katello/puppet-pulp)
 ####Table of Contents
 
 1. [Overview](#overview)
@@ -51,4 +53,3 @@ The provider doesn't support yet updating notes or description.
 ##Development
 
 See the CONTRIBUTING guide for steps on how to make a change and get it accepted upstream.
-
