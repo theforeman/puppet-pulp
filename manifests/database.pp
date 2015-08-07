@@ -1,7 +1,7 @@
 # Set up the pulp database
-class pulp::database {
+class pulp::database inherits pulp::params {
   if $pulp::manage_db {
-    if (versioncmp($::mongodb_version, '2.6.5') >= 0) {
+    if (versioncmp($pulp::params::mongodb_version, '2.6.5') >= 0) {
       $mongodb_pidfilepath = '/var/run/mongodb/mongod.pid'
     } else {
       $mongodb_pidfilepath = '/var/run/mongodb/mongodb.pid'
