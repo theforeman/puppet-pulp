@@ -32,4 +32,12 @@ class pulp::install {
   if $pulp::enable_python {
     package { ['pulp-python-plugins']: ensure => $pulp::version, }
   }
+
+  if $pulp::enable_katello {
+    if $pulp::messaging_transport == 'rabbitmq' {
+      fail('pulp-katello plugin doesn\'t support rabbitmq')
+    }
+
+    package { ['pulp-katello']: ensure => $pulp::version, }
+  }
 }
