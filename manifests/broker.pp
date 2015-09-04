@@ -15,7 +15,9 @@ class pulp::broker {
     Service[$broker_service] -> Exec['migrate_pulp_db']
   } else {
     if $pulp::messaging_transport == 'qpid' {
-      package { 'qpid-tools': ensure => installed } -> Class['pulp::service']
+      include ::qpid::tools
+
+      Class['qpid::tools'] -> Class['pulp::service']
     }
   }
 }
