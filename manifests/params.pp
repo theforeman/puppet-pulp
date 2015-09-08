@@ -10,7 +10,7 @@ class pulp::params {
   $messaging_ca_cert = undef
   $messaging_client_cert = undef
 
-  $broker_url = "qpid://${::fqdn}:5671"
+  $broker_url = 'qpid://localhost:5671'
   $broker_use_ssl = true
 
   $consumers_ca_cert = '/etc/pki/pulp/ca.crt'
