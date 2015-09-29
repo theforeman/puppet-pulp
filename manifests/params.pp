@@ -66,6 +66,7 @@ class pulp::params {
   $manage_db = true
   $manage_broker = true
   $manage_httpd = true
+  $manage_plugins_httpd = true
   $reset_cache = false
 
   $default_login = 'admin'

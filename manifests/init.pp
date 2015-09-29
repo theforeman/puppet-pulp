@@ -182,6 +182,10 @@
 #                               to true
 #                               type:boolean
 #
+# $manage_plugins_httpd::       Boolean whether to install the enabled pulp plugins apache configs
+#                               even if $manage_httpd is false.  Defaults to true.
+#                               type:boolean
+#
 # $manage_broker::              Boolean to install and configure the qpid or rabbitmq broker.
 #                               Defaults to true
 #                               type:boolean
@@ -265,6 +269,7 @@ class pulp (
   $manage_broker             = $pulp::params::manage_broker,
   $manage_db                 = $pulp::params::manage_db,
   $manage_httpd              = $pulp::params::manage_httpd,
+  $manage_plugins_httpd      = $pulp::params::manage_plugins_httpd,
   $node_certificate          = $pulp::params::node_certificate,
   $node_verify_ssl           = $pulp::params::node_verify_ssl,
   $node_server_ca_cert       = $pulp::params::node_server_ca_cert,
@@ -282,6 +287,7 @@ class pulp (
   validate_bool($manage_db)
   validate_bool($manage_broker)
   validate_bool($manage_httpd)
+  validate_bool($manage_plugins_httpd)
   validate_bool($enable_parent_node)
 
   include ::mongodb::client
