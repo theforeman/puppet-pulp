@@ -5,14 +5,6 @@ class pulp::apache {
   include ::apache::mod::ssl
 
   if $pulp::manage_httpd {
-    file { '/etc/pulp/vhosts80/':
-      ensure => directory,
-      owner  => 'apache',
-      group  => 'apache',
-      mode   => '0755',
-      purge  => true,
-    }
-
     if $pulp::enable_http or $pulp::enable_puppet {
       apache::vhost { 'pulp-http':
         priority            => '05',
@@ -75,6 +67,16 @@ class pulp::apache {
       add_default_charset        => 'UTF-8',
       custom_fragment            => '# allow older yum clients to connect, see bz 647828
 	  SSLInsecureRenegotiation on',
+    }
+  }
+
+  if $pulp::manage_httpd or $pulp::manage_plugins_httpd {
+    file { '/etc/pulp/vhosts80/':
+      ensure => directory,
+      owner  => 'apache',
+      group  => 'apache',
+      mode   => '0755',
+      purge  => true,
     }
 
     if $pulp::enable_rpm {

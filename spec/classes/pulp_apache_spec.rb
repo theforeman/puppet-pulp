@@ -62,7 +62,16 @@ describe 'pulp::apache' do
         "class {'pulp': enable_http => false}"
       end
 
-      it { should_not contain_apache__vhost('pulp-http')}
+      it { should_not contain_apache__vhost('pulp-http') }
+    end
+
+    describe 'with manage_httpd false & manage_plugins_httpd true' do
+      let :pre_condition do
+        "class {'pulp': manage_httpd => false, manage_plugins_httpd => true, enable_rpm => true}"
+      end
+ 
+       it { should_not contain_apache__vhost('pulp-http') }
+       it { is_expected.to contain_file('/etc/httpd/conf.d/pulp_rpm.conf') }
     end
 
     describe 'with enable_http true' do
