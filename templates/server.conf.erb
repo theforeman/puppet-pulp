@@ -270,7 +270,7 @@ cacert: <%= scope['pulp::messaging_ca_cert'] %>
 <% if scope['pulp::messaging_client_cert'] -%>
 clientcert: <%= scope['pulp::messaging_client_cert'] %>
 <% end -%>
-topic_exchange: '<%= scope['pulp::oauth_enabled'] %>'
+topic_exchange: '<%= scope['pulp::messaging_topic_exchange'] %>'
 
 
 # = Asynchronous Tasks =

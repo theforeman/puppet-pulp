@@ -51,6 +51,10 @@ describe 'pulp::config' do
         should contain_file('/etc/default/pulp_workers').with_content(/^PULP_CONCURRENCY=8$/)
       end
     end
-  end
 
+    it 'should configure server.conf' do
+      should contain_file('/etc/pulp/server.conf').
+        with_content(/^topic_exchange: 'amq.topic'$/)
+    end
+  end
 end
