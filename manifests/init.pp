@@ -117,10 +117,6 @@
 # $consumer_history_lifetime::  number of days to store consumer events; events older
 #                               than this will be purged; set to -1 to disable
 #
-# $messaging_url::              the url used to contact the broker: <protocol>://<host>:<port>/<virtual-host>
-#                               Supported <protocol>  values are 'tcp' or 'ssl' depending on if SSL should be used or not.
-#                               The <virtual-host> is optional, and is only applicable to RabbitMQ broker environments.
-#
 # $messaging_auth_enabled::     Message authentication enabled flag. The default is 'true' which enables authentication.
 #                               To disable authentication, use 'false'.
 #
@@ -170,6 +166,10 @@
 #                               type:boolean
 #
 # $enable_child_node::          Boolean to enable pulp child nodes. Defaults
+#                               to false
+#                               type:boolean
+#
+# $enable_katello::             Boolean to enable pulp katello plugin. Defaults
 #                               to false
 #                               type:boolean
 #
@@ -265,6 +265,7 @@ class pulp (
   $enable_puppet             = $pulp::params::enable_puppet,
   $enable_python             = $pulp::params::enable_python,
   $enable_parent_node        = $pulp::params::enable_parent_node,
+  $enable_katello            = $pulp::params::enable_katello,
   $enable_http               = $pulp::params::enable_http,
   $manage_broker             = $pulp::params::manage_broker,
   $manage_db                 = $pulp::params::manage_db,
@@ -289,6 +290,7 @@ class pulp (
   validate_bool($manage_httpd)
   validate_bool($manage_plugins_httpd)
   validate_bool($enable_parent_node)
+  validate_bool($enable_katello)
 
   include ::mongodb::client
   include ::pulp::apache
