@@ -52,6 +52,7 @@ class pulp::params {
 
   $enable_rpm = true
   $enable_docker = false
+  $enable_ostree = false
   $enable_puppet = false
   $enable_python = false
   $enable_parent_node = false
@@ -73,6 +74,8 @@ class pulp::params {
   $default_password = cache_data('foreman_cache_data', 'pulp_password', random_password(32))
 
   $repo_auth = false
+  $disabled_authenticators = []
+  $additional_wsgi_scripts = {}
 
   $proxy_url = undef
   $proxy_port = undef

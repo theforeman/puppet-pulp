@@ -35,6 +35,7 @@ If your most recent release breaks compatibility or requires particular steps fo
 ##Limitations
 
 * EL6,7 (RHEL6,7 / CentOS 6,7)
+* Requires Pulp 2.7.0 or higher.
 
 ##Pulp consumer
 
