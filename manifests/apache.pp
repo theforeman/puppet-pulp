@@ -3,6 +3,7 @@ class pulp::apache {
   include ::apache
   include ::apache::mod::wsgi
   include ::apache::mod::ssl
+  include ::apache::mod::xsendfile
 
   if $pulp::manage_httpd {
     if $pulp::enable_http or $pulp::enable_puppet {

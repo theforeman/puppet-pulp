@@ -305,6 +305,7 @@ class pulp (
   include ::pulp::apache
   include ::pulp::database
   include ::pulp::broker
+
   class { '::pulp::install': } ->
   class { '::pulp::config': } ~>
   class { '::pulp::service': } ~>
