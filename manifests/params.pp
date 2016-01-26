@@ -13,12 +13,15 @@ class pulp::params {
   $db_ssl_certfile = undef
   $db_verify_ssl = true
   $db_ca_path = '/etc/pki/tls/certs/ca-bundle.crt'
+  $db_unsafe_autoretry = false
+  $db_write_concern = undef
 
   $server_name = downcase($::fqdn)
   $key_url = '/pulp/gpg'
   $ks_url = '/pulp/ks'
   $debugging_mode = false
   $log_level = 'INFO'
+  $server_working_directory = undef
 
   $rsa_key = '/etc/pki/pulp/rsa.key'
   $rsa_pub = '/etc/pki/pulp/rsa_pub.key'
@@ -38,9 +41,12 @@ class pulp::params {
   $messaging_ca_cert = undef
   $messaging_client_cert = undef
   $messaging_topic_exchange = 'amq.topic'
+  $messaging_event_notifications_enabled = false
+  $messaging_event_notifications_url = undef
 
   $broker_url = "qpid:///guest@${::fqdn}:5672"
   $broker_use_ssl = false
+  $tasks_login_method = undef
 
   $ca_cert = '/etc/pki/pulp/ca.crt'
   $ca_key = '/etc/pki/pulp/ca.key'
@@ -61,6 +67,14 @@ class pulp::params {
   $email_port = 25
   $email_from = "no-reply@${::domain}"
   $email_enabled = false
+
+  $lazy_enabled = false
+  $lazy_redirect_host = downcase($::fqdn)
+  $lazy_redirect_port = undef
+  $lazy_redirect_path = '/streamer/'
+  $lazy_https_retrieval = false
+  $lazy_download_interval = 30
+  $lazy_download_concurrency = 5
 
   $consumers_crl = undef
 
