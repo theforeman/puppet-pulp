@@ -1,7 +1,7 @@
 {
-    "proxy_host": "<%= @proxy_url %>",
-    <%- if @proxy_port %>
-    "proxy_port": <%= @proxy_port %>,
+    "proxy_host": "<%= scope['pulp::proxy_url'] %>",
+    <%- if scope['pulp::proxy_port'] %>
+    "proxy_port": <%= scope['pulp::proxy_port'] %>,
     <% else %>
     "proxy_port": null,
     <% end %>

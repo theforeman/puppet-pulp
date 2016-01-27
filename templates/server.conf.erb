@@ -37,18 +37,18 @@
 [database]
 name: <%= scope['pulp::db_name'] %>
 seeds: <%= scope['pulp::db_seeds'] %>
-<% if scope['pulp::db_username'] != :undef -%>
+<% if scope['pulp::db_username'] -%>
 username: <%= scope['pulp::db_username'] %>
 <% end -%>
-<% if scope['pulp::db_password'] != :undef -%>
+<% if scope['pulp::db_password'] -%>
 password: <%= scope['pulp::db_password'] %>
 <% end -%>
-<% if scope['pulp::db_replica_set'] != :undef -%>
+<% if scope['pulp::db_replica_set'] -%>
 replica_set: <%= scope['pulp::db_replica_set'] %>
 <% end -%>
 ssl: <%= scope['pulp::db_ssl'] %>
 <% if scope['pulp::db_ssl'] -%>
-<% if scope['pulp::db_ssl_keyfile'] != :undef -%>
+<% if scope['pulp::db_ssl_keyfile'] -%>
 ssl_keyfile: <%= scope['pulp::db_ssl_keyfile'] %>
 <% end -%>
 ssl_certfile: <%= scope['pulp::db_ssl_certfile'] %>
