@@ -1,13 +1,10 @@
 fixtures:
   repositories:
-    stdlib:        "git://github.com/puppetlabs/puppetlabs-stdlib.git"
-    extlib:        "git://github.com/puppet-community/puppet-extlib.git"
-    apache:        "git://github.com/puppetlabs/puppetlabs-apache.git"
-    concat:
-      repo:   "git://github.com/puppetlabs/puppetlabs-concat"
-      branch: "1.2.x"
-    concat_native: "git://github.com/theforeman/puppet-concat"
-    mongodb:       "git://github.com/puppetlabs/puppetlabs-mongodb.git"
-    qpid:          "git://github.com/katello/puppet-qpid.git"
+    stdlib:  "git://github.com/puppetlabs/puppetlabs-stdlib.git"
+    extlib:  "git://github.com/puppet-community/puppet-extlib.git"
+    apache:  "git://github.com/puppetlabs/puppetlabs-apache.git"
+    concat:  "git://github.com/puppetlabs/puppetlabs-concat.git"
+    mongodb: "git://github.com/puppetlabs/puppetlabs-mongodb.git"
+    qpid:    "git://github.com/katello/puppet-qpid.git"
   symlinks:
     pulp: "#{source_dir}"
