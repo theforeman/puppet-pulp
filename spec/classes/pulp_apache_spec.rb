@@ -69,7 +69,7 @@ describe 'pulp::apache' do
       let :pre_condition do
         "class {'pulp': manage_httpd => false, manage_plugins_httpd => true, enable_rpm => true}"
       end
- 
+
        it { should_not contain_apache__vhost('pulp-http') }
        it { is_expected.to contain_file('/etc/httpd/conf.d/pulp_rpm.conf') }
     end
@@ -91,6 +91,39 @@ describe 'pulp::apache' do
       end
     end
 
+    describe 'with manage_httpd true or manage_plugins_httpd true' do
+      let :pre_condition do
+        "class {'pulp': manage_httpd => true}"
+      end
+
+      it 'should configure pulp_content' do
+        is_expected.to contain_file('/etc/httpd/conf.d/pulp_content.conf').with(
+        :content => 'WSGISocketPrefix run/wsgi
+WSGIProcessGroup pulp-content
+WSGIApplicationGroup pulp-content
+WSGIScriptAlias /pulp/content /usr/share/pulp/wsgi/content.wsgi
+WSGIDaemonProcess pulp-content user=apache group=apache processes=3 display-name=%{GROUP}
+WSGIImportScript /usr/share/pulp/wsgi/content.wsgi process-group=pulp-content application-group=pulp-content
+
+<Files content.wsgi>
+    WSGIPassAuthorization On
+    WSGIProcessGroup pulp-content
+    WSGIApplicationGroup pulp-content
+    SSLRenegBufferSize  1048576
+    SSLVerifyDepth 9
+    SSLOptions +StdEnvVars +ExportCertData
+    SSLVerifyClient require
+</Files>
+
+<Location /pulp/content/>
+    XSendFile on
+    XSendFilePath /var/lib/pulp/content
+    XSendFilePath /var/lib/pulp/published
+</Location>
+')
+      end
+    end
+
     describe 'with enable_rpm' do
       let :pre_condition do
         "class {'pulp': enable_rpm => true}"
@@ -102,17 +135,32 @@ describe 'pulp::apache' do
 # Apache configuration file for pulp web services and repositories
 #
 
-# -- HTTPS Repositories ---------
-Alias /pulp/repos /var/www/pub/yum/https/repos
+AddType application/x-pkcs7-crl .crl
+AddType application/x-x509-ca-cert .crt
+
+# -- Yum Repositories ---------
+#
+# This Location block replaces an `Alias` directive. In order to maintain
+# backwards compatibility with existing Yum repository configurations, this
+# block rewrites all requests to `/pulp/repos/` to the location of the WSGI
+# application, content.wsgi, provided by the Pulp platform. The content.wsgi
+# application adds support for downloading content on-demand.
+<Location /pulp/repos/>
+  RewriteEngine On
+  RewriteCond %{HTTPS} on
+  RewriteRule (.+/pulp/repos/)(.+) /pulp/content/var/www/pub/yum/https/repos/$2 [DPI]
+  RewriteCond %{HTTPS} off
+  RewriteRule (.+/pulp/repos/)(.+) /pulp/content/var/www/pub/yum/http/repos/$2 [DPI]
+</Location>
 
 # -- HTTPS Exports
 Alias /pulp/exports /var/www/pub/yum/https/exports
 
 <Directory /var/www/pub/yum/https>
-    WSGIAccessScript /srv/pulp/repo_auth.wsgi
+    WSGIAccessScript /usr/share/pulp/wsgi/repo_auth.wsgi
     SSLRequireSSL
     SSLVerifyClient require
-    SSLVerifyDepth 2
+    SSLVerifyDepth 9
     SSLOptions +StdEnvVars +ExportCertData +FakeBasicAuth
     Options FollowSymLinks Indexes
 </Directory>
@@ -122,12 +170,11 @@ Alias /pulp/exports /var/www/pub/yum/https/exports
     Options FollowSymLinks Indexes
 </Directory>
 
-
 # -- HTTPS ISOS
 Alias /pulp/isos /var/www/pub/https/isos
 
 <Directory /var/www/pub/https/isos>
-    WSGIAccessScript /srv/pulp/repo_auth.wsgi
+    WSGIAccessScript /usr/share/pulp/wsgi/repo_auth.wsgi
     SSLRequireSSL
     SSLVerifyClient require
     SSLVerifyDepth 2
@@ -170,11 +217,24 @@ Alias /pulp/exports /var/www/pub/yum/http/exports
 
 # -- HTTPS Repositories ---------
 
-Alias /pulp/docker /var/www/pub/docker/web
+# This prevents mod_mime_magic from adding content-type and content-encoding headers, which will confuse the Docker
+# client.
+MimeMagicFile NEVER_EVER_USE
 
-<Location /var/www/pub/docker/web>
+# Docker v2
+Alias /pulp/docker/v2 /var/www/pub/docker/v2/web
+<Directory /var/www/pub/docker/v2/web>
+    Header set Docker-Distribution-API-Version "registry/2.0"
+    SSLRequireSSL
+    Options FollowSymlinks Indexes
+</Directory>
+
+# Docker v1
+Alias /pulp/docker/v1 /var/www/pub/docker/v1/web
+<Directory /var/www/pub/docker/v1/web>
+    SSLRequireSSL
     Options FollowSymLinks Indexes
-</Location>
+</Directory>
 ')
       end
     end
@@ -224,10 +284,12 @@ Alias /pulp/puppet_files /var/www/pub/puppet/files
 # and so the following redirect will match any path that isn\'t the above.
 RedirectMatch ^\/?pulp_puppet\/forge\/[^\/]+\/[^\/]+\/(?!api\/v1\/releases\.json)(.*)$ /$1
 
-# for puppet < 3.3
-WSGIScriptAlias /api/v1 /srv/pulp/puppet_forge_pre33_api.wsgi
-# for puppet >= 3.3
-WSGIScriptAlias /pulp_puppet/forge /srv/pulp/puppet_forge_post33_api.wsgi
+WSGIDaemonProcess pulp_forge user=apache group=apache processes=3 display-name=%{GROUP}
+WSGIProcessGroup pulp_forge
+WSGIApplicationGroup pulp_forge
+WSGIScriptAlias /api/v1 /usr/share/pulp/wsgi/puppet_forge.wsgi process-group=pulp_forge application-group=pulp_forge
+WSGIScriptAlias /pulp_puppet/forge /usr/share/pulp/wsgi/puppet_forge.wsgi process-group=pulp_forge application-group=pulp_forge
+WSGIScriptAlias /v3 /usr/share/pulp/wsgi/puppet_forge.wsgi process-group=pulp_forge application-group=pulp_forge
 WSGIPassAuthorization On
 ')
 
@@ -259,6 +321,34 @@ Alias /pulp/python /var/www/pub/python/
       end
     end
 
+
+    describe 'with enable_ostree' do
+      let :pre_condition do
+        "class {'pulp': enable_ostree => true}"
+      end
+
+      it 'should configure apache for serving ostree' do
+        is_expected.to contain_file('/etc/httpd/conf.d/pulp_ostree.conf').with(
+        :content => '#
+# Apache configuration file for Pulp\'s OSTree support
+#
+
+# -- HTTPS Repositories ---------
+
+Alias /pulp/ostree /var/www/pub/ostree/
+
+<Directory /var/www/pub/ostree>
+    WSGIAccessScript /usr/share/pulp/wsgi/repo_auth.wsgi
+    SSLRequireSSL
+    SSLVerifyClient require
+    SSLVerifyDepth 2
+    SSLOptions +StdEnvVars +ExportCertData +FakeBasicAuth
+    Options FollowSymLinks Indexes
+</Directory>
+')
+      end
+    end
+
     describe 'with enable_parent_node' do
       let :pre_condition do
         "class {'pulp': enable_parent_node => true}"
@@ -283,6 +373,17 @@ Alias /pulp/nodes/http/repos /var/www/pulp/nodes/http/repos
 Alias /pulp/nodes/https/repos /var/www/pulp/nodes/https/repos
 
 <Directory /var/www/pulp/nodes/https/repos >
+  Options FollowSymLinks Indexes
+  SSLRequireSSL
+  SSLVerifyClient require
+  SSLVerifyDepth  5
+  SSLOptions +FakeBasicAuth
+  SSLRequire %{SSL_CLIENT_S_DN_O} eq "PULP" and %{SSL_CLIENT_S_DN_OU} eq "NODES"
+</Directory>
+
+Alias /pulp/nodes/content /var/www/pulp/nodes/content
+
+<Directory /var/www/pulp/nodes/content >
   Options FollowSymLinks Indexes
   SSLRequireSSL
   SSLVerifyClient require

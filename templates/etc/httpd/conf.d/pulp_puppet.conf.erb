@@ -36,8 +36,10 @@ Alias /pulp/puppet_files /var/www/pub/puppet/files
 # and so the following redirect will match any path that isn't the above.
 RedirectMatch ^\/?pulp_puppet\/forge\/[^\/]+\/[^\/]+\/(?!api\/v1\/releases\.json)(.*)$ /$1
 
-# for puppet < 3.3
-WSGIScriptAlias /api/v1 /srv/pulp/puppet_forge_pre33_api.wsgi
-# for puppet >= 3.3
-WSGIScriptAlias /pulp_puppet/forge /srv/pulp/puppet_forge_post33_api.wsgi
+WSGIDaemonProcess pulp_forge user=apache group=apache processes=3 display-name=%{GROUP}
+WSGIProcessGroup pulp_forge
+WSGIApplicationGroup pulp_forge
+WSGIScriptAlias /api/v1 /usr/share/pulp/wsgi/puppet_forge.wsgi process-group=pulp_forge application-group=pulp_forge
+WSGIScriptAlias /pulp_puppet/forge /usr/share/pulp/wsgi/puppet_forge.wsgi process-group=pulp_forge application-group=pulp_forge
+WSGIScriptAlias /v3 /usr/share/pulp/wsgi/puppet_forge.wsgi process-group=pulp_forge application-group=pulp_forge
 WSGIPassAuthorization On

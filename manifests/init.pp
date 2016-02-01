@@ -31,6 +31,9 @@
 #
 # $broker_use_ssl::             Require SSL if set to 'true', otherwise do not require SSL.
 #
+# $tasks_login_method::         Select the SASL login method used to connect to the broker. This should be left
+#                               unset except in special cases such as SSL client certificate authentication.
+#
 # $ca_cert::                    full path to the CA certificate that will be used to sign consumer
 #                               and admin identification certificates; this must match the value of
 #                               SSLCACertificateFile in /etc/httpd/conf.d/pulp.conf
@@ -64,6 +67,14 @@
 #                               certificates, which are used to validate certificates passed from the other end
 #                               of the connection.
 #
+# $db_unsafe_autoretry:         If true, retry commands to the database if there is a connection error.
+#                               Warning: if set to true, this setting can result in duplicate records.
+#
+# $db_write_concern:            Write concern of 'majority' or 'all'. When 'all' is specified, 'w' is set to
+#                               number of seeds specified. For version of MongoDB < 2.6, replica_set must also
+#                               be specified. Please note that 'all' will cause Pulp to halt if any of the
+#                               replica set members is not available. 'majority' is used by defau
+#
 # $server_name::                hostname the admin client and consumers should use when accessing
 #                               the server; if not specified, this is defaulted to the server's hostname
 #
@@ -75,6 +86,8 @@
 #
 # $log_level::                  The desired logging level. Options are: CRITICAL, ERROR, WARNING, INFO, DEBUG,
 #                               and NOTSET. Pulp will default to INFO.
+#
+# $server_working_directory::   Path to where pulp workers can create working directories needed to complete tasks
 #
 # $rsa_key::                    The RSA private key used for authentication.
 #
@@ -133,6 +146,10 @@
 # $messaging_topic_exchange::   The name of the exchange to use. The exchange must be a topic exchange. The
 #                               default is 'amq.topic', which is a default exchange that is guaranteed to exist on a Qpid broker.
 #
+# $messaging_event_notifications_enabled:: Enables or disables Pulp event notfications on the message bus. Defaults to 'false'.
+#
+# $messaging_event_notification_url:: The AMQP URL for event notifications. Defaults to 'qpid://localhost:5672/'.
+#
 # $email_host::                 host name of the MTA pulp should relay through
 #
 # $email_port::                 destination port to connect on
@@ -141,6 +158,29 @@
 #
 # $email_enabled::              boolean controls whether or not emails will be sent
 #                               type:boolean
+#
+# $lazy_enabled::               boolean controls whether redirect is enabled
+#
+# $lazy_redirect_host::         The host FQDN or IP to which requests are redirected.
+#
+# $lazy_redirect_port::         The TCP port to which requests are redirected
+#
+# $lazy_redirect_path::         The base path to which requests are redirected
+#
+# $lazy_https_retrieval::       boolean; controls whether Pulp uses HTTPS or HTTP to
+#                               retrieve content from the streamer.
+#                               WARNING: Setting this to 'false' is not safe if you wish
+#                               to use Pulp to provide repository entitlement
+#                               enforcement. It is strongly recommended to keep
+#                               this set to 'true' and use certificates that are
+#                               signed by a trusted authority on the web server
+#                               that serves as the streamer reverse proxy.
+#
+# $lazy_download_interval::     The interval in minutes between checks for content cached
+#                               by the Squid proxy.
+#
+# $lazy_download_concurrency:   The number of downloads to perform concurrently when
+#                               downloading content from the Squid cache.
 #
 # $proxy_url::                  URL of the proxy server
 #
@@ -223,6 +263,8 @@ class pulp (
   $db_ssl_certfile           = $pulp::params::db_ssl_certfile,
   $db_verify_ssl             = $pulp::params::db_verify_ssl,
   $db_ca_path                = $pulp::params::db_ca_path,
+  $db_unsafe_autoretry       = $pulp::params::db_unsafe_autoretry,
+  $db_write_concern          = $pulp::params::db_write_concern,
   $server_name               = $pulp::params::server_name,
   $key_url                   = $pulp::params::key_url,
   $ks_url                    = $pulp::params::ks_url,
@@ -230,6 +272,7 @@ class pulp (
   $default_password          = $pulp::params::default_password,
   $debugging_mode            = $pulp::params::debugging_mode,
   $log_level                 = $pulp::params::log_level,
+  $server_working_directory  = $pulp::params::server_working_directory,
   $rsa_key                   = $pulp::params::rsa_key,
   $rsa_pub                   = $pulp::params::rsa_pub,
   $ca_cert                   = $pulp::params::ca_cert,
@@ -250,12 +293,22 @@ class pulp (
   $messaging_ca_cert         = $pulp::params::messaging_ca_cert,
   $messaging_client_cert     = $pulp::params::messaging_client_cert,
   $messaging_topic_exchange  = $pulp::params::messaging_topic_exchange,
+  $messaging_event_notifications_enabled = $pulp::params::messaging_event_notifications_enabled,
+  $messaging_event_notification_url = $pulp::params::messaging_event_notification_url,
   $broker_url                = $pulp::params::broker_url,
   $broker_use_ssl            = $pulp::params::broker_use_ssl,
+  $tasks_login_method        = $pulp::params::tasks_login_method,
   $email_host                = $pulp::params::email_host,
   $email_port                = $pulp::params::email_port,
   $email_from                = $pulp::params::email_from,
   $email_enabled             = $pulp::params::email_enabled,
+  $lazy_enabled              = $pulp::params::lazy_enabled,
+  $lazy_redirect_host        = $pulp::params::lazy_redirect_host,
+  $lazy_redirect_port        = $pulp::params::lazy_redirect_port,
+  $lazy_redirect_path        = $pulp::params::lazy_redirect_path,
+  $lazy_https_retrieval      = $pulp::params::lazy_https_retrieval,
+  $lazy_download_interval    = $pulp::params::lazy_download_interval,
+  $lazy_download_concurrency = $pulp::params::lazy_download_concurrency,
   $consumers_crl             = $pulp::params::consumers_crl,
   $reset_cache               = $pulp::params::reset_cache,
   $ssl_verify_client         = $pulp::params::ssl_verify_client,
@@ -298,6 +351,10 @@ class pulp (
   validate_bool($enable_parent_node)
   validate_bool($repo_auth)
   validate_bool($reset_cache)
+  validate_bool($db_unsafe_autoretry)
+  validate_bool($messaging_event_notifications_enabled)
+  validate_bool($lazy_enabled)
+  validate_bool($lazy_https_retrieval)
   validate_array($disabled_authenticators)
   validate_hash($additional_wsgi_scripts)
 

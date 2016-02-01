@@ -72,6 +72,8 @@ class pulp::apache {
   }
 
   if $pulp::manage_httpd or $pulp::manage_plugins_httpd {
+    pulp::apache_plugin {'content' : vhosts80 => false}
+
     file { '/etc/pulp/vhosts80/':
       ensure => directory,
       owner  => 'apache',
