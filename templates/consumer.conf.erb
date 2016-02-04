@@ -154,10 +154,10 @@ scheme: <%= scope['pulp::consumer::messaging_scheme'] %>
 host: <%= scope['pulp::consumer::messaging_host'] %>
 port: <%= scope['pulp::consumer::messaging_port'] %>
 transport: <%= scope['pulp::consumer::messaging_transport'] %>
-<% if scope['pulp::consumer::messaging_cacert'] != :undef -%>
+<% unless [nil, :undefined, :undef, ''].include?(scope.lookupvar('pulp::consumer::messaging_cacert')) -%>
 cacert: <%= scope['pulp::consumer::messaging_cacert'] %>
 <% end -%>
-<% if scope['pulp::consumer::messaging_clientcert'] != :undef -%>
+<% unless [nil, :undefined, :undef, ''].include?(scope.lookupvar('pulp::consumer::messaging_clientcert')) -%>
 clientcert: <%= scope['pulp::consumer::messaging_clientcert'] %>
 <% end -%>
 
