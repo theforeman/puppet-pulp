@@ -16,7 +16,7 @@ class pulp::child::config {
     ssl               => true,
     ssl_cert          => $pulp::child::ssl_cert,
     ssl_key           => $pulp::child::ssl_key,
-    ssl_ca            => $pulp::ssl_ca_cert,
+    ssl_ca            => $pulp::ca_cert,
     ssl_verify_client => 'optional',
     ssl_options       => '+StdEnvVars',
     ssl_verify_depth  => '3',

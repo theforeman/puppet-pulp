@@ -60,7 +60,7 @@
 #
 # $db_verify_ssl::              Specifies whether a certificate is required from the other side of the
 #                               connection, and whether it will be validated if provided. If it is true, then
-#                               the ssl_ca_certs parameter must point to a file of CA certificates used to
+#                               the ca_certs parameter must point to a file of CA certificates used to
 #                               validate the connection.
 #
 # $db_ca_path::                 The ca_certs file contains a set of concatenated "certification authority"
@@ -96,10 +96,6 @@
 # $https_cert::                 apache public certificate for ssl
 #
 # $https_key::                  apache private certificate for ssl
-#
-# $ssl_ca_cert::                full path to the CA certificate used to sign the Pulp
-#                               server's SSL certificate; consumers will use this to verify the
-#                               Pulp server's SSL certificate during the SSL handshake
 #
 # $consumers_crl::              Certificate revocation list for consumers which
 #                               are no valid (have had their client certs
@@ -279,7 +275,6 @@ class pulp (
   $ca_key                    = $pulp::params::ca_key,
   $https_cert                = $pulp::params::https_cert,
   $https_key                 = $pulp::params::https_key,
-  $ssl_ca_cert               = $pulp::params::ssl_ca_cert,
   $user_cert_expiration      = $pulp::params::user_cert_expiration,
   $consumer_cert_expiration  = $pulp::params::consumer_cert_expiration,
   $serial_number_path        = $pulp::params::serial_number_path,
