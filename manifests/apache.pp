@@ -9,7 +9,7 @@ class pulp::apache {
     if $pulp::enable_http or $pulp::enable_puppet {
       apache::vhost { 'pulp-http':
         priority            => '05',
-        docroot             => '/srv/pulp',
+        docroot             => '/usr/share/pulp/wsgi',
         port                => 80,
         servername          => $::fqdn,
         serveraliases       => [$::hostname],
@@ -19,7 +19,7 @@ class pulp::apache {
 
     apache::vhost { 'pulp-https':
       priority                   => '05',
-      docroot                    => '/srv/pulp',
+      docroot                    => '/usr/share/pulp/wsgi',
       port                       => 443,
       servername                 => $::fqdn,
       serveraliases              => [$::hostname],
@@ -33,15 +33,15 @@ class pulp::apache {
       ssl_verify_depth           => '3',
       wsgi_process_group         => 'pulp',
       wsgi_application_group     => 'pulp',
-      wsgi_daemon_process        => 'pulp user=apache group=apache processes=1 threads=8 display-name=%{GROUP}',
+      wsgi_daemon_process        => 'pulp user=apache group=apache processes=3 display-name=%{GROUP}',
       wsgi_pass_authorization    => 'On',
-      wsgi_import_script         => '/srv/pulp/webservices.wsgi',
+      wsgi_import_script         => '/usr/share/pulp/wsgi/webservices.wsgi',
       wsgi_import_script_options => {
         'process-group'     => 'pulp',
         'application-group' => 'pulp',
       },
       wsgi_script_aliases        => merge(
-        {'/pulp/api'=>'/srv/pulp/webservices.wsgi'},
+        {'/pulp/api'=>'/usr/share/pulp/wsgi/webservices.wsgi'},
         $pulp::additional_wsgi_scripts),
       directories                => [
         {
@@ -49,7 +49,7 @@ class pulp::apache {
           'provider' => 'files',
         },
         {
-          'path'     => '/srv/pulp',
+          'path'     => '/usr/share/pulp/wsgi',
           'provider' => 'directory',
         },
         {

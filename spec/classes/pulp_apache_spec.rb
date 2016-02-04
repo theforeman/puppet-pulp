@@ -37,7 +37,7 @@ describe 'pulp::apache' do
         :port                    => 443,
         :servername              => facts[:fqdn],
         :serveraliases           => [facts[:hostname]],
-        :docroot                 => '/srv/pulp',
+        :docroot                 => '/usr/share/pulp/wsgi',
         :ssl                     => true,
         :ssl_verify_client       => 'optional',
         :ssl_protocol            => ' all -SSLv2',
@@ -45,9 +45,9 @@ describe 'pulp::apache' do
         :ssl_verify_depth        => '3',
         :wsgi_process_group      => 'pulp',
         :wsgi_application_group  => 'pulp',
-        :wsgi_daemon_process     => 'pulp user=apache group=apache processes=1 threads=8 display-name=%{GROUP}',
+        :wsgi_daemon_process     => 'pulp user=apache group=apache processes=3 display-name=%{GROUP}',
         :wsgi_pass_authorization => 'On',
-        :wsgi_import_script      => '/srv/pulp/webservices.wsgi',
+        :wsgi_import_script      => '/usr/share/pulp/wsgi/webservices.wsgi',
       })
     end
   end
@@ -85,7 +85,7 @@ describe 'pulp::apache' do
           :port                    => 80,
           :servername              => facts[:fqdn],
           :serveraliases           => [facts[:hostname]],
-          :docroot                 => '/srv/pulp',
+          :docroot                 => '/usr/share/pulp/wsgi',
           :additional_includes     => '/etc/pulp/vhosts80/*.conf',
         })
       end
