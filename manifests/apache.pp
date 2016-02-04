@@ -87,6 +87,7 @@ class pulp::apache {
     }
 
     if $pulp::enable_docker {
+      include ::apache::mod::headers
       pulp::apache_plugin { 'docker': vhosts80 => false }
     }
 
