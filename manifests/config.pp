@@ -32,7 +32,7 @@ class pulp::config {
 
     file { '/etc/pulp/server/plugins.conf.d/yum_importer.json':
       ensure  => file,
-      content => template('pulp/yum_importer.json'),
+      content => template('pulp/yum_importer.json.erb'),
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
@@ -40,7 +40,7 @@ class pulp::config {
 
     file { '/etc/pulp/server/plugins.conf.d/iso_importer.json':
       ensure  => file,
-      content => template('pulp/iso_importer.json'),
+      content => template('pulp/iso_importer.json.erb'),
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
@@ -50,7 +50,7 @@ class pulp::config {
   if $pulp::enable_docker {
     file { '/etc/pulp/server/plugins.conf.d/docker_importer.json':
       ensure  => file,
-      content => template('pulp/docker_importer.json'),
+      content => template('pulp/docker_importer.json.erb'),
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
@@ -66,7 +66,7 @@ class pulp::config {
 
     file { '/etc/pulp/server/plugins.conf.d/puppet_importer.json':
       ensure  => file,
-      content => template('pulp/puppet_importer.json'),
+      content => template('pulp/puppet_importer.json.erb'),
       owner   => 'root',
       group   => 'root',
       mode    => '0644',

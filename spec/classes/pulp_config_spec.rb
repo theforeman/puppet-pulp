@@ -57,4 +57,33 @@ describe 'pulp::config' do
         with_content(/^topic_exchange: 'amq.topic'$/)
     end
   end
+
+  context "with proxy configuration" do
+    let :pre_condition do
+      "class {'pulp':
+        enable_rpm     => true,
+        proxy_url      => 'http://fake.com',
+        proxy_port     => 7777,
+        proxy_username => 'al',
+        proxy_password => 'beproxyin'
+      }"
+    end
+
+    let :facts do
+      default_facts
+    end
+
+    it "should produce valid json" do
+      should contain_file("/etc/pulp/server/plugins.conf.d/yum_importer.json").with_content(
+        /"proxy_host": "http:\/\/fake.com",/
+      ).with_content(
+        /"proxy_port": 7777,/
+      ).with_content(
+        /"proxy_username": "al",/
+      ).with_content(
+        /"proxy_password": "beproxyin"/
+      )
+    end
+
+  end
 end
