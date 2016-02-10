@@ -408,12 +408,9 @@ enabled: <%= scope['pulp::email_enabled'] %>
 #   downloading content from the Squid cache.
 
 [lazy]
-enabled: <%= scope['pulp::lazy_enabled'] %>
-<% if scope['pulp::lazy_enabled'] -%>
 redirect_host: <%= scope['pulp::lazy_redirect_host'] %>
 redirect_port: <%= scope['pulp::lazy_redirect_port'] %>
 redirect_path: <%= scope['pulp::lazy_redirect_path'] %>
 https_retrieval: <%= scope['pulp::lazy_https_retrieval'] %>
 download_interval: <%= scope['pulp::lazy_download_interval'] %>
 download_concurrency: <%= scope['pulp::lazy_download_concurrency'] %>
-<% end -%>

@@ -155,7 +155,7 @@
 # $email_enabled::              boolean controls whether or not emails will be sent
 #                               type:boolean
 #
-# $lazy_enabled::               boolean controls whether redirect is enabled
+# $manage_squid::               boolean controls whether squid configuration is managed or manual
 #
 # $lazy_redirect_host::         The host FQDN or IP to which requests are redirected.
 #
@@ -297,7 +297,7 @@ class pulp (
   $email_port                = $pulp::params::email_port,
   $email_from                = $pulp::params::email_from,
   $email_enabled             = $pulp::params::email_enabled,
-  $lazy_enabled              = $pulp::params::lazy_enabled,
+  $manage_squid              = $pulp::params::manage_squid,
   $lazy_redirect_host        = $pulp::params::lazy_redirect_host,
   $lazy_redirect_port        = $pulp::params::lazy_redirect_port,
   $lazy_redirect_path        = $pulp::params::lazy_redirect_path,
@@ -348,7 +348,7 @@ class pulp (
   validate_bool($reset_cache)
   validate_bool($db_unsafe_autoretry)
   validate_bool($messaging_event_notifications_enabled)
-  validate_bool($lazy_enabled)
+  validate_bool($manage_squid)
   validate_bool($lazy_https_retrieval)
   validate_array($disabled_authenticators)
   validate_hash($additional_wsgi_scripts)

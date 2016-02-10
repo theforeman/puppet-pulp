@@ -97,4 +97,27 @@ class pulp::config {
       refreshonly => true,
     }
   }
+
+  if $pulp::manage_squid {
+    if $::osfamily == 'RedHat' and versioncmp($::operatingsystemrelease, '7') < 0 {
+      $deprecated_opts = true
+    } else {
+      $deprecated_opts = false
+    }
+    class { '::squid3':
+      use_deprecated_opts           => $deprecated_opts,
+      http_port                     => [ '3128 accel' ],
+      acl                           => [ 'Safe_ports port 3128' ],
+      http_access                   => [ 'allow localhost', 'deny to_localhost', 'deny all' ],
+      cache                         => [ 'allow all' ],
+      maximum_object_size           => '5 GB',
+      maximum_object_size_in_memory => '100 MB',
+      cache_dir                     => [ 'aufs /var/spool/squid 10000 16 256' ],
+      template                      => 'short',
+      config_hash                   => {
+        cache_peer        => '127.0.0.1 parent 8751 0 no-digest no-query originserver name=PulpStreamer',
+        cache_peer_access => 'PulpStreamer allow all',
+      },
+    }
+  }
 }
