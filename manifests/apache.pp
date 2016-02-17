@@ -110,7 +110,7 @@ class pulp::apache {
     }
 
     if $pulp::enable_ostree {
-      pulp::apache_plugin { 'ostree': }
+      pulp::apache_plugin { 'ostree': vhosts80 => false }
     }
 
     if $pulp::enable_parent_node {
