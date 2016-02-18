@@ -36,4 +36,9 @@ class pulp::install {
   if $pulp::enable_python {
     package { ['pulp-python-plugins']: ensure => $pulp::version, }
   }
+
+  if $pulp::enable_ostree {
+    ensure_packages(['ostree'])
+    package { ['pulp-ostree-plugins']: ensure => $pulp::version, }
+  }
 }
