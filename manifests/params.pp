@@ -67,7 +67,7 @@ class pulp::params {
   $email_from = "no-reply@${::domain}"
   $email_enabled = false
 
-  $lazy_enabled = false
+  $manage_squid = false
   $lazy_redirect_host = downcase($::fqdn)
   $lazy_redirect_port = undef
   $lazy_redirect_path = '/streamer/'

@@ -30,6 +30,10 @@
     {
       "name": "katello/qpid",
       "version_requirement": ">= 0.1.0"
+    },
+    {
+      "name": "thias/squid3",
+      "version_requirement": ">= 1.0.0"
     }
   ]
 }
