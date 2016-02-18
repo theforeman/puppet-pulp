@@ -20,7 +20,7 @@ class pulp::child::config {
     ssl_verify_client => 'optional',
     ssl_options       => '+StdEnvVars',
     ssl_verify_depth  => '3',
-    custom_fragment   => template('pulp/etc/httpd/conf.d/_ssl_username.conf.erb'),
+    custom_fragment   => template('pulp/etc/httpd/conf.d/_ssl_vhost.conf.erb'),
   }
 
   # we need to make sure the goferd reads the current oauth credentials to talk
