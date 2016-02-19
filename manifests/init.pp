@@ -247,6 +247,10 @@
 # $node_oauth_key::             The oauth key used to authenticate to the parent node
 #
 # $node_oauth_secret::          The oauth secret used to authenticate to the parent node
+#
+# $max_keep_alive::             Configuration value for apache MaxKeepAliveRequests
+#                               type:integer
+#
 class pulp (
   $version                   = $pulp::params::version,
   $db_name                   = $pulp::params::db_name,
@@ -282,6 +286,7 @@ class pulp (
   $oauth_enabled             = $pulp::params::oauth_enabled,
   $oauth_key                 = $pulp::params::oauth_key,
   $oauth_secret              = $pulp::params::oauth_secret,
+  $max_keep_alive            = $pulp::params::max_keep_alive,
   $messaging_url             = $pulp::params::messaging_url,
   $messaging_transport       = $pulp::params::messaging_transport,
   $messaging_auth_enabled    = $pulp::params::messaging_auth_enabled,
@@ -352,7 +357,7 @@ class pulp (
   validate_bool($lazy_https_retrieval)
   validate_array($disabled_authenticators)
   validate_hash($additional_wsgi_scripts)
-
+  validate_integer($max_keep_alive)
   include ::mongodb::client
   include ::pulp::apache
   include ::pulp::database

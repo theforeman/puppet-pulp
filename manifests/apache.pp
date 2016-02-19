@@ -68,8 +68,7 @@ class pulp::apache {
       ],
       options                    => ['SymLinksIfOwnerMatch'],
       add_default_charset        => 'UTF-8',
-      custom_fragment            => '# allow older yum clients to connect, see bz 647828
-	  SSLInsecureRenegotiation on',
+      custom_fragment            => template('pulp/etc/httpd/conf.d/_ssl_vhost.conf.erb'),
     }
   } else {
     file {'/etc/httpd/conf.d/pulp.conf':

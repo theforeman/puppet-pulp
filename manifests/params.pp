@@ -95,6 +95,7 @@ class pulp::params {
   $proxy_username = undef
   $proxy_password = undef
 
+  $max_keep_alive = 10000
   $num_workers = min($::processorcount, 8)
 
   $node_certificate = '/etc/pki/pulp/nodes/node.crt'
