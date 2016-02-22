@@ -72,7 +72,7 @@ class pulp::params {
   $lazy_redirect_port = undef
   $lazy_redirect_path = '/streamer/'
   $lazy_https_retrieval = false
-  $lazy_download_interval = 30
+  $lazy_download_interval = 10
   $lazy_download_concurrency = 5
 
   $consumers_crl = undef

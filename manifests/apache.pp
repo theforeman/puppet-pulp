@@ -116,4 +116,12 @@ class pulp::apache {
       pulp::apache_plugin { 'nodes': vhosts80 => false }
     }
   }
+
+  file {'/etc/httpd/conf.d/pulp_streamer.conf':
+    ensure  => file,
+    content => template('pulp/etc/httpd/conf.d/pulp_streamer.conf.erb'),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+  }
 }

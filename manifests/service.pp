@@ -3,7 +3,7 @@ class pulp::service {
   if $::operatingsystemmajrelease == 7 {
     exec { 'pulp refresh system service':
       command     => '/bin/systemctl daemon-reload',
-      before      => Service['pulp_celerybeat', 'pulp_workers', 'pulp_resource_manager'],
+      before      => Service['pulp_celerybeat', 'pulp_workers', 'pulp_resource_manager', 'pulp_streamer'],
       refreshonly => true,
     }
   }
@@ -34,4 +34,11 @@ class pulp::service {
     status     => 'service pulp_resource_manager status | grep "node resource_manager"',
   }
 
+  service { 'pulp_streamer':
+    ensure     => running,
+    require    => [Service[mongodb]],
+    enable     => true,
+    hasstatus  => true,
+    hasrestart => true,
+  }
 }
