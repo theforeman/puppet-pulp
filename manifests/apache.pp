@@ -117,11 +117,14 @@ class pulp::apache {
     }
   }
 
-  file {'/etc/httpd/conf.d/pulp_streamer.conf':
-    ensure  => file,
-    content => template('pulp/etc/httpd/conf.d/pulp_streamer.conf.erb'),
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
+  if $pulp::enable_streamer {
+    include ::apache::mod::proxy
+    file {'/etc/httpd/conf.d/pulp_streamer.conf':
+      ensure  => file,
+      content => template('pulp/etc/httpd/conf.d/pulp_streamer.conf.erb'),
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+    }
   }
 }
