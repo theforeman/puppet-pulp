@@ -45,6 +45,6 @@ class pulp::service {
       hasrestart => true,
     }
   } else {
-     $servicelist = Service['pulp_celerybeat', 'pulp_workers', 'pulp_resource_manager']
+    $servicelist = Service['pulp_celerybeat', 'pulp_workers', 'pulp_resource_manager']
   }
 }
