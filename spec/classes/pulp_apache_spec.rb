@@ -197,8 +197,7 @@ Alias /pulp/gpg /var/www/pub/gpg
 ')
 
         is_expected.to contain_file('/etc/pulp/vhosts80/rpm.conf').with(
-        :content => 'Alias /pulp/repos /var/www/pub/yum/http/repos
-Alias /pulp/isos /var/www/pub/http/isos
+        :content => 'Alias /pulp/isos /var/www/pub/http/isos
 Alias /pulp/exports /var/www/pub/yum/http/exports
 ')
       end
