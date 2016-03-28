@@ -115,8 +115,10 @@ class pulp::config {
       cache_dir                     => [ 'aufs /var/spool/squid 10000 16 256' ],
       template                      => 'short',
       config_hash                   => {
-        cache_peer        => '127.0.0.1 parent 8751 0 no-digest no-query originserver name=PulpStreamer',
-        cache_peer_access => 'PulpStreamer allow all',
+        cache_peer          => '127.0.0.1 parent 8751 0 no-digest no-query originserver name=PulpStreamer',
+        cache_peer_access   => 'PulpStreamer allow all',
+        range_offset_limit  => 'none',
+        minimum_object_size => '0 kB',
       },
     }
   }
