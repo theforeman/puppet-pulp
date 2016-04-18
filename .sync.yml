@@ -1,0 +1,6 @@
+---
+Rakefile:
+  param_docs_pattern:
+    - manifests/admin.pp
+    - manifests/consumer.pp
+    - manifests/init.pp
