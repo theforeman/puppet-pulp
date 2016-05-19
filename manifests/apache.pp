@@ -29,6 +29,7 @@ class pulp::apache {
       ssl                        => true,
       ssl_cert                   => $pulp::https_cert,
       ssl_key                    => $pulp::https_key,
+      ssl_chain                  => $pulp::https_chain,
       ssl_ca                     => $pulp::ca_cert,
       ssl_verify_client          => 'optional',
       ssl_protocol               => ' all -SSLv2',
