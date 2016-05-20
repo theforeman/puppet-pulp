@@ -97,6 +97,8 @@
 #
 # $https_key::                  apache private certificate for ssl
 #
+# $https_chain::                apache chain file for ssl
+#
 # $consumers_crl::              Certificate revocation list for consumers which
 #                               are no valid (have had their client certs
 #                               revoked)
@@ -280,6 +282,7 @@ class pulp (
   $ca_key                    = $pulp::params::ca_key,
   $https_cert                = $pulp::params::https_cert,
   $https_key                 = $pulp::params::https_key,
+  $https_chain               = $pulp::params::https_chain,
   $user_cert_expiration      = $pulp::params::user_cert_expiration,
   $consumer_cert_expiration  = $pulp::params::consumer_cert_expiration,
   $serial_number_path        = $pulp::params::serial_number_path,
@@ -359,6 +362,16 @@ class pulp (
   validate_array($disabled_authenticators)
   validate_hash($additional_wsgi_scripts)
   validate_integer($max_keep_alive)
+  if $https_cert {
+    validate_absolute_path($https_cert)
+  }
+  if $https_key {
+    validate_absolute_path($https_key)
+  }
+  if $https_chain {
+    validate_absolute_path($https_chain)
+  }
+
   include ::mongodb::client
   include ::pulp::apache
   include ::pulp::database
