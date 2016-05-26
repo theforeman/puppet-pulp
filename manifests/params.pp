@@ -108,6 +108,8 @@ class pulp::params {
 
   $osreleasemajor = regsubst($::operatingsystemrelease, '^(\d+)\..*$', '\1')
 
+  $mongodb_version = get_mongodb_version()
+
   case $::osfamily {
     'RedHat' : {
       case $osreleasemajor {
