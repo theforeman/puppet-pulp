@@ -39,12 +39,12 @@ class pulp::database {
   }
 
   exec { 'migrate_pulp_db':
-    command     => 'pulp-manage-db',
-    path        => '/bin:/usr/bin',
-    logoutput   => 'on_failure',
-    user        => 'apache',
-    refreshonly => true,
-    require     => File['/etc/pulp/server.conf'],
+    command   => 'pulp-manage-db && touch /var/lib/pulp/init.flag',
+    path      => '/bin:/usr/bin',
+    logoutput => 'on_failure',
+    user      => 'apache',
+    creates   => '/var/lib/pulp/init.flag',
+    require   => File['/etc/pulp/server.conf'],
   }
 
   Class['pulp::install'] ~> Exec['migrate_pulp_db'] ~> Class['pulp::service']
