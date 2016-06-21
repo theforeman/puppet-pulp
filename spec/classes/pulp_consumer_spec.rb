@@ -4,9 +4,8 @@ describe 'pulp::consumer' do
   context 'on RedHat' do
     context 'install class without parameters' do
       let :facts do
-        {
-          :fqdn => 'localhost',
-        } end
+        on_supported_os['redhat-7-x86_64'].merge(:concat_basedir => '/tmp', :mongodb_version => '2.4.14')
+      end
 
       it { should contain_class('pulp::consumer::install') }
       it { should contain_class('pulp::consumer::config') }
@@ -22,7 +21,7 @@ describe 'pulp::consumer' do
       it 'should set consumer.conf file' do
         should contain_file('/etc/pulp/consumer/consumer.conf').
           with_content(/^\[server\]$/).
-          with_content(/^host: localhost$/).
+          with_content(/^host: foo.example.com$/).
           with_content(/^port: 443$/).
           with_content(/^api_prefix: \/pulp\/api$/).
           with_content(/^rsa_pub: \/etc\/pki\/pulp\/consumer\/server\/rsa_pub.key$/).
@@ -53,7 +52,7 @@ describe 'pulp::consumer' do
           with_content(/^wrap_width: 80$/).
           with_content(/^\[messaging\]$/).
           with_content(/^scheme: tcp$/).
-          with_content(/^host: localhost$/).
+          with_content(/^host: foo.example.com$/).
           with_content(/^port: 5672$/).
           with_content(/^transport: qpid$/).
           with_content(/^\[profile\]$/).
