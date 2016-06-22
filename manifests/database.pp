@@ -14,6 +14,7 @@ class pulp::database {
     Service['mongodb'] -> Service['pulp_celerybeat']
     Service['mongodb'] -> Service['pulp_workers']
     Service['mongodb'] -> Service['pulp_resource_manager']
+    Service['mongodb'] -> Service['pulp_streamer']
     Service['mongodb'] -> Exec['migrate_pulp_db']
   }
 
