@@ -1,13 +1,17 @@
 # Pulp Installation Packages
 # Private class
 class pulp::install {
-  package { ['pulp-server', 'pulp-selinux', 'python-pulp-streamer']: ensure => $pulp::version, }
+  package { ['pulp-server', 'pulp-selinux']: ensure => $pulp::version, }
 
   if $pulp::messaging_transport == 'qpid' {
     ensure_packages(['python-gofer-qpid'], {
       ensure => $pulp::version
     }
     )
+  }
+
+  if $pulp::enable_streamer {
+    package { 'python-pulp-streamer': ensure => $pulp::version, }
   }
 
   if $pulp::messaging_transport == 'rabbitmq' {

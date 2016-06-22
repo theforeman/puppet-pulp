@@ -76,6 +76,8 @@ class pulp::params {
   $lazy_download_interval = 10
   $lazy_download_concurrency = 5
 
+  $enable_streamer = true
+
   $consumers_crl = undef
 
   $manage_db = true

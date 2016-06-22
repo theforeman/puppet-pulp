@@ -313,6 +313,7 @@ class pulp (
   $lazy_https_retrieval      = $pulp::params::lazy_https_retrieval,
   $lazy_download_interval    = $pulp::params::lazy_download_interval,
   $lazy_download_concurrency = $pulp::params::lazy_download_concurrency,
+  $enable_streamer           = $pulp::params::enable_streamer,
   $consumers_crl             = $pulp::params::consumers_crl,
   $reset_cache               = $pulp::params::reset_cache,
   $ssl_verify_client         = $pulp::params::ssl_verify_client,
@@ -353,6 +354,7 @@ class pulp (
   validate_bool($manage_httpd)
   validate_bool($manage_plugins_httpd)
   validate_bool($enable_parent_node)
+  validate_bool($enable_streamer)
   validate_bool($repo_auth)
   validate_bool($reset_cache)
   validate_bool($db_unsafe_autoretry)
