@@ -4,15 +4,7 @@ describe 'pulp' do
 
  context 'on redhat' do
     let :facts do
-      {
-        :concat_basedir            => '/tmp',
-        :operatingsystem           => 'RedHat',
-        :operatingsystemrelease    => '6.4',
-        :operatingsystemmajrelease => '6.4',
-        :osreleasemajor            => '6',
-        :osfamily                  => 'RedHat',
-        :processorcount            => 3,
-      }
+      on_supported_os['redhat-7-x86_64'].merge(:concat_basedir => '/tmp', :mongodb_version => '2.4.14')
     end
 
     it { should contain_class('pulp::install') }

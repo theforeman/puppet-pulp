@@ -3,16 +3,7 @@ require 'spec_helper'
 
 describe 'pulp::config' do
   let :default_facts do
-    {
-      :concat_basedir => '/tmp',
-      :interfaces     => '',
-      :operatingsystem            => 'RedHat',
-      :operatingsystemrelease     => '6.4',
-      :operatingsystemmajrelease  => '6.4',
-      :osfamily                   => 'RedHat',
-      :processorcount             => 3,
-      :mongodb_version            => '2.4.9',
-    }
+    on_supported_os['redhat-7-x86_64'].merge(:concat_basedir => '/tmp', :mongodb_version => '2.4.14', :processorcount => 3)
   end
 
   context 'with no parameters' do

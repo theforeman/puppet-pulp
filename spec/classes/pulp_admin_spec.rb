@@ -4,9 +4,8 @@ describe 'pulp::admin' do
   context 'on RedHat' do
     context 'install class without parameters' do
       let :facts do
-      {
-        :fqdn => 'localhost',
-      } end
+        on_supported_os['redhat-7-x86_64'].merge(:concat_basedir => '/tmp', :mongodb_version => '2.4.14')
+      end
 
       it { should contain_class('pulp::admin::install') }
       it { should contain_class('pulp::admin::config') }
@@ -17,7 +16,7 @@ describe 'pulp::admin' do
       it 'should set admin.conf file' do
         should contain_file('/etc/pulp/admin/admin.conf').
           with_content(/^\[server\]$/).
-          with_content(/^host: localhost$/).
+          with_content(/^host: foo.example.com$/).
           with_content(/^port: 443$/).
           with_content(/^api_prefix: \/pulp\/api$/).
           with_content(/^verify_ssl: true$/).

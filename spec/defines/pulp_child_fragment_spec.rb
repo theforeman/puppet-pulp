@@ -1,30 +1,22 @@
 require 'spec_helper'
 
 describe 'pulp::child::fragment' do
-  let(:title) { 'test_name' } 
+  let(:title) { 'test_name' }
 
   let :pre_condition do
     "include pulp
       class {'pulp::child':
-        parent_fqdn => 'mamma-pulp' 
+        parent_fqdn => 'mamma-pulp'
       }"
   end
 
   context 'on redhat' do
     let :facts do
-      {
-        :concat_basedir            => '/tmp',
-        :operatingsystem           => 'RedHat',
-        :operatingsystemrelease    => '6.4',
-        :operatingsystemmajrelease => '6.4',
-        :osreleasemajor            => '6',
-        :osfamily                  => 'RedHat',
-        :processorcount            => 3,
-      }
+      on_supported_os['redhat-7-x86_64'].merge(:concat_basedir => '/tmp', :mongodb_version => '2.4.14')
     end
- 
-    context 'with ssl_content parameter' do 
-      let :params do 
+
+    context 'with ssl_content parameter' do
+      let :params do
         { :ssl_content => "some_string" }
       end
 

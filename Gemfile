@@ -1,5 +1,5 @@
 # This file is managed centrally by modulesync
-#   https://github.com/katello/foreman-installer-modulesync
+#   https://github.com/Katello/foreman-installer-modulesync
 
 source 'https://rubygems.org'
 
@@ -12,7 +12,7 @@ if RUBY_VERSION.start_with? '1.8'
 else
   gem 'rake'
   gem 'rspec', '~> 3.0'
-  gem 'rspec-puppet-facts'
+  gem 'rspec-puppet-facts', '>= 1.5'
 end
 gem 'rspec-puppet', '~> 2.3'
 gem 'puppetlabs_spec_helper', '>= 0.8.0'
@@ -31,6 +31,8 @@ gem 'simplecov'
 gem 'puppet-blacksmith', '>= 3.1.0', {"groups"=>["development"]}
 gem 'rest-client', '< 1.7', {"platforms"=>["ruby_18"], "groups"=>["development"]}
 gem 'mime-types', '~> 1.0', {"platforms"=>["ruby_18"], "groups"=>["development"]}
+gem 'json', '~> 1.0', {"platforms"=>["ruby_18", "ruby_19"], "groups"=>["test"]}
+gem 'json_pure', '~> 1.0', {"platforms"=>["ruby_18", "ruby_19"], "groups"=>["test"]}
 gem 'metadata-json-lint'
 
 # vim:ft=ruby

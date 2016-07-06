@@ -1,5 +1,5 @@
 # This file is managed centrally by modulesync
-#   https://github.com/theforeman/foreman-installer-modulesync
+#   https://github.com/Katello/foreman-installer-modulesync
 
 ## MAC OS
 .DS_Store
@@ -34,3 +34,6 @@ spec/fixtures/
 ## Puppet module
 pkg/
 coverage/
+
+## InteliJ / RubyMine
+.idea

@@ -1,5 +1,5 @@
 # This file is managed centrally by modulesync
-#   https://github.com/theforeman/foreman-installer-modulesync
+#   https://github.com/Katello/foreman-installer-modulesync
 
 require 'puppetlabs_spec_helper/rake_tasks'
 require 'puppet-lint/tasks/puppet-lint'
