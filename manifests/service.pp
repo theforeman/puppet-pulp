@@ -10,7 +10,6 @@ class pulp::service {
 
   service { 'pulp_celerybeat':
     ensure     => running,
-    require    => [Service[mongodb]],
     enable     => true,
     hasstatus  => true,
     hasrestart => true,
@@ -18,7 +17,6 @@ class pulp::service {
 
   service { 'pulp_workers':
     ensure     => running,
-    require    => [Service[mongodb]],
     enable     => true,
     hasstatus  => true,
     hasrestart => true,
@@ -27,7 +25,6 @@ class pulp::service {
 
   service { 'pulp_resource_manager':
     ensure     => running,
-    require    => [Service[mongodb]],
     enable     => true,
     hasstatus  => true,
     hasrestart => true,
@@ -36,7 +33,6 @@ class pulp::service {
 
   service { 'pulp_streamer':
     ensure     => running,
-    require    => [Service[mongodb]],
     enable     => true,
     hasstatus  => true,
     hasrestart => true,
