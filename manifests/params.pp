@@ -99,6 +99,8 @@ class pulp::params {
   $max_keep_alive = 10000
   $num_workers = min($::processorcount, 8)
 
+  $puppet_wsgi_processes = 3
+
   $node_certificate = '/etc/pki/pulp/nodes/node.crt'
   $node_verify_ssl = true
   $node_server_ca_cert = '/etc/pki/pulp/ca.crt'

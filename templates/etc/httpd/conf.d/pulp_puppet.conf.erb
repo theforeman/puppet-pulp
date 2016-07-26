@@ -36,7 +36,7 @@ Alias /pulp/puppet_files /var/www/pub/puppet/files
 # and so the following redirect will match any path that isn't the above.
 RedirectMatch ^\/?pulp_puppet\/forge\/[^\/]+\/[^\/]+\/(?!api\/v1\/releases\.json)(.*)$ /$1
 
-WSGIDaemonProcess pulp_forge user=apache group=apache processes=3 display-name=%{GROUP}
+WSGIDaemonProcess pulp_forge user=apache group=apache processes=<%= scope['pulp::puppet_wsgi_processes'] %> display-name=%{GROUP}
 WSGIProcessGroup pulp_forge
 WSGIApplicationGroup pulp_forge
 WSGIScriptAlias /api/v1 /usr/share/pulp/wsgi/puppet_forge.wsgi process-group=pulp_forge application-group=pulp_forge
