@@ -231,7 +231,7 @@ Alias /pulp/docker/v1 /var/www/pub/docker/v1/web
 
     describe 'with enable_puppet' do
       let :pre_condition do
-        "class {'pulp': enable_puppet => true}"
+        "class {'pulp': enable_puppet => true, puppet_wsgi_processes => 2}"
       end
 
       it 'should configure apache for serving puppet' do
@@ -274,7 +274,7 @@ Alias /pulp/puppet_files /var/www/pub/puppet/files
 # and so the following redirect will match any path that isn\'t the above.
 RedirectMatch ^\/?pulp_puppet\/forge\/[^\/]+\/[^\/]+\/(?!api\/v1\/releases\.json)(.*)$ /$1
 
-WSGIDaemonProcess pulp_forge user=apache group=apache processes=3 display-name=%{GROUP}
+WSGIDaemonProcess pulp_forge user=apache group=apache processes=2 display-name=%{GROUP}
 WSGIProcessGroup pulp_forge
 WSGIApplicationGroup pulp_forge
 WSGIScriptAlias /api/v1 /usr/share/pulp/wsgi/puppet_forge.wsgi process-group=pulp_forge application-group=pulp_forge
