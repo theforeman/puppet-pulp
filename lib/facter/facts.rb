@@ -10,7 +10,7 @@ Facter.add(:mongodb_version) do
     commands.each do |command|
       exe = command.partition(' ').first
       if system("which #{exe} > /dev/null 2>&1")
-        version = `#{command}`.chomp
+        version = `#{command} 2> /dev/null`.chomp
         if $?.success? && !version.empty?
           ret = version
           break
