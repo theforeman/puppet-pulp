@@ -86,11 +86,12 @@ class pulp::apache {
     pulp::apache_plugin {'content' : vhosts80 => false}
 
     file { '/etc/pulp/vhosts80/':
-      ensure => directory,
-      owner  => 'apache',
-      group  => 'apache',
-      mode   => '0755',
-      purge  => true,
+      ensure  => directory,
+      owner   => 'apache',
+      group   => 'apache',
+      mode    => '0755',
+      purge   => true,
+      require => Package['pulp-server'],
     }
 
     if $pulp::enable_rpm {
