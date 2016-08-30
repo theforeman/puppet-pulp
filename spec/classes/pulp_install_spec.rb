@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'pulp::install' do
   let :default_facts do
-    on_supported_os['redhat-7-x86_64'].merge(:concat_basedir => '/tmp', :mongodb_version => '2.4.14')
+    on_supported_os['redhat-7-x86_64'].merge(:concat_basedir => '/tmp', :mongodb_version => '2.4.14', :root_home => '/root')
   end
 
   describe "with enable_parent_node" do
