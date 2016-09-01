@@ -311,7 +311,6 @@ Alias /pulp/python /var/www/pub/python/
       end
     end
 
-
     describe 'with enable_ostree' do
       let :pre_condition do
         "class {'pulp': enable_ostree => true}"
@@ -322,6 +321,8 @@ Alias /pulp/python /var/www/pub/python/
         :content => '#
 # Apache configuration file for Pulp\'s OSTree support
 #
+RedirectMatch "^/pulp/ostree/web/(.*?)/repodata/(.*)"  "/pulp/repos/$1/repodata/$2"
+RedirectMatch "^/pulp/ostree/web/(.*?)\.rpm"  "/pulp/repos/$1.rpm"
 
 # -- HTTPS Repositories ---------
 
