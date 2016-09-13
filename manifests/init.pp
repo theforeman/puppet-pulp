@@ -129,6 +129,8 @@
 #
 # $ssl_verify_client::          Enforce use of SSL authentication for yum repos access
 #
+# $ssl_protocol::               List which versions of the SSL/TLS protocol will be accepted in new connections
+#
 # $serial_number_path::         Path to the serial number file
 #
 # $consumer_history_lifetime::  number of days to store consumer events; events older
@@ -318,6 +320,7 @@ class pulp (
   $consumers_crl             = $pulp::params::consumers_crl,
   $reset_cache               = $pulp::params::reset_cache,
   $ssl_verify_client         = $pulp::params::ssl_verify_client,
+  $ssl_protocol              = $pulp::params::ssl_protocol,
   $repo_auth                 = $pulp::params::repo_auth,
   $proxy_url                 = $pulp::params::proxy_url,
   $proxy_port                = $pulp::params::proxy_port,
