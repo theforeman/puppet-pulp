@@ -5,5 +5,7 @@
   MaxKeepAliveRequests <%= scope['::pulp::max_keep_alive'] %>
 
 <% if scope['::pulp::ssl_username'] and !scope['::pulp::ssl_username'].empty? -%>
-  SSLUsername <%= scope['::pulp::ssl_username'] %>
+  <Location /pulp/api>
+    SSLUsername <%= scope['::pulp::ssl_username'] %>
+  </Location>
 <%- end -%>
