@@ -377,6 +377,9 @@ class pulp (
   if $https_chain {
     validate_absolute_path($https_chain)
   }
+  if $ssl_protocol != undef {
+    validate_string($ssl_protocol)
+  }
 
   include ::mongodb::client
   include ::pulp::apache
