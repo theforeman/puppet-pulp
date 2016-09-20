@@ -15,6 +15,7 @@ class pulp::params {
   $db_ca_path = '/etc/pki/tls/certs/ca-bundle.crt'
   $db_unsafe_autoretry = false
   $db_write_concern = undef
+  $migrate_db_timeout = 300
 
   $server_name = downcase($::fqdn)
   $key_url = '/pulp/gpg'

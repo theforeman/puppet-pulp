@@ -259,6 +259,9 @@
 #
 # $puppet_wsgi_processes::      Number of WSGI processes to spawn for the puppet webapp
 #
+# $migrate_db_timeout::         Change the timeout for pulp-manage-db
+#                               type:integer
+#
 class pulp (
   $version                   = $pulp::params::version,
   $db_name                   = $pulp::params::db_name,
@@ -348,6 +351,7 @@ class pulp (
   $disabled_authenticators   = $pulp::params::disabled_authenticators,
   $additional_wsgi_scripts   = $pulp::params::additional_wsgi_scripts,
   $puppet_wsgi_processes     = $pulp::params::puppet_wsgi_processes,
+  $migrate_db_timeout        = $pulp::params::migrate_db_timeout,
 ) inherits pulp::params {
   validate_bool($enable_docker)
   validate_bool($enable_rpm)
