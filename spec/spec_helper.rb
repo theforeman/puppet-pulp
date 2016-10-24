@@ -11,7 +11,7 @@ add_custom_fact :concat_basedir, '/tmp'             # puppetlabs-concat
 add_custom_fact :mongodb_version, '2.4.14'          # puppetlabs-mongodb
 add_custom_fact :root_home, '/root'                 # puppetlabs-stdlib
 add_custom_fact :puppetversion, Puppet.version      # Facter, but excluded from rspec-puppet-facts
-add_custom_fact :puppet_environmentpath, Gem::Version.new(Puppet.version) >= Gem::Version.new('4.0') ? '/etc/puppetlabs/code/environments' : '/etc/puppet/environments' # puppetlabs-stdlib
+add_custom_fact :puppet_environmentpath, Gem::Version.new(Puppet.version) >= Gem::Version.new('4.0') ? '/etc/puppetlabs/code/environments' : '' # puppetlabs-stdlib
 
 # Workaround for no method in rspec-puppet to pass undef through :params
 class Undef
