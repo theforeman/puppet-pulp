@@ -1,6 +1,6 @@
 {
   "name": "katello-pulp",
-  "version": "3.5.0",
+  "version": "4.0.0",
   "author": "Katello",
   "summary": "Configure and install a Pulp server or node.",
   "license": "GPL-3.0+",
@@ -29,7 +29,7 @@
     },
     {
       "name": "katello/qpid",
-      "version_requirement": ">= 0.1.0"
+      "version_requirement": ">= 2.0.0 < 3.0.0"
     },
     {
       "name": "thias/squid3",
@@ -46,21 +46,18 @@
     {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
-        "6",
         "7"
       ]
     },
     {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
-        "6",
         "7"
       ]
     },
     {
       "operatingsystem": "Scientific",
       "operatingsystemrelease": [
-        "6",
         "7"
       ]
     }
