@@ -20,6 +20,6 @@ class pulp::crane (
   class { '::pulp::crane::install': } ~>
   class { '::pulp::crane::config': } ~>
   class { '::pulp::crane::apache': } ->
-  Class['crane']
+  Class['::pulp::crane']
 }
 
