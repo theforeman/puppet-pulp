@@ -35,7 +35,7 @@ describe 'pulp::crane' do
     end
 
     it "should set the port" do
-      should contain_file('/etc/pulp::crane.conf').
+      should contain_file('/etc/crane.conf').
         with_content(/^endpoint: foo.example.com:5001$/)
     end
   end
