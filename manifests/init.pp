@@ -7,6 +7,7 @@
 #                               can be set to specific version number, 'latest', 'present' etc.
 #
 # $crane_port::                 Port for Crane to run on
+#                               type:integer
 #
 # $crane_data_dir::             Directory containing docker v1/v2 artifacts published by pulp
 #
@@ -387,6 +388,7 @@ class pulp (
   validate_array($disabled_authenticators)
   validate_hash($additional_wsgi_scripts)
   validate_integer($max_keep_alive)
+  validate_integer($crane_port)
 
   if $https_cert {
     validate_absolute_path($https_cert)
