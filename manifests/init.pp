@@ -3,6 +3,7 @@
 # Install and configure pulp
 #
 # === Parameters:
+#
 # $version::                    pulp package version, it's passed to ensure parameter of package resource
 #                               can be set to specific version number, 'latest', 'present' etc.
 #
@@ -388,7 +389,6 @@ class pulp (
   validate_array($disabled_authenticators)
   validate_hash($additional_wsgi_scripts)
   validate_integer($max_keep_alive)
-  validate_integer($crane_port)
 
   if $https_cert {
     validate_absolute_path($https_cert)
@@ -408,7 +408,7 @@ class pulp (
   include ::pulp::database
   include ::pulp::broker
 
-  if($enable_crane) {
+  if $enable_crane {
     class { '::pulp::crane':
       cert     => $https_cert,
       key      => $https_key,

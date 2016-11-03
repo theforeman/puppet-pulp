@@ -18,12 +18,12 @@
 # $data_dir_polling_interval::  The number of seconds between checks for updates to metadata files in the data_dir
 #                               type:integer
 class pulp::crane (
-  $port                      = $pulp::crane::params::port,
-  $data_dir                  = $pulp::crane::params::data_dir,
-  $data_dir_polling_interval = $pulp::crane::params::data_dir_polling_interval,
-  $key                       = $pulp::crane::params::key,
-  $cert                      = $pulp::crane::params::cert,
-  $ca_cert                   = $pulp::crane::params::ca_cert,
+  $port                      = $::pulp::crane::params::port,
+  $data_dir                  = $::pulp::crane::params::data_dir,
+  $data_dir_polling_interval = $::pulp::crane::params::data_dir_polling_interval,
+  $key                       = $::pulp::crane::params::key,
+  $cert                      = $::pulp::crane::params::cert,
+  $ca_cert                   = $::pulp::crane::params::ca_cert,
   ) inherits pulp::crane::params {
 
   validate_absolute_path($data_dir, $key, $cert, $ca_cert)
