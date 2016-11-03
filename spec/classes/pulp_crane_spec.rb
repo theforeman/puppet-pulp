@@ -3,11 +3,50 @@ require 'spec_helper'
 describe 'pulp::crane' do
 
  context 'on redhat' do
-    let :facts do
-      on_supported_os['redhat-7-x86_64']
-    end
+    context 'with parameters' do
+      let :pre_condition do
+        "class {'pulp::crane':
+          port    => 5001,
+          cert    => '/tmp/cert.crt',
+          key     => '/tmp/cert.key',
+          ca_cert => '/tmp/ca_cert.crt',
+        }"
+      end
 
-    it { should contain_class('pulp::crane::install') }
-    it { should contain_class('pulp::crane::config') }
+      let :facts do
+        on_supported_os['redhat-7-x86_64']
+      end
+
+      it { should contain_class('pulp::crane::install') }
+      it { should contain_class('pulp::crane::config') }
+
+      it "should set up the config file" do
+        should contain_file('/etc/crane.conf').
+          with({
+            'ensure'  => 'file',
+            'owner'   => 'root',
+            'group'   => 'root',
+            'mode'    => '0644',
+          }).
+          with_content(/^endpoint: foo.example.com:5001$/)
+      end
+
+      it 'should configure apache vhost' do
+        is_expected.to contain_apache__vhost('crane').with({
+          :priority          => '03',
+          :port              => 5001,
+          :servername        => facts[:fqdn],
+          :docroot           => '/usr/share/crane/',
+          :ssl               => true,
+          :ssl_verify_client => 'optional',
+          :ssl_options       => '+StdEnvVars +ExportCertData +FakeBasicAuth',
+          :ssl_verify_depth  => '3',
+          :ssl_key           => '/tmp/cert.key',
+          :ssl_cert          => '/tmp/cert.crt',
+          :ssl_ca            => '/tmp/ca_cert.crt',
+          :ssl_chain         => '/tmp/ca_cert.crt',
+        })
+      end
+    end
   end
 end

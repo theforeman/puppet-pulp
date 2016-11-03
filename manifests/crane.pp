@@ -27,7 +27,8 @@ class pulp::crane (
   ) inherits pulp::crane::params {
 
   validate_absolute_path($data_dir, $key, $cert, $ca_cert)
-  validate_integer($port, $data_dir_polling_interval)
+  validate_integer($port)
+  validate_integer($data_dir_polling_interval)
 
   class { '::pulp::crane::install': } ~>
   class { '::pulp::crane::config': } ~>
