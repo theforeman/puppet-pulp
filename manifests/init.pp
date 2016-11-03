@@ -264,8 +264,9 @@
 # $migrate_db_timeout::         Change the timeout for pulp-manage-db
 #                               type:integer
 #
-# $show_conf_diff::             Allow showing diff for changes in server.conf; Warning: may display
-#                               and log passwords contained in this file. Defaults to false
+# $show_conf_diff::             Allow showing diff for changes in server.conf and importer.json;
+#                               Warning: may display and log passwords contained in these files.
+#                               Defaults to false
 #                               type:boolean
 # 
 class pulp (
