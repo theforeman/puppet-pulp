@@ -410,6 +410,9 @@ class pulp (
 
   if($enable_crane) {
     class { '::pulp::crane':
+      cert     => $https_cert,
+      key      => $https_key,
+      ca_cert  => $ca_cert,
       port     => $crane_port,
       data_dir => $crane_data_dir,
     }
