@@ -7,6 +7,9 @@
 # $version::                    pulp package version, it's passed to ensure parameter of package resource
 #                               can be set to specific version number, 'latest', 'present' etc.
 #
+# $crane_debug::                Enable crane debug logging
+#                               type:boolean
+#
 # $crane_port::                 Port for Crane to run on
 #                               type:integer
 #
@@ -275,6 +278,7 @@
 #
 class pulp (
   $version                   = $pulp::params::version,
+  $crane_debug               = $pulp::params::crane_debug,
   $crane_port                = $pulp::params::crane_port,
   $crane_data_dir            = $pulp::params::crane_data_dir,
   $db_name                   = $pulp::params::db_name,
@@ -415,6 +419,7 @@ class pulp (
       ca_cert  => $ca_cert,
       port     => $crane_port,
       data_dir => $crane_data_dir,
+      debug    => $crane_debug,
     }
   }
 

@@ -59,6 +59,7 @@ class pulp::params {
   $ssl_verify_client = 'require'
   $ssl_protocol = 'all -SSLv2 -SSLv3'
 
+  $crane_debug = false
   $crane_port = 5000
   $crane_data_dir = '/var/lib/pulp/published/docker/v2/app'
 

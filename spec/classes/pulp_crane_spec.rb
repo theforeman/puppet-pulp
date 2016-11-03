@@ -6,10 +6,12 @@ describe 'pulp::crane' do
     context 'with parameters' do
       let :pre_condition do
         "class {'pulp::crane':
-          port    => 5001,
-          cert    => '/tmp/cert.crt',
-          key     => '/tmp/cert.key',
-          ca_cert => '/tmp/ca_cert.crt',
+          port                      => 5001,
+          cert                      => '/tmp/cert.crt',
+          key                       => '/tmp/cert.key',
+          ca_cert                   => '/tmp/ca_cert.crt',
+          data_dir_polling_interval => 90,
+          debug                     => true,
         }"
       end
 
@@ -28,7 +30,9 @@ describe 'pulp::crane' do
             'group'   => 'root',
             'mode'    => '0644',
           }).
-          with_content(/^endpoint: foo.example.com:5001$/)
+          with_content(/^endpoint: foo.example.com:5001$/).
+          with_content(/^data_dir_polling_interval: 90$/).
+          with_content(/^debug: true$/)
       end
 
       it 'should configure apache vhost' do
