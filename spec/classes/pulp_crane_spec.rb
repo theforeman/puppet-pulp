@@ -4,15 +4,15 @@ describe 'pulp::crane' do
 
  context 'on redhat' do
     context 'with parameters' do
-      let :pre_condition do
-        "class {'pulp::crane':
-          port                      => 5001,
-          cert                      => '/tmp/cert.crt',
-          key                       => '/tmp/cert.key',
-          ca_cert                   => '/tmp/ca_cert.crt',
-          data_dir_polling_interval => 90,
-          debug                     => true,
-        }"
+      let :params do
+        {
+          :port                      => 5001,
+          :cert                      => '/tmp/cert.crt',
+          :key                       => '/tmp/cert.key',
+          :ca_cert                   => '/tmp/ca_cert.crt',
+          :data_dir_polling_interval => 90,
+          :debug                     => true,
+        }
       end
 
       let :facts do
