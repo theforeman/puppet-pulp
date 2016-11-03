@@ -9,11 +9,12 @@ class pulp::config {
   }
 
   file { '/etc/pulp/server.conf':
-    ensure  => file,
-    content => template('pulp/server.conf.erb'),
-    owner   => 'apache',
-    group   => 'apache',
-    mode    => '0600',
+    ensure    => file,
+    content   => template('pulp/server.conf.erb'),
+    owner     => 'apache',
+    group     => 'apache',
+    mode      => '0600',
+    show_diff => $pulp::show_conf_diff,
   }
 
   file { '/etc/pki/pulp/content/pulp-global-repo.ca':
