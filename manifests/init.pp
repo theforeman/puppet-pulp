@@ -3,8 +3,17 @@
 # Install and configure pulp
 #
 # === Parameters:
+#
 # $version::                    pulp package version, it's passed to ensure parameter of package resource
 #                               can be set to specific version number, 'latest', 'present' etc.
+#
+# $crane_debug::                Enable crane debug logging
+#                               type:boolean
+#
+# $crane_port::                 Port for Crane to run on
+#                               type:integer
+#
+# $crane_data_dir::             Directory containing docker v1/v2 artifacts published by pulp
 #
 # $oauth_key::                  string; key to enable OAuth style authentication
 #
@@ -99,7 +108,7 @@
 #
 # $https_chain::                apache chain file for ssl
 #
-# $ssl_username::               Value to use for SSLUsername directive in apache vhost. Defaults to 
+# $ssl_username::               Value to use for SSLUsername directive in apache vhost. Defaults to
 #                               SSL_CLIENT_S_DN_CN. Set false to unset directive.
 #
 # $consumers_crl::              Certificate revocation list for consumers which
@@ -198,6 +207,9 @@
 #                               defaults to number of processors and maxs at 8
 #                               type:integer
 #
+# $enable_crane::               Boolean to enable crane docker repository
+#                               type:boolean
+#
 # $enable_rpm::                 Boolean to enable rpm plugin. Defaults
 #                               to true
 #                               type:boolean
@@ -266,6 +278,9 @@
 #
 class pulp (
   $version                   = $pulp::params::version,
+  $crane_debug               = $pulp::params::crane_debug,
+  $crane_port                = $pulp::params::crane_port,
+  $crane_data_dir            = $pulp::params::crane_data_dir,
   $db_name                   = $pulp::params::db_name,
   $db_seeds                  = $pulp::params::db_seeds,
   $db_username               = $pulp::params::db_username,
@@ -334,6 +349,7 @@ class pulp (
   $proxy_username            = $pulp::params::proxy_username,
   $proxy_password            = $pulp::params::proxy_password,
   $num_workers               = $pulp::params::num_workers,
+  $enable_crane              = $pulp::params::enable_crane,
   $enable_docker             = $pulp::params::enable_docker,
   $enable_rpm                = $pulp::params::enable_rpm,
   $enable_puppet             = $pulp::params::enable_puppet,
@@ -356,6 +372,7 @@ class pulp (
   $puppet_wsgi_processes     = $pulp::params::puppet_wsgi_processes,
   $migrate_db_timeout        = $pulp::params::migrate_db_timeout,
 ) inherits pulp::params {
+  validate_bool($enable_crane)
   validate_bool($enable_docker)
   validate_bool($enable_rpm)
   validate_bool($enable_puppet)
@@ -376,6 +393,7 @@ class pulp (
   validate_array($disabled_authenticators)
   validate_hash($additional_wsgi_scripts)
   validate_integer($max_keep_alive)
+
   if $https_cert {
     validate_absolute_path($https_cert)
   }
@@ -393,6 +411,17 @@ class pulp (
   include ::pulp::apache
   include ::pulp::database
   include ::pulp::broker
+
+  if $enable_crane {
+    class { '::pulp::crane':
+      cert     => $https_cert,
+      key      => $https_key,
+      ca_cert  => $ca_cert,
+      port     => $crane_port,
+      data_dir => $crane_data_dir,
+      debug    => $crane_debug,
+    }
+  }
 
   class { '::pulp::install': } ->
   class { '::pulp::config': } ~>

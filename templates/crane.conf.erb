@@ -1,0 +1,9 @@
+# =========================
+# Pulp Crane Configuration
+# =========================
+
+[general]
+debug: <%= scope['pulp::crane::debug'] %>
+data_dir_polling_interval: <%= scope['pulp::crane::data_dir_polling_interval'] %>
+data_dir: <%= scope['pulp::crane::data_dir'] %>
+endpoint: <%= @fqdn %>:<%= scope['pulp::crane::port'] %>
