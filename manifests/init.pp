@@ -276,6 +276,11 @@
 # $migrate_db_timeout::         Change the timeout for pulp-manage-db
 #                               type:integer
 #
+# $show_conf_diff::             Allow showing diff for changes in server.conf and importer.json;
+#                               Warning: may display and log passwords contained in these files.
+#                               Defaults to false
+#                               type:boolean
+# 
 class pulp (
   $version                   = $pulp::params::version,
   $crane_debug               = $pulp::params::crane_debug,
@@ -371,6 +376,7 @@ class pulp (
   $additional_wsgi_scripts   = $pulp::params::additional_wsgi_scripts,
   $puppet_wsgi_processes     = $pulp::params::puppet_wsgi_processes,
   $migrate_db_timeout        = $pulp::params::migrate_db_timeout,
+  $show_conf_diff            = $pulp::params::show_conf_diff,
 ) inherits pulp::params {
   validate_bool($enable_crane)
   validate_bool($enable_docker)
@@ -390,6 +396,7 @@ class pulp (
   validate_bool($messaging_event_notifications_enabled)
   validate_bool($manage_squid)
   validate_bool($lazy_https_retrieval)
+  validate_bool($show_conf_diff)
   validate_array($disabled_authenticators)
   validate_hash($additional_wsgi_scripts)
   validate_integer($max_keep_alive)

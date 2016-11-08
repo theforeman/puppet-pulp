@@ -108,6 +108,7 @@ class pulp::params {
   $num_workers = min($::processorcount, 8)
 
   $puppet_wsgi_processes = 3
+  $show_conf_diff = false
 
   $node_certificate = '/etc/pki/pulp/nodes/node.crt'
   $node_verify_ssl = true
