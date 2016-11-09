@@ -217,6 +217,10 @@
 # $enable_crane::               Boolean to enable crane docker repository
 #                               type:boolean
 #
+# $max_tasks_per_child::        Number of tasks after which the worker is restarted
+#                               and the memory it allocated is returned to the system
+#                               type:integer
+#
 # $enable_rpm::                 Boolean to enable rpm plugin. Defaults
 #                               to true
 #                               type:boolean
@@ -287,7 +291,7 @@
 #                               Warning: may display and log passwords contained in these files.
 #                               Defaults to false
 #                               type:boolean
-# 
+#
 class pulp (
   $version                   = $pulp::params::version,
   $crane_debug               = $pulp::params::crane_debug,
@@ -364,6 +368,7 @@ class pulp (
   $num_workers               = $pulp::params::num_workers,
   $enable_katello            = $pulp::params::enable_katello,
   $enable_crane              = $pulp::params::enable_crane,
+  $max_tasks_per_child       = $pulp::params::max_tasks_per_child,
   $enable_docker             = $pulp::params::enable_docker,
   $enable_rpm                = $pulp::params::enable_rpm,
   $enable_puppet             = $pulp::params::enable_puppet,

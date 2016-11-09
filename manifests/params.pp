@@ -107,6 +107,7 @@ class pulp::params {
 
   $max_keep_alive = 10000
   $num_workers = min($::processorcount, 8)
+  $max_tasks_per_child = undef
 
   $yum_max_speed = undef
 
