@@ -432,7 +432,7 @@ class pulp (
 
   class { '::pulp::install': } ->
   class { '::pulp::config': } ~>
-  class { '::pulp::service': } ~>
-  Service['httpd'] ->
-  Class[pulp]
+  class { '::pulp::service': } ->
+  Class[pulp] ~>
+  Service['httpd']
 }
