@@ -149,4 +149,13 @@ class pulp::config {
       },
     }
   }
+
+  if $pulp::enable_profiling {
+    file { $pulp::profiling_directory:
+      ensure => directory,
+      owner  => 'apache',
+      group  => 'apache',
+      mode   => '0755',
+    }
+  }
 }
