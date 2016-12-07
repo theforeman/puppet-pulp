@@ -294,6 +294,11 @@
 #                               Warning: may display and log passwords contained in these files.
 #                               Defaults to false
 #                               type:boolean
+# 
+# $enable_profiling::           Turns on cProfiling of tasks in Pulp
+#                               type:boolean
+#
+# $profiling_directory::        Directory to store task profiling data in
 #
 class pulp (
   $version                   = $pulp::params::version,
@@ -395,6 +400,8 @@ class pulp (
   $puppet_wsgi_processes     = $pulp::params::puppet_wsgi_processes,
   $migrate_db_timeout        = $pulp::params::migrate_db_timeout,
   $show_conf_diff            = $pulp::params::show_conf_diff,
+  $enable_profiling          = $pulp::params::enable_profiling,
+  $profiling_directory       = $pulp::params::profiling_directory,
 ) inherits pulp::params {
   validate_bool($enable_katello)
   validate_bool($enable_crane)
@@ -419,6 +426,8 @@ class pulp (
   validate_array($disabled_authenticators)
   validate_hash($additional_wsgi_scripts)
   validate_integer($max_keep_alive)
+  validate_bool($enable_profiling)
+  validate_absolute_path($profiling_directory)
 
   if $max_tasks_per_child {
     validate_integer($max_tasks_per_child)

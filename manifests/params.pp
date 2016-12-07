@@ -121,4 +121,7 @@ class pulp::params {
   $node_oauth_effective_user = 'admin'
   $node_oauth_key = 'pulp'
   $node_oauth_secret = 'secret'
+
+  $enable_profiling = false
+  $profiling_directory = '/var/lib/pulp/c_profiles'
 }
