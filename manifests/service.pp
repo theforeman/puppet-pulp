@@ -1,6 +1,6 @@
 # Pulp Master Service
 class pulp::service {
-  if $::operatingsystemmajrelease == 7 {
+  if versioncmp($::operatingsystemmajrelease, '7') == 0 {
     exec { 'pulp refresh system service':
       command     => '/bin/systemctl daemon-reload',
       before      => Service['pulp_celerybeat', 'pulp_workers', 'pulp_resource_manager', 'pulp_streamer'],
