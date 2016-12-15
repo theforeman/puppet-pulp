@@ -103,6 +103,11 @@ class pulp::config {
     }
   }
 
+    exec { 'run pulp-gen-ca':
+      command => '/usr/bin/pulp-gen-ca-certificate',
+      creates => '/etc/pki/pulp/ca.crt',
+    }
+
   if $pulp::manage_squid {
     if $::osfamily == 'RedHat' and versioncmp($::operatingsystemrelease, '7') < 0 {
       $deprecated_opts = true
