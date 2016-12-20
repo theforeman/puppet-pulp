@@ -86,6 +86,12 @@ class pulp::config {
     mode    => '0644',
   }
 
+  file { $::pulp::rsa_key:
+    owner => 'root',
+    group => 'apache',
+    mode  => '0640',
+  }
+
   if $pulp::reset_cache {
     exec { 'reset_pulp_cache':
       command => 'rm -rf /var/lib/pulp/packages/*',
