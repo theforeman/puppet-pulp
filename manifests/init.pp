@@ -207,6 +207,10 @@
 #                               defaults to number of processors and maxs at 8
 #                               type:integer
 #
+# $enable_katello::             Boolean to enable pulp katello plugin. Defaults
+#                               to false
+#                               type:boolean
+#
 # $enable_crane::               Boolean to enable crane docker repository
 #                               type:boolean
 #
@@ -354,6 +358,7 @@ class pulp (
   $proxy_username            = $pulp::params::proxy_username,
   $proxy_password            = $pulp::params::proxy_password,
   $num_workers               = $pulp::params::num_workers,
+  $enable_katello            = $pulp::params::enable_katello,
   $enable_crane              = $pulp::params::enable_crane,
   $enable_docker             = $pulp::params::enable_docker,
   $enable_rpm                = $pulp::params::enable_rpm,
@@ -378,6 +383,7 @@ class pulp (
   $migrate_db_timeout        = $pulp::params::migrate_db_timeout,
   $show_conf_diff            = $pulp::params::show_conf_diff,
 ) inherits pulp::params {
+  validate_bool($enable_katello)
   validate_bool($enable_crane)
   validate_bool($enable_docker)
   validate_bool($enable_rpm)
