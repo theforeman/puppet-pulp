@@ -52,6 +52,56 @@ The provider doesn't support yet updating notes or description.
     	pass => 'admin'
     }
 
+##Pulp providers
+
+### RPM provider
+
+	pulp_rpmrepo { 'scl_ruby22_el7':
+	  checksum_type    => 'sha256',
+	  display_name     => 'scl_ruby22_el7',
+	  feed             => 'https://www.softwarecollections.org/repos/rhscl/rh-ruby22/epel-7-x86_64/',
+	  relative_url     => 'scl_ruby22/7Server',
+	  remove_missing   => 'true',
+	  retain_old_count => '1',
+	  serve_http       => 'true',
+	  serve_https      => 'true',
+	  validate         => 'true',
+	}
+
+### Puppet provider
+
+	pulp_puppetrepo { 'company_puppet_forge':
+	  display_name    => 'company_puppet_forge',
+	  max_downloads   => '10',
+	  serve_http      => 'true',
+	  serve_https     => 'true',
+	  validate        => 'true',
+	  verify_feed_ssl => 'false',
+	}
+
+### ISO provider
+
+	pulp_isorepo { 'optymyze_thirdparty':
+	  display_name    => 'files_thirdparty',
+	  feed            => 'https://pulp-server.company.net/pulp/isos/files_thirdparty/',
+	  max_downloads   => '10',
+	  remove_missing  => 'false',
+	  serve_http      => 'true',
+	  serve_https     => 'true',
+	  validate        => 'true',
+	  verify_feed_ssl => 'false',
+	}
+
+### Schedule provider
+
+	pulp_schedule { 'scl_ruby22_el7':
+	  enabled       => 'true',
+	  schedule_time => '2000-W01-6T12:00Z/P1W',
+	}
+
+	# force schedules to be added after the repos are created
+	Pulp_rpmrepo <| |> -> Pulp_schedule <| |>
+
 ##Development
 
 See the CONTRIBUTING guide for steps on how to make a change and get it accepted upstream.
