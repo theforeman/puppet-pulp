@@ -203,6 +203,9 @@
 #
 # $proxy_password::             Proxy password for authentication
 #
+# $yum_max_speed::              The maximum download speed for a Pulp task, such as a sync. (e.g. "4 Kb" or 1Gb")
+#                               type:string
+#
 # $num_workers::                Number of Pulp workers to use
 #                               defaults to number of processors and maxs at 8
 #                               type:integer
@@ -357,6 +360,7 @@ class pulp (
   $proxy_port                = $pulp::params::proxy_port,
   $proxy_username            = $pulp::params::proxy_username,
   $proxy_password            = $pulp::params::proxy_password,
+  $yum_max_speed             = $pulp::params::yum_max_speed,
   $num_workers               = $pulp::params::num_workers,
   $enable_katello            = $pulp::params::enable_katello,
   $enable_crane              = $pulp::params::enable_crane,
@@ -419,6 +423,13 @@ class pulp (
   if $ssl_protocol != undef {
     validate_string($ssl_protocol)
   }
+
+if $yum_max_speed {
+  validate_string($yum_max_speed)
+  $real_yum_max_speed = to_bytes($yum_max_speed)
+} else {
+  $real_yum_max_speed = undef
+}
 
   include ::mongodb::client
   include ::pulp::apache

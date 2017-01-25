@@ -108,6 +108,8 @@ class pulp::params {
   $max_keep_alive = 10000
   $num_workers = min($::processorcount, 8)
 
+  $yum_max_speed = undef
+
   $puppet_wsgi_processes = 3
   $show_conf_diff = false
 
