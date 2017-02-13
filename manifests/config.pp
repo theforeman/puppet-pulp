@@ -61,6 +61,17 @@ class pulp::config {
     }
   }
 
+  if $pulp::enable_ostree {
+    file { '/etc/pulp/server/plugins.conf.d/ostree_importer.json':
+      ensure    => file,
+      content   => template('pulp/ostree_importer.json.erb'),
+      owner     => 'root',
+      group     => 'root',
+      mode      => '0644',
+      show_diff => $pulp::show_conf_diff,
+    }
+  }
+
   if $pulp::enable_puppet {
     exec { 'selinux_pulp_manage_puppet':
       command => 'semanage boolean -m --on pulp_manage_puppet',
