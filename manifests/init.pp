@@ -102,11 +102,13 @@
 #
 # $rsa_pub::                    The RSA public key used for authentication.
 #
-# $https_cert::                 apache public certificate for ssl
+# $https_cert::                 Apache public certificate for ssl
 #
-# $https_key::                  apache private certificate for ssl
+# $https_key::                  Apache private certificate for ssl
 #
-# $https_chain::                apache chain file for ssl
+# $https_chain::                Apache chain file for ssl
+#
+# $https_ports::                Ports to listen on
 #
 # $ssl_username::               Value to use for SSLUsername directive in apache vhost. Defaults to
 #                               SSL_CLIENT_S_DN_CN. Set false to unset directive.
