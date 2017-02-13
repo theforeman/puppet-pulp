@@ -126,7 +126,7 @@ describe 'pulp::config' do
         'mode'      => '0644',
         'show_diff' => false,
       })
- 
+
     end
 
   end
@@ -138,6 +138,7 @@ describe 'pulp::config' do
         enable_rpm     => true,
         enable_puppet  => true,
         enable_docker  => true,
+        enable_ostree  => true,
       }"
     end
 
@@ -156,7 +157,7 @@ describe 'pulp::config' do
         'show_diff' => true,
       })
     end
- 
+
     it "should configure importers" do
       importer_params = {
         'ensure'    => 'file',
@@ -169,6 +170,7 @@ describe 'pulp::config' do
       should contain_file("/etc/pulp/server/plugins.conf.d/iso_importer.json").with(importer_params)
       should contain_file("/etc/pulp/server/plugins.conf.d/puppet_importer.json").with(importer_params)
       should contain_file("/etc/pulp/server/plugins.conf.d/docker_importer.json").with(importer_params)
+      should contain_file("/etc/pulp/server/plugins.conf.d/ostree_importer.json").with(importer_params)
     end
   end
 end
