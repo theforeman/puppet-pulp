@@ -44,6 +44,7 @@ class pulp::params {
   $messaging_topic_exchange = 'amq.topic'
   $messaging_event_notifications_enabled = false
   $messaging_event_notification_url = undef
+  $messaging_version = 'present'
 
   $broker_url = "qpid:///guest@${::fqdn}:5672"
   $broker_use_ssl = false
