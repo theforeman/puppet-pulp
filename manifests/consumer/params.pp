@@ -42,6 +42,7 @@ class pulp::consumer::params {
   $messaging_transport = 'qpid'
   $messaging_cacert = undef
   $messaging_clientcert = undef
+  $messaging_version = 'present'
 
   $profile_minutes = 240
 

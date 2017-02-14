@@ -88,6 +88,8 @@
 #
 # $messaging_transport::           The AMQP transport name. Valid options are 'qpid' or 'rabbitmq'. The default is 'qpid'.
 #
+# $messaging_version::             Determines the version of packages related to the 'messaging transport protocol'.
+#
 # $messaging_cacert::              The (optional) absolute path to a PEM encoded CA certificate to validate the identity of the
 #                                  broker.
 #
