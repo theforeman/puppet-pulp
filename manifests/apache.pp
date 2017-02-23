@@ -46,28 +46,24 @@ class pulp::apache {
       },
       wsgi_script_aliases        => merge(
         {'/pulp/api'=>'/usr/share/pulp/wsgi/webservices.wsgi'},
-        $::pulp::additional_wsgi_scripts),
-      directories                => [
-        {
-          'path'     => 'webservices.wsgi',
-          'provider' => 'files',
-        },
-        {
-          'path'     => '/usr/share/pulp/wsgi',
-          'provider' => 'directory',
-        },
-        {
-          'path'     => '/pulp/static',
-          'provider' => 'location',
-        },
-      ],
+        $::pulp::additional_wsgi_scripts
+      ),
+      directories                => [{
+        'path'     => 'webservices.wsgi',
+        'provider' => 'files',
+      },{
+        'path'     => '/usr/share/pulp/wsgi',
+        'provider' => 'directory',
+      },{
+        'path'     => '/pulp/static',
+        'provider' => 'location',
+      }],
       aliases                    => [{
-          alias           => '/pulp/static',
-          path            => '/var/lib/pulp/static',
-          options         => ['Indexes'],
-          custom_fragment => 'SSLRequireSSL'
-        }
-      ],
+        alias           => '/pulp/static',
+        path            => '/var/lib/pulp/static',
+        options         => ['Indexes'],
+        custom_fragment => 'SSLRequireSSL'
+      }],
       options                    => ['SymLinksIfOwnerMatch'],
       add_default_charset        => 'UTF-8',
       custom_fragment            => template('pulp/etc/httpd/conf.d/_ssl_vhost.conf.erb'),
