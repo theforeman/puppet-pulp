@@ -138,6 +138,7 @@ class pulp::consumer (
   $messaging_host            = $pulp::consumer::params::messaging_host,
   $messaging_port            = $pulp::consumer::params::messaging_port,
   $messaging_transport       = $pulp::consumer::params::messaging_transport,
+  $messaging_version         = $pulp::consumer::params::messaging_version,
   $messaging_cacert          = $pulp::consumer::params::messaging_cacert,
   $messaging_clientcert      = $pulp::consumer::params::messaging_clientcert,
   $profile_minutes           = $pulp::consumer::params::profile_minutes,
