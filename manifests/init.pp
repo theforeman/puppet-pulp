@@ -416,6 +416,10 @@ class pulp (
   validate_hash($additional_wsgi_scripts)
   validate_integer($max_keep_alive)
 
+  if $max_tasks_per_child {
+    validate_integer($max_tasks_per_child)
+  }
+
   if $https_cert {
     validate_absolute_path($https_cert)
   }
