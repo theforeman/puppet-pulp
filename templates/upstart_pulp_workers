@@ -22,7 +22,7 @@ PYTHONIOENCODING="UTF-8"
 
 # To avoid memory leaks, Pulp can terminate and replace a worker after processing X tasks. If
 # left commented, process recycling is disabled. PULP_MAX_TASKS_PER_CHILD must be > 0.
-<% if !scope['pulp::max_tasks_per_child'].nil? and scope['pulp::max_tasks_per_child'] > 0 %>
+<% unless [nil, :undefined, :undef, '', 0].include?(scope.lookupvar('pulp::max_tasks_per_child')) %>
 PULP_MAX_TASKS_PER_CHILD=<%= scope['pulp::max_tasks_per_child'] %>
 <% else %>
 # PULP_MAX_TASKS_PER_CHILD=2
