@@ -91,7 +91,7 @@ class pulp::config {
 
   file { '/etc/default/pulp_workers':
     ensure  => file,
-    content => template("pulp/${pulp::pulp_workers_template}"),
+    content => template('pulp/systemd_pulp_workers'),
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
