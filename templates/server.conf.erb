@@ -32,7 +32,7 @@
 # ssl_certfile:      The certificate file used to identify the local connection against mongod.
 # verify_ssl:        Specifies whether a certificate is required from the other side of the
 #                    connection, and whether it will be validated if provided. If it is true, then
-#                    the ssl_ca_certs parameter must point to a file of CA certificates used to
+#                    the ca_cert parameter must point to a file of CA certificates used to
 #                    validate the connection.
 # ca_path:           The ca_certs file contains a set of concatenated “certification authority”
 #                    certificates, which are used to validate certificates passed from the other end
@@ -148,7 +148,7 @@ rsa_pub = <%= scope['pulp::rsa_pub'] %>
 [security]
 cacert: <%= scope['pulp::ca_cert'] %>
 cakey: <%= scope['pulp::ca_key'] %>
-ssl_ca_certificate: <%= scope['pulp::ssl_ca_cert'] %>
+ssl_ca_certificate: <%= scope['pulp::ca_cert'] %>
 user_cert_expiration: <%= scope['pulp::user_cert_expiration'] %>
 consumer_cert_expiration: <%= scope['pulp::consumer_cert_expiration'] %>
 serial_number_path: <%= scope['pulp::serial_number_path'] %>
