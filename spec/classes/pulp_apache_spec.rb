@@ -41,6 +41,8 @@ describe 'pulp::apache' do
         :wsgi_import_script      => '/usr/share/pulp/wsgi/webservices.wsgi',
       })
     end
+    
+    it { is_expected.to contain_selinux__boolean('httpd_use_openstack') }
   end
 
   context 'with parameters' do
