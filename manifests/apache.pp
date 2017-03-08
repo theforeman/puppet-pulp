@@ -123,4 +123,6 @@ class pulp::apache {
     group   => 'root',
     mode    => '0644',
   }
+  
+  selinux::boolean { 'httpd_use_openstack': }
 }
