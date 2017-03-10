@@ -2,19 +2,23 @@
 class pulp::consumer::install {
   if $pulp::consumer::messaging_transport == 'qpid' {
     ensure_packages(['python-gofer-qpid'], {
-      ensure => $pulp::consumer::version
+      ensure => $pulp::consumer::messaging_version,
     }
     )
   }
 
   if $pulp::consumer::messaging_transport == 'rabbitmq' {
     ensure_packages(['python-gofer-amqp'], {
-      ensure => $pulp::consumer::version
+      ensure => $pulp::consumer::messaging_version,
     }
     )
   }
 
-  package { ['pulp-consumer-client', 'pulp-agent', 'gofer']:
+  package { 'gofer':
+    ensure => $pulp::consumer::messaging_version,
+  }
+
+  package { ['pulp-consumer-client', 'pulp-agent']:
     ensure => $pulp::consumer::version,
   }
 

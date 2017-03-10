@@ -35,6 +35,9 @@
 # $messaging_client_cert::      Absolute path to PEM encoded file containing both the private key and
 #                               certificate Pulp should present to the broker to be authenticated by the broker.
 #
+# $messaging_version::          Determines the version of packages related to the 'messaging transport protocol'.
+#
+#
 # $broker_url::                 A URL to a broker that Celery can use to queue tasks:
 #                               qpid://<username>:<password>@<hostname>:<port>/
 #
@@ -341,6 +344,7 @@ class pulp (
   $messaging_topic_exchange  = $pulp::params::messaging_topic_exchange,
   $messaging_event_notifications_enabled = $pulp::params::messaging_event_notifications_enabled,
   $messaging_event_notification_url = $pulp::params::messaging_event_notification_url,
+  $messaging_version         = $pulp::params::messaging_version,
   $broker_url                = $pulp::params::broker_url,
   $broker_use_ssl            = $pulp::params::broker_use_ssl,
   $tasks_login_method        = $pulp::params::tasks_login_method,
