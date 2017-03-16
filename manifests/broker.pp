@@ -20,8 +20,8 @@ class pulp::broker {
     }
   }
 
-  Service[$broker_service] -> Service['pulp_celerybeat']
-  Service[$broker_service] -> Service['pulp_workers']
-  Service[$broker_service] -> Service['pulp_resource_manager']
-  Service[$broker_service] -> Exec['migrate_pulp_db']
+  Service <| title == $broker_service |> -> Service['pulp_celerybeat']
+  Service <| title == $broker_service |> -> Service['pulp_workers']
+  Service <| title == $broker_service |> -> Service['pulp_resource_manager']
+  Service <| title == $broker_service |> -> Exec['migrate_pulp_db']
 }
