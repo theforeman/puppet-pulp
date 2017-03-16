@@ -424,3 +424,21 @@ redirect_path: <%= scope['pulp::lazy_redirect_path'] %>
 https_retrieval: <%= scope['pulp::lazy_https_retrieval'] %>
 download_interval: <%= scope['pulp::lazy_download_interval'] %>
 download_concurrency: <%= scope['pulp::lazy_download_concurrency'] %>
+
+# = Profiling =
+#
+# Settings for profiling Pulp tasks
+#
+# enabled:
+#   This enables the cProfile Python module to profile individual tasks and
+#   store the output by task ID in a directory. Note that enabling this can
+#   impact performance.
+#
+# directory:
+#   The directory that the cProfiles are written to. This directory must be
+#   writeable and readable by Pulp. This directory will be created automatically
+#   if it does not exist.
+
+[profiling]
+# enabled: false
+# directory: /var/lib/pulp/c_profiles
