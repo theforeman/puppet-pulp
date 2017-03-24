@@ -3,7 +3,7 @@
 
 source 'https://rubygems.org'
 
-gem 'puppet', ENV.key?('PUPPET_VERSION') ? "~> #{ENV['PUPPET_VERSION']}" : '~> 3.5'
+gem 'puppet', ENV.key?('PUPPET_VERSION') ? "~> #{ENV['PUPPET_VERSION']}" : '>= 3.5'
 
 gem 'rake'
 gem 'rspec', '~> 3.0'
@@ -21,10 +21,13 @@ gem 'puppet-lint-leading_zero-check'
 gem 'puppet-lint-trailing_comma-check'
 gem 'puppet-lint-file_ensure-check'
 gem 'puppet-lint-param-docs', '>= 1.3.0'
+gem 'puppet-lint-strict_indent-check'
 gem 'simplecov'
 gem 'puppet-blacksmith', '>= 3.1.0', {"groups"=>["development"]}
 gem 'json', '~> 1.0', {"platforms"=>["ruby_19"], "groups"=>["test"]}
 gem 'json_pure', '~> 1.0', {"platforms"=>["ruby_19"], "groups"=>["test"]}
+gem 'beaker-rspec', {"groups"=>["system_tests"]}
+gem 'beaker-puppet_install_helper', {"groups"=>["system_tests"]}
 gem 'metadata-json-lint'
 gem 'kafo_module_lint'
 
