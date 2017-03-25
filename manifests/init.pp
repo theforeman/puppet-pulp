@@ -294,7 +294,7 @@
 #                               Warning: may display and log passwords contained in these files.
 #                               Defaults to false
 #                               type:boolean
-# 
+#
 # $enable_profiling::           Turns on cProfiling of tasks in Pulp
 #                               type:boolean
 #
@@ -446,12 +446,12 @@ class pulp (
     validate_string($ssl_protocol)
   }
 
-if $yum_max_speed {
-  validate_string($yum_max_speed)
-  $real_yum_max_speed = to_bytes($yum_max_speed)
-} else {
-  $real_yum_max_speed = undef
-}
+  if $yum_max_speed {
+    validate_string($yum_max_speed)
+    $real_yum_max_speed = to_bytes($yum_max_speed)
+  } else {
+    $real_yum_max_speed = undef
+  }
 
   include ::mongodb::client
   include ::pulp::apache

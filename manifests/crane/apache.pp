@@ -9,10 +9,9 @@ class pulp::crane::apache {
   apache::vhost { 'crane':
     servername          => $::fqdn,
     docroot             => '/usr/share/crane/',
-    wsgi_script_aliases =>
-                          {
-                            '/' => '/usr/share/crane/crane.wsgi',
-                          },
+    wsgi_script_aliases => {
+      '/' => '/usr/share/crane/crane.wsgi',
+    },
     port                => $::pulp::crane::port,
     priority            => '03',
     ssl                 => true,

@@ -28,7 +28,7 @@ class pulp::crane (
   $key                       = $::pulp::crane::params::key,
   $cert                      = $::pulp::crane::params::cert,
   $ca_cert                   = $::pulp::crane::params::ca_cert,
-  ) inherits pulp::crane::params {
+) inherits pulp::crane::params {
 
   validate_bool($debug)
   validate_absolute_path($data_dir, $key, $cert, $ca_cert)
