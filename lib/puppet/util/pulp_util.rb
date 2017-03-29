@@ -13,6 +13,7 @@ module Puppet
         @config[:host]       = config['server']['host']                 || Facter['fqdn'].value
         @config[:port]       = config['server']['port']                 || 443
         @config[:api_prefix] = config['server']['api_prefix']           || "/pulp/api"
+        @config[:verify_ssl] = config['server']['verify_ssl']           || true
         @config[:cert_dir]   = config['filesystem']['id_cert_dir']      || "~/.pulp"
         @config[:cert_file]  = config['filesystem']['id_cert_filename'] || "user-cert.pem"
       end
@@ -98,7 +99,11 @@ module Puppet
           https.use_ssl = true
           https.cert = OpenSSL::X509::Certificate.new(cert_raw)
           https.key = OpenSSL::PKey::RSA.new(cert_raw)
-          https.verify_mode = OpenSSL::SSL::VERIFY_PEER
+          if [true, 'True', 1].include? @config[:verify_ssl]
+            https.verify_mode = OpenSSL::SSL::VERIFY_PEER
+          else
+            https.verify_mode = OpenSSL::SSL::VERIFY_NONE
+          end
           #  https.ca_file = '/etc/pki/ca-trust/source/anchors/puppet_ca.pem'
           resp = https.request req
           if resp.code == '200'
