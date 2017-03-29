@@ -233,4 +233,49 @@ Puppet::Type.newtype(:pulp_rpmrepo) do
     bound consumers to grant access to this repository"
   end
 
+  newproperty(:updateinfo_checksum_type) do
+    desc "type of checksum to use during updateinfo.xml
+    generation"
+  end
+
+  newproperty(:repoview, :boolean => false) do
+    desc 'if "true", static HTML files will be generated
+    during publish by the repoview tool for faster
+    browsing of the repository. Enables
+    --generate-sqlite flag.'
+    newvalues(:true, :false)
+    munge do |value|
+      @resource.munge_boolean(value)
+    end
+  end
+
+  newproperty(:require_signature, :boolean => false) do
+    desc 'if "Require that imported packages should be signed.
+    Defaults to False'
+    newvalues(:true, :false)
+    munge do |value|
+      @resource.munge_boolean(value)
+    end
+  end
+
+  newproperty(:allowed_keys, :array_matching => :all) do
+    desc "List of allowed signature keys that imported packages
+    can be signed with. Comma separated values."
+  end
+
+  newproperty(:download_policy) do
+    desc "content downloading policy"
+    newvalues(:immediate, :background, :on_demand)
+  end
+
+  newproperty(:basicauth_user) do
+    desc "username used to authenticate with sync location via HTTP
+    basic auth"
+  end
+
+  newproperty(:basicauth_pass) do
+    desc "password used to authenticate with sync location via HTTP
+    basic auth"
+  end
+
 end

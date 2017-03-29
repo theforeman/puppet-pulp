@@ -75,35 +75,42 @@ Puppet::Type.type(:pulp_rpmrepo).provide(:api) do
 
     repo['distributors'].each { |distributor|
       if distributor['id'] == 'yum_distributor'
-        hash[:relative_url]     = distributor['config']['relative_url']
-        hash[:serve_http]       = distributor['config']['http'] ? :true : :false
-        hash[:serve_https]      = distributor['config']['https'] ? :true : :false
-        hash[:checksum_type]    = distributor['config']['checksum_type']
-        hash[:gpg_key]          = distributor['config']['gpgkey']
-        hash[:generate_sqlite]  = distributor['config']['generate_sqlite'] ? :true : :false
-        hash[:auth_ca]          = distributor['config']['auth_ca']
-        hash[:auth_cert]        = distributor['config']['auth_cert']
-        hash[:host_ca]          = distributor['config']['https_ca']
+        hash[:auth_ca]                  = distributor['config']['auth_ca']
+        hash[:auth_cert]                = distributor['config']['auth_cert']
+        hash[:checksum_type]            = distributor['config']['checksum_type']
+        hash[:generate_sqlite]          = distributor['config']['generate_sqlite'] ? :true : :false
+        hash[:gpg_key]                  = distributor['config']['gpgkey']
+        hash[:host_ca]                  = distributor['config']['https_ca']
+        hash[:relative_url]             = distributor['config']['relative_url']
+        hash[:repoview]                 = distributor['config']['repoview'] ? :true : :false
+        hash[:serve_http]               = distributor['config']['http'] ? :true : :false
+        hash[:serve_https]              = distributor['config']['https'] ? :true : :false
+        hash[:updateinfo_checksum_type] = distributor['config']['updateinfo_checksum_type'] || ''
       end
     }
 
     repo['importers'].each { |importer|
       if importer['id'] == 'yum_importer'
-        hash[:feed]             = importer['config']['feed'] || ''
-        hash[:validate]         = importer['config']['validate'] ? :true : :false
-        hash[:skip]             = importer['config']['type_skip_list']
-        hash[:feed_ca_cert]     = importer['config']['ssl_ca_cert']
-        hash[:verify_feed_ssl]  = importer['config']['ssl_validation'] ? :true : :false
-        hash[:feed_cert]        = importer['config']['ssl_client_cert']
-        hash[:feed_key]         = importer['config']['ssl_client_key']
-        hash[:proxy_host]       = importer['config']['proxy_host']
-        hash[:proxy_port]       = importer['config']['proxy_port']
-        hash[:proxy_user]       = importer['config']['proxy_username']
-        hash[:proxy_pass]       = importer['config']['proxy_password']
-        hash[:max_downloads]    = importer['config']['max_downloads']
-        hash[:max_speed]        = importer['config']['max_speed']
-        hash[:remove_missing]   = importer['config']['remove_missing'] ? :true : :false
-        hash[:retain_old_count] = importer['config']['retain_old_count']
+        hash[:basicauth_pass]    = importer['config']['basic_auth_password'] || ''
+        hash[:basicauth_user]    = importer['config']['basic_auth_username'] || ''
+        hash[:download_policy]   = importer['config']['download_policy']
+        hash[:allowed_keys]      = importer['config']['allowed_keys'] || ''
+        hash[:require_signature] = importer['config']['require_signature'] ? :true : :false
+        hash[:feed]              = importer['config']['feed'] || ''
+        hash[:validate]          = importer['config']['validate'] ? :true : :false
+        hash[:skip]              = importer['config']['type_skip_list']
+        hash[:feed_ca_cert]      = importer['config']['ssl_ca_cert']
+        hash[:verify_feed_ssl]   = importer['config']['ssl_validation'] ? :true : :false
+        hash[:feed_cert]         = importer['config']['ssl_client_cert']
+        hash[:feed_key]          = importer['config']['ssl_client_key']
+        hash[:proxy_host]        = importer['config']['proxy_host']
+        hash[:proxy_port]        = importer['config']['proxy_port']
+        hash[:proxy_user]        = importer['config']['proxy_username']
+        hash[:proxy_pass]        = importer['config']['proxy_password']
+        hash[:max_downloads]     = importer['config']['max_downloads']
+        hash[:max_speed]         = importer['config']['max_speed']
+        hash[:remove_missing]    = importer['config']['remove_missing'] ? :true : :false
+        hash[:retain_old_count]  = importer['config']['retain_old_count']
       end
     }
 
@@ -150,33 +157,40 @@ Puppet::Type.type(:pulp_rpmrepo).provide(:api) do
 
   def set_repo
     params_hash = {
-      '--display-name'     => resource[:display_name],
-      '--description'      => resource[:description],
-      '--note'             => resource[:note],
-      '--feed'             => resource[:feed],
-      '--validate'         => resource[:validate],
-      '--skip'             => resource[:skip],
-      '--feed-ca-cert'     => resource[:feed_ca_cert],
-      '--verify-feed-ssl'  => resource[:verify_feed_ssl],
-      '--feed-cert'        => resource[:feed_cert],
-      '--feed-key'         => resource[:feed_key],
-      '--proxy-host'       => resource[:proxy_host],
-      '--proxy-port'       => resource[:proxy_port],
-      '--proxy-user'       => resource[:proxy_user],
-      '--proxy-pass'       => resource[:proxy_pass],
-      '--max-downloads'    => resource[:max_downloads],
-      '--max-speed'        => resource[:max_speed],
-      '--remove-missing'   => resource[:remove_missing],
-      '--retain-old-count' => resource[:retain_old_count],
-      '--relative-url'     => resource[:relative_url],
-      '--serve-http'       => resource[:serve_http],
-      '--serve-https'      => resource[:serve_https],
-      '--checksum-type'    => resource[:checksum_type],
-      '--gpg-key'          => resource[:gpg_key],
-      '--generate-sqlite'  => resource[:generate_sqlite],
-      '--host-ca'          => resource[:host_ca],
-      '--auth-ca'          => resource[:auth_ca],
-      '--auth-cert'        => resource[:auth_cert],
+      '--allowed-keys'             => resource[:allowed_keys],
+      '--auth-ca'                  => resource[:auth_ca],
+      '--auth-cert'                => resource[:auth_cert],
+      '--basicauth-pass'           => resource[:basicauth_pass],
+      '--basicauth-user'           => resource[:basicauth_user],
+      '--checksum-type'            => resource[:checksum_type],
+      '--description'              => resource[:description],
+      '--display-name'             => resource[:display_name],
+      '--download-policy'          => resource[:download_policy],
+      '--feed'                     => resource[:feed],
+      '--feed-ca-cert'             => resource[:feed_ca_cert],
+      '--feed-cert'                => resource[:feed_cert],
+      '--feed-key'                 => resource[:feed_key],
+      '--generate-sqlite'          => resource[:generate_sqlite],
+      '--gpg-key'                  => resource[:gpg_key],
+      '--host-ca'                  => resource[:host_ca],
+      '--max-downloads'            => resource[:max_downloads],
+      '--max-speed'                => resource[:max_speed],
+      '--note'                     => resource[:note],
+      '--proxy-host'               => resource[:proxy_host],
+      '--proxy-pass'               => resource[:proxy_pass],
+      '--proxy-port'               => resource[:proxy_port],
+      '--proxy-user'               => resource[:proxy_user],
+      '--relative-url'             => resource[:relative_url],
+      '--remove-missing'           => resource[:remove_missing],
+      '--repoview'                 => resource[:repoview],
+      '--require-signature'        => resource[:require_signature],
+      '--retain-old-count'         => resource[:retain_old_count],
+      '--serve-http'               => resource[:serve_http],
+      '--serve-https'              => resource[:serve_https],
+      '--skip'                     => resource[:skip],
+      '--updateinfo_checksum_type' => resource[:updateinfo_checksum_type],
+      '--validate'                 => resource[:validate],
+      '--verify-feed-ssl'          => resource[:verify_feed_ssl],
     }
 
     params= []
