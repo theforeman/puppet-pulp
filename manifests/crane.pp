@@ -35,8 +35,8 @@ class pulp::crane (
   validate_integer($port)
   validate_integer($data_dir_polling_interval)
 
-  class { '::pulp::crane::install': } ~>
-  class { '::pulp::crane::config': } ~>
-  class { '::pulp::crane::apache': } ->
-  Class['pulp::crane']
+  class { '::pulp::crane::install': }
+  ~> class { '::pulp::crane::config': }
+  ~> class { '::pulp::crane::apache': }
+  -> Class['pulp::crane']
 }
