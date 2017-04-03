@@ -173,4 +173,53 @@ describe 'pulp::config' do
       should contain_file("/etc/pulp/server/plugins.conf.d/ostree_importer.json").with(importer_params)
     end
   end
+
+  describe 'repo_auth' do
+    context 'by default' do
+      let :pre_condition do
+        "class {'pulp':}"
+      end
+
+      let :facts do
+        default_facts
+      end
+
+      it 'defaults to false' do
+        should contain_file('/etc/pulp/repo_auth.conf').
+          with_content(/^enabled: false$/)
+      end
+    end
+    context 'when set to true' do
+      let :pre_condition do
+        "class {'pulp':
+          repo_auth => true,
+        }"
+      end
+
+      let :facts do
+        default_facts
+      end
+
+      it 'sets enabled to true' do
+        should contain_file('/etc/pulp/repo_auth.conf').
+          with_content(/^enabled: true$/)
+      end
+    end
+    context 'when set to false' do
+      let :pre_condition do
+        "class {'pulp':
+          repo_auth => false,
+        }"
+      end
+
+      let :facts do
+        default_facts
+      end
+
+      it 'sets enabled to false' do
+        should contain_file('/etc/pulp/repo_auth.conf').
+          with_content(/^enabled: false$/)
+      end
+    end
+  end
 end
