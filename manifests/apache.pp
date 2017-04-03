@@ -2,6 +2,7 @@
 class pulp::apache {
   include ::apache
   include ::apache::mod::proxy
+  include ::apache::mod::proxy_http
   include ::apache::mod::wsgi
   include ::apache::mod::ssl
   include ::apache::mod::xsendfile
