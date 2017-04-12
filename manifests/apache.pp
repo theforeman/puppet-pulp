@@ -36,7 +36,7 @@ class pulp::apache {
       $ldap_custom_fragment = {}
     }
 
-    $directories = [
+    $base_directories = [
       merge($webservices_wsgi_directory, $ldap_custom_fragment),
       {
         'path'     => '/usr/share/pulp/wsgi',
@@ -47,6 +47,19 @@ class pulp::apache {
         'provider' => 'location',
       },
     ]
+
+    if $::pulp::ssl_username and !empty($::pulp::ssl_username) {
+      $directories = concat(
+        $base_directories,
+        {
+          'path'            => '/pulp/api',
+          'provider'        => 'Location',
+          'custom_fragment' => "SSLUsername ${::pulp::ssl_username}",
+        }
+      )
+    } else {
+      $directories = $base_directories
+    }
 
     $aliases = [
       {
@@ -63,6 +76,8 @@ class pulp::apache {
       port                       => 443,
       servername                 => $::fqdn,
       serveraliases              => [$::hostname],
+      keepalive                  => 'on',
+      max_keepalive_requests     => $::pulp::max_keep_alive,
       ssl                        => true,
       ssl_cert                   => $::pulp::https_cert,
       ssl_key                    => $::pulp::https_key,
@@ -89,7 +104,8 @@ class pulp::apache {
       aliases                    => $aliases,
       options                    => ['SymLinksIfOwnerMatch'],
       add_default_charset        => 'UTF-8',
-      custom_fragment            => template('pulp/etc/httpd/conf.d/_ssl_vhost.conf.erb'),
+      # allow older yum clients to connect, see bz 647828
+      custom_fragment            => 'SSLInsecureRenegotiation On',
     }
   } else {
     file {'/etc/httpd/conf.d/pulp.conf':
