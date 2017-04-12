@@ -4,100 +4,91 @@
 #
 # === Parameters:
 #
-# $version::                    pulp package version, it's passed to ensure parameter of package resource
-#                               can be set to specific version number, 'latest', 'present' etc.
+# $version::                    pulp package version, it's passed to ensure parameter of package resource can be set to
+#                               specific version number, 'latest', 'present' etc.
 #
-# $crane_debug::                Enable crane debug logging
-#                               type:boolean
+# $crane_debug::                Whether to enable crane debug logging
 #
 # $crane_port::                 Port for Crane to run on
-#                               type:integer
 #
 # $crane_data_dir::             Directory containing docker v1/v2 artifacts published by pulp
 #
-# $oauth_key::                  string; key to enable OAuth style authentication
+# $oauth_key::                  Key to enable OAuth style authentication
 #
-# $oauth_secret::               string; shared secret that can be used for OAuth style
-#                               authentication
+# $oauth_secret::               Shared secret that can be used for OAuth style authentication
 #
-# $oauth_enabled::              boolean; controls whether OAuth authentication is enabled
+# $oauth_enabled::              Controls whether OAuth authentication is enabled
 #
 # $messaging_url::              the url used to contact the broker: <protocol>://<host>:<port>/<virtual-host>
 #                               Supported <protocol>  values are 'tcp' or 'ssl' depending on if SSL should be used or not.
 #                               The <virtual-host> is optional, and is only applicable to RabbitMQ broker environments.
 #
-# $messaging_transport::        The type of broker you are connecting to. The default is 'qpid'.
-#                               For RabbitMQ, 'rabbitmq' should be used.
+# $messaging_transport::        The type of broker you are connecting to.
 #
 # $messaging_ca_cert::          Absolute path to PEM encoded CA certificate file, used by Pulp to validate the identity
 #                               of the broker using SSL.
 #
-# $messaging_client_cert::      Absolute path to PEM encoded file containing both the private key and
-#                               certificate Pulp should present to the broker to be authenticated by the broker.
+# $messaging_client_cert::      Absolute path to PEM encoded file containing both the private key and certificate Pulp
+#                               should present to the broker to be authenticated by the broker.
 #
 # $messaging_version::          Determines the version of packages related to the 'messaging transport protocol'.
-#
 #
 # $broker_url::                 A URL to a broker that Celery can use to queue tasks:
 #                               qpid://<username>:<password>@<hostname>:<port>/
 #
-# $broker_use_ssl::             Require SSL if set to 'true', otherwise do not require SSL.
+# $broker_use_ssl::             Whether to require SSL.
 #
-# $tasks_login_method::         Select the SASL login method used to connect to the broker. This should be left
-#                               unset except in special cases such as SSL client certificate authentication.
+# $tasks_login_method::         Select the SASL login method used to connect to the broker. This should be left unset
+#                               except in special cases such as SSL client certificate authentication.
 #
-# $ca_cert::                    full path to the CA certificate that will be used to sign consumer
-#                               and admin identification certificates; this must match the value of
-#                               SSLCACertificateFile in /etc/httpd/conf.d/pulp.conf
+# $ca_cert::                    Full path to the CA certificate that will be used to sign consumer and admin
+#                               identification certificates; this must match the value of SSLCACertificateFile in
+#                               Apache.
 #
-# $ca_key::                     path to the private key for the above CA certificate
+# $ca_key::                     Path to the private key for the above CA certificate
 #
-# $db_name::                    name of the database to use
+# $db_name::                    Name of the database to use
 #
-# $db_seeds::                   comma-separated list of hostname:port of database replica seed hosts
+# $db_seeds::                   Comma-separated list of hostname:port of database replica seed hosts
 #
 # $db_username::                The user name to use for authenticating to the MongoDB server
 #
 # $db_password::                The password to use for authenticating to the MongoDB server
 #
-# $db_replica_set::             and set this value to the name of replica set configured in MongoDB,
-#                               if one is in use
+# $db_replica_set::             The name of replica set configured in MongoDB, if one is in use
 #
-# $db_ssl::                     If True, create the connection to the server using SSL.
+# $db_ssl::                     Whether to connect to the database server using SSL.
 #
-# $db_ssl_keyfile::             A path to the private keyfile used to identify the local connection against
-#                               mongod. If included with the certfile then only the ssl_certfile is needed.
+# $db_ssl_keyfile::             A path to the private keyfile used to identify the local connection against mongod. If
+#                               included with the certfile then only the ssl_certfile is needed.
 #
 # $db_ssl_certfile::            The certificate file used to identify the local connection against mongod.
 #
-# $db_verify_ssl::              Specifies whether a certificate is required from the other side of the
-#                               connection, and whether it will be validated if provided. If it is true, then
-#                               the ca_certs parameter must point to a file of CA certificates used to
-#                               validate the connection.
+# $db_verify_ssl::              Specifies whether a certificate is required from the other side of the connection, and
+#                               whether it will be validated if provided. If it is true, then the ca_certs parameter
+#                               must point to a file of CA certificates used to validate the connection.
 #
-# $db_ca_path::                 The ca_certs file contains a set of concatenated "certification authority"
-#                               certificates, which are used to validate certificates passed from the other end
-#                               of the connection.
+# $db_ca_path::                 The ca_certs file contains a set of concatenated "certification authority" certificates,
+#                               which are used to validate certificates passed from the other end of the connection.
 #
 # $db_unsafe_autoretry::        If true, retry commands to the database if there is a connection error.
 #                               Warning: if set to true, this setting can result in duplicate records.
 #
-# $db_write_concern::           Write concern of 'majority' or 'all'. When 'all' is specified, 'w' is set to
-#                               number of seeds specified. For version of MongoDB < 2.6, replica_set must also
-#                               be specified. Please note that 'all' will cause Pulp to halt if any of the
-#                               replica set members is not available. 'majority' is used by defau
+# $db_write_concern::           Write concern of 'majority' or 'all'. When 'all' is specified, 'w' is set to number of
+#                               seeds specified. For version of MongoDB < 2.6, replica_set must also be specified.
+#                               Please note that 'all' will cause Pulp to halt if any of the replica set members is not
+#                               available. 'majority' is used by default
 #
-# $server_name::                hostname the admin client and consumers should use when accessing
-#                               the server; if not specified, this is defaulted to the server's hostname
+# $server_name::                Hostname the admin client and consumers should use when accessing the server
 #
-# $key_url::                    URL to use for GPG keys
+# $key_url::                    Path within the URL to use for GPG keys
 #
-# $ks_url::                     URL to use for kickstart trees
+# $ks_url::                     Path within the URL to use for kickstart trees
 #
-# $debugging_mode::             boolean; toggles Pulp's debugging capabilities
+# $debugging_mode::             Whether to enable Pulp's debugging capabilities
 #
-# $log_level::                  The desired logging level. Options are: CRITICAL, ERROR, WARNING, INFO, DEBUG,
-#                               and NOTSET. Pulp will default to INFO.
+# $log_level::                  The desired logging level. Options are: CRITICAL, ERROR, WARNING, INFO, DEBUG, and
+#                               NOTSET.
 #
 # $server_working_directory::   Path to where pulp workers can create working directories needed to complete tasks
 #
@@ -105,45 +96,39 @@
 #
 # $rsa_pub::                    The RSA public key used for authentication.
 #
-# $https_cert::                 apache public certificate for ssl
+# $https_cert::                 Apache public certificate for ssl
 #
-# $https_key::                  apache private certificate for ssl
+# $https_key::                  Apache private certificate for ssl
 #
 # $https_chain::                apache chain file for ssl
 #
-# $ssl_username::               Value to use for SSLUsername directive in apache vhost. Defaults to
-#                               SSL_CLIENT_S_DN_CN. Set false to unset directive.
+# $ssl_username::               Value to use for SSLUsername directive in apache vhost. Defaults to SSL_CLIENT_S_DN_CN.
+#                               Set an empty string or false to unset directive.
 #
-# $consumers_crl::              Certificate revocation list for consumers which
-#                               are no valid (have had their client certs
-#                               revoked)
+# $consumers_crl::              Certificate revocation list for consumers which are no valid (have had their client
+#                               certs revoked)
 #
-# $user_cert_expiration::       number of days a user certificate is valid
+# $user_cert_expiration::       Number of days a user certificate is valid
 #
-# $default_login::              default admin username of the Pulp server; this user will be
-#                               the first time the server is started
+# $default_login::              Default admin username of the Pulp server; this user will be the first time the server
+#                               is started
 #
-# $default_password::           default password for admin when it is first created; this
-#                               should be changed once the server is operational
+# $default_password::           Default password for admin when it is first created; this should be changed once the
+#                               server is operational
 #
-# $repo_auth::                  Boolean to determine whether repos managed by
-#                               pulp will require authentication.
-#                               type:boolean
+# $repo_auth::                  Whether to determine whether repos managed by pulp will require authentication.
 #
-# $consumer_cert_expiration::   number of days a consumer certificate is valid
+# $consumer_cert_expiration::   Number of days a consumer certificate is valid
 #
 # $disabled_authenticators::    List of repo authenticators to disable.
-#                               type:array
 #
 # $additional_wsgi_scripts::    Hash of additional paths and WSGI script locations for Pulp vhost
-#                               type:hash
 #
-# $reset_cache::                Boolean to flush the cache. Defaults to false
-#                               type:boolean
+# $reset_cache::                Whether to force a cache flush. Not recommend in a regular puppet environment.
 #
 # $ssl_verify_client::          Enforce use of SSL authentication for yum repos access
 #
-# $ssl_protocol::               List which versions of the SSL/TLS protocol will be accepted in new connections
+# $ssl_protocol::               Versions of the SSL/TLS protocol will be accepted in new connections
 #
 # $serial_number_path::         Path to the serial number file
 #
@@ -154,26 +139,25 @@
 #                               Supported <protocol>  values are 'tcp' or 'ssl' depending on if SSL should be used or not.
 #                               The <virtual-host> is optional, and is only applicable to RabbitMQ broker environments.
 #
-# $messaging_auth_enabled::     Message authentication enabled flag. The default is 'true' which enables authentication.
-#                               To disable authentication, use 'false'.
+# $messaging_auth_enabled::     Whether to enable message authentication.
 #
 # $messaging_topic_exchange::   The name of the exchange to use. The exchange must be a topic exchange. The
-#                               default is 'amq.topic', which is a default exchange that is guaranteed to exist on a Qpid broker.
+#                               default 'amq.topic' is a default exchange that is guaranteed to exist on a Qpid broker.
 #
-# $messaging_event_notifications_enabled:: Enables or disables Pulp event notfications on the message bus. Defaults to 'false'.
+# $messaging_event_notifications_enabled:: Whether to enable Pulp event notfications on the message bus.
 #
-# $messaging_event_notification_url:: The AMQP URL for event notifications. Defaults to 'qpid://localhost:5672/'.
+# $messaging_event_notification_url:: The AMQP URL for event notifications.
 #
-# $email_host::                 host name of the MTA pulp should relay through
+# $email_host::                 Hostname of the MTA pulp should relay through
 #
-# $email_port::                 destination port to connect on
+# $email_port::                 Port of the MTA relay
 #
-# $email_from::                 the "From" address of each email the system sends
+# $email_from::                 The "From" address of each email the system sends
 #
-# $email_enabled::              boolean controls whether or not emails will be sent
-#                               type:boolean
+# $email_enabled::              Whether emails will be sent
 #
-# $manage_squid::               boolean controls whether squid configuration is managed or manual
+# $manage_squid::               Whether the Squid configuration is managed. This is used by Pulp Streamer.
+#                               Requires the squid module.
 #
 # $lazy_redirect_host::         The host FQDN or IP to which requests are redirected.
 #
@@ -181,97 +165,62 @@
 #
 # $lazy_redirect_path::         The base path to which requests are redirected
 #
-# $lazy_https_retrieval::       boolean; controls whether Pulp uses HTTPS or HTTP to
-#                               retrieve content from the streamer.
-#                               WARNING: Setting this to 'false' is not safe if you wish
-#                               to use Pulp to provide repository entitlement
-#                               enforcement. It is strongly recommended to keep
-#                               this set to 'true' and use certificates that are
-#                               signed by a trusted authority on the web server
+# $lazy_https_retrieval::       controls whether Pulp uses HTTPS or HTTP to retrieve content from the streamer.
+#                               WARNING: Setting this to 'false' is not safe if you wish to use Pulp to provide
+#                               repository entitlement enforcement.  It is strongly recommended to keep this set to
+#                               'true' and use certificates that are signed by a trusted authority on the web server
 #                               that serves as the streamer reverse proxy.
 #
-# $lazy_download_interval::     The interval in minutes between checks for content cached
-#                               by the Squid proxy.
+# $lazy_download_interval::     The interval in minutes between checks for content cached by the Squid proxy.
 #
-# $lazy_download_concurrency::  The number of downloads to perform concurrently when
-#                               downloading content from the Squid cache.
+# $lazy_download_concurrency::  The number of downloads to perform concurrently when downloading content from the Squid
+#                               cache.
 #
 # $proxy_url::                  URL of the proxy server
 #
 # $proxy_port::                 Port the proxy is running on
-#                               type:integer
 #
 # $proxy_username::             Proxy username for authentication
 #
 # $proxy_password::             Proxy password for authentication
 #
 # $yum_max_speed::              The maximum download speed for a Pulp task, such as a sync. (e.g. "4 Kb" or 1Gb")
-#                               type:string
 #
-# $num_workers::                Number of Pulp workers to use
-#                               defaults to number of processors and maxs at 8
-#                               type:integer
+# $num_workers::                Number of Pulp workers to use.
 #
-# $enable_katello::             Boolean to enable pulp katello plugin. Defaults
-#                               to false
-#                               type:boolean
+# $enable_katello::             Whether to enable pulp katello plugin.
 #
-# $enable_crane::               Boolean to enable crane docker repository
-#                               type:boolean
+# $enable_crane::               Whether to enable crane docker repository
 #
-# $max_tasks_per_child::        Number of tasks after which the worker is restarted
-#                               and the memory it allocated is returned to the system
-#                               type:integer
+# $max_tasks_per_child::        Number of tasks after which the worker is restarted and the memory it allocated is
+#                               returned to the system
 #
-# $enable_rpm::                 Boolean to enable rpm plugin. Defaults
-#                               to true
-#                               type:boolean
+# $enable_rpm::                 Whether to enable rpm plugin.
 #
-# $enable_docker::              Boolean to enable docker plugin. Defaults
-#                               to false
-#                               type:boolean
+# $enable_docker::              Whether to enable docker plugin.
 #
-# $enable_puppet::              Boolean to enable puppet plugin. Defaults
-#                               to false
-#                               type:boolean
+# $enable_puppet::              Whether to enable puppet plugin.
 #
-# $enable_python::              Boolean to enable python plugin. Defaults
-#                               to false
-#                               type:boolean
+# $enable_python::              Whether to enable python plugin.
 #
-# $enable_ostree::              Boolean to enable ostree plugin. Defaults
-#                               to false
-#                               type:boolean
+# $enable_ostree::              Whether to enable ostree plugin.
 #
-# $enable_parent_node::         Boolean to enable pulp parent nodes. Defaults
-#                               to false
-#                               type:boolean
+# $enable_parent_node::         Whether to enable pulp parent nodes.
 #
-# $enable_http::                Boolean to enable http access to rpm repos. Defaults
-#                               to false
-#                               type:boolean
+# $enable_http::                Whether to enable http access to rpm repos.
 #
+# $manage_httpd::               Whether to install and configure the httpd server.
 #
-# $manage_httpd::               Boolean to install and configure the httpd server. Defaults
-#                               to true
-#                               type:boolean
+# $manage_plugins_httpd::       Whether to install the enabled pulp plugins apache configs even if $manage_httpd is
+#                               false.
 #
-# $manage_plugins_httpd::       Boolean whether to install the enabled pulp plugins apache configs
-#                               even if $manage_httpd is false.  Defaults to true.
-#                               type:boolean
+# $manage_broker::              Whether install and configure the qpid or rabbitmq broker.
 #
-# $manage_broker::              Boolean to install and configure the qpid or rabbitmq broker.
-#                               Defaults to true
-#                               type:boolean
-#
-# $manage_db::                  Boolean to install and configure the mongodb. Defaults
-#                               to true
-#                               type:boolean
+# $manage_db::                  Boolean to install and configure the mongodb.
 #
 # $node_certificate::           The absolute path to the node SSL certificate
 #
-# $node_verify_ssl::            Verify node SSL
-#                               type:boolean
+# $node_verify_ssl::            Whether to verify node SSL
 #
 # $node_server_ca_cert::        Server cert for pulp node
 #
@@ -282,20 +231,15 @@
 # $node_oauth_secret::          The oauth secret used to authenticate to the parent node
 #
 # $max_keep_alive::             Configuration value for apache MaxKeepAliveRequests
-#                               type:integer
 #
 # $puppet_wsgi_processes::      Number of WSGI processes to spawn for the puppet webapp
 #
 # $migrate_db_timeout::         Change the timeout for pulp-manage-db
-#                               type:integer
 #
 # $show_conf_diff::             Allow showing diff for changes in server.conf and importer.json;
 #                               Warning: may display and log passwords contained in these files.
-#                               Defaults to false
-#                               type:boolean
 #
 # $enable_profiling::           Turns on cProfiling of tasks in Pulp
-#                               type:boolean
 #
 # $profiling_directory::        Directory to store task profiling data in
 #
