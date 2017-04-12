@@ -2,15 +2,15 @@
 # node_certificate - The absolute path to the node SSL certificate
 
 [main]
-node_certificate: <%= scope['pulp::node_certificate'] %>
-verify_ssl: <%= scope['pulp::node_verify_ssl'] %>
-ca_path: <%= scope['pulp::node_server_ca_cert'] %>
+node_certificate: <%= @node_certificate %>
+verify_ssl: <%= @verify_ssl %>
+ca_path: <%= @ca_path %>
 
 # The oauth configuration used to authenticate to this node
 # user_id - The pulp user ID
 
 [oauth]
-user_id: <%= scope['pulp::node_oauth_effective_user'] %>
+user_id: <%= @oauth_user_id %>
 
 # The oauth configuration used to authenticate to the parent node
 # key     - The oauth key
@@ -18,6 +18,6 @@ user_id: <%= scope['pulp::node_oauth_effective_user'] %>
 # user_id - The pulp user ID
 
 [parent_oauth]
-key: <%= scope['pulp::node_oauth_key'] %>
-secret: <%= scope['pulp::node_oauth_secret'] %>
-user_id: <%= scope['pulp::node_oauth_effective_user'] %>
+key: <%= @oauth_key %>
+secret: <%= @oauth_secret %>
+user_id: <%= @oauth_user_id %>
