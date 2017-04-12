@@ -126,13 +126,8 @@ class pulp::config {
   }
 
   if $pulp::manage_squid {
-    if $::osfamily == 'RedHat' and versioncmp($::operatingsystemrelease, '7') < 0 {
-      $deprecated_opts = true
-    } else {
-      $deprecated_opts = false
-    }
     class { '::squid3':
-      use_deprecated_opts           => $deprecated_opts,
+      use_deprecated_opts           => false,
       http_port                     => [ '3128 accel defaultsite=127.0.0.1:8751' ],
       acl                           => [ 'Safe_ports port 3128' ],
       http_access                   => [ 'allow localhost', 'deny to_localhost', 'deny all' ],
