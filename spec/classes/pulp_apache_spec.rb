@@ -33,7 +33,7 @@ describe 'pulp::apache' do
         :docroot                 => '/usr/share/pulp/wsgi',
         :ssl                     => true,
         :ssl_verify_client       => 'optional',
-        :ssl_protocol            => 'all -SSLv2 -SSLv3',
+        :ssl_protocol            => ['all', '-SSLv2', '-SSLv3'],
         :ssl_options             => '+StdEnvVars +ExportCertData',
         :ssl_verify_depth        => '3',
         :wsgi_process_group      => 'pulp',

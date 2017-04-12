@@ -319,7 +319,7 @@ class pulp (
   Optional[Stdlib::Absolutepath] $consumers_crl = $::pulp::params::consumers_crl,
   Boolean $reset_cache = $::pulp::params::reset_cache,
   Enum['none', 'optional', 'require', 'optional_no_ca'] $ssl_verify_client = $::pulp::params::ssl_verify_client,
-  String $ssl_protocol = $::pulp::params::ssl_protocol,
+  Variant[Array[String], String] $ssl_protocol = $::pulp::params::ssl_protocol,
   Boolean $repo_auth = $::pulp::params::repo_auth,
   Optional[String] $proxy_url = $::pulp::params::proxy_url,
   Optional[Integer[1, 65535]] $proxy_port = $::pulp::params::proxy_port,

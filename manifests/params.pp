@@ -58,7 +58,7 @@ class pulp::params {
   $ssl_username = 'SSL_CLIENT_S_DN_CN'
   $enable_http = false
   $ssl_verify_client = 'require'
-  $ssl_protocol = 'all -SSLv2 -SSLv3'
+  $ssl_protocol = ['all', '-SSLv2', '-SSLv3']
 
   $crane_debug = false
   $crane_port = 5000
