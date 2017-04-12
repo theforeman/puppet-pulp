@@ -5,7 +5,6 @@
 # === Parameters:
 #
 # $debug::                      Enable debug logging
-#                               type:boolean
 #
 # $key::                        Path to the SSL key for https
 #
@@ -14,27 +13,19 @@
 # $ca_cert::                    Path to the SSL CA cert for https
 #
 # $port::                       Port for Crane to run on
-#                               type:integer
 #
 # $data_dir::                   Directory containing docker v1/v2 artifacts published by pulp
 #
 # $data_dir_polling_interval::  The number of seconds between checks for updates to metadata files in the data_dir
-#                               type:integer
 class pulp::crane (
-  $debug                     = $::pulp::crane::params::debug,
-  $port                      = $::pulp::crane::params::port,
-  $data_dir                  = $::pulp::crane::params::data_dir,
-  $data_dir_polling_interval = $::pulp::crane::params::data_dir_polling_interval,
-  $key                       = $::pulp::crane::params::key,
-  $cert                      = $::pulp::crane::params::cert,
-  $ca_cert                   = $::pulp::crane::params::ca_cert,
+  Boolean $debug = $::pulp::crane::params::debug,
+  Integer[0, 65535] $port = $::pulp::crane::params::port,
+  Stdlib::Absolutepath $data_dir = $::pulp::crane::params::data_dir,
+  Integer[0] $data_dir_polling_interval = $::pulp::crane::params::data_dir_polling_interval,
+  Stdlib::Absolutepath $key = $::pulp::crane::params::key,
+  Stdlib::Absolutepath $cert = $::pulp::crane::params::cert,
+  Stdlib::Absolutepath $ca_cert = $::pulp::crane::params::ca_cert,
 ) inherits pulp::crane::params {
-
-  validate_bool($debug)
-  validate_absolute_path($data_dir, $key, $cert, $ca_cert)
-  validate_integer($port)
-  validate_integer($data_dir_polling_interval)
-
   class { '::pulp::crane::install': } ~>
   class { '::pulp::crane::config': } ~>
   class { '::pulp::crane::apache': } ->
