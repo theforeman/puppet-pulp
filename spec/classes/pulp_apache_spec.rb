@@ -16,6 +16,8 @@ describe 'pulp::apache' do
 
     it 'should include apache with modules' do
       is_expected.to contain_class('apache')
+      is_expected.to contain_class('apache::mod::proxy')
+      is_expected.to contain_class('apache::mod::proxy_http')
       is_expected.to contain_class('apache::mod::wsgi')
       is_expected.to contain_class('apache::mod::ssl')
     end
