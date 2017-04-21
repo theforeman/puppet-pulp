@@ -57,25 +57,6 @@ describe 'pulp::config' do
     end
   end
 
-  context 'with database auth parameters on unsupported mongo' do
-    let :pre_condition do
-      "class {'pulp':
-        db_username => 'rspec',
-        db_password => 'rsp3c4l1f3',
-       }"
-    end
-
-    let :facts do
-      default_facts
-    end
-
-    it "should not configure auth" do
-      should contain_file('/etc/pulp/server.conf').
-        without_content(/^username: rspec$/).
-        without_content(/^password: rsp3c4l1f3$/)
-    end
-  end
-
   context 'with database auth parameters on supported mongo' do
     let :pre_condition do
       "class {'pulp':
@@ -85,7 +66,7 @@ describe 'pulp::config' do
     end
 
     let :facts do
-      default_facts.merge(:mongodb_version => '2.6.1')
+      default_facts
     end
 
     it "should configure auth" do
