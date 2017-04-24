@@ -127,8 +127,7 @@
 #                               should be changed once the server is operational
 #
 # $repo_auth::                  Boolean to determine whether repos managed by
-#                               pulp will require authentication. Defaults
-#                               to true
+#                               pulp will require authentication.
 #                               type:boolean
 #
 # $consumer_cert_expiration::   number of days a consumer certificate is valid

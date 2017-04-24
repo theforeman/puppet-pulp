@@ -1,7 +1,7 @@
 # This file is managed by puppet. Changes may be overridden!
 
 [main]
-enabled: <%= @repo_auth ? "true" : "false" %>
+enabled: <%= scope['pulp::repo_auth'] ? "true" : "false" %>
 log_failed_cert: true
 log_failed_cert_verbose: false
 max_num_certs_in_chain: 100
