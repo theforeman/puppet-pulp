@@ -409,6 +409,7 @@ enabled: <%= scope['pulp::email_enabled'] %>
 #   downloading content from the Squid cache.
 
 [lazy]
+enabled: <%= scope['pulp::lazy_enabled'] %>
 <% unless [nil, :undefined, :undef, ''].include?(scope.lookupvar('pulp::lazy_redirect_host')) -%>
 redirect_host: <%= scope['pulp::lazy_redirect_host'] %>
 <% end -%>
