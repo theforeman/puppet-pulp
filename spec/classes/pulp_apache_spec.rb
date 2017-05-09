@@ -395,6 +395,36 @@ Alias /pulp/nodes/content /var/www/pulp/nodes/content
 ')
       end
     end
+
+    describe 'with ldap parameters' do
+      let :pre_condition do
+        "class {'pulp':
+           ldap_url           => 'ldaps://ad.example.com?sAMAccountName',
+           ldap_bind_dn       => 'cn=pulp,dc=example,dc=com',
+           ldap_bind_password => 'BIND_PASSWORD',
+          }"
+      end
+
+      it 'should configure apache for LDAP authentication' do
+        verify_concat_fragment_contents(catalogue, 'pulp-https-directories', [
+          '  <Files "webservices.wsgi">',
+          '    SetEnvIfNoCase ^Authorization$ "Basic.*" USE_APACHE_AUTH=1',
+          '    Order allow,deny',
+          '    Allow from env=!USE_APACHE_AUTH',
+          '    Satisfy Any',
+          '    AuthType basic',
+          '    AuthBasicProvider ldap',
+          '    AuthName "Pulp"',
+          '    AuthLDAPURL "ldaps://ad.example.com?sAMAccountName"',
+          '    AuthLDAPBindDN "cn=pulp,dc=example,dc=com"',
+          '    AuthLDAPBindPassword "BIND_PASSWORD"',
+          '    AuthLDAPRemoteUserAttribute sAMAccountName',
+          '    Require valid-user',
+          '  </Files>'
+        ])
+      end
+
+    end
   end
 
 end

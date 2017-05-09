@@ -124,4 +124,9 @@ class pulp::params {
 
   $enable_profiling = false
   $profiling_directory = '/var/lib/pulp/c_profiles'
+
+  $ldap_url = undef
+  $ldap_bind_dn = undef
+  $ldap_bind_password = undef
+  $ldap_remote_user_attribute = 'sAMAccountName'
 }

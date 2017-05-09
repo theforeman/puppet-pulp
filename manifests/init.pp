@@ -299,6 +299,19 @@
 #
 # $profiling_directory::        Directory to store task profiling data in
 #
+# $ldap_url::                   URL to use for LDAP authentication. Defaults
+#                               to undef (internal authentication is used)
+#                               type:string
+#
+# $ldap_bind_dn::               LDAP Bind DN
+#                               type:string
+#
+# $ldap_bind_password::         LDAP Password
+#                               type:string
+#
+# $ldap_remote_user_attribute:: LDAP Remote User Attribute. Defaults to 'sAMAccountName'
+#                               type:string
+#
 class pulp (
   $version                   = $pulp::params::version,
   $crane_debug               = $pulp::params::crane_debug,
@@ -401,6 +414,10 @@ class pulp (
   $show_conf_diff            = $pulp::params::show_conf_diff,
   $enable_profiling          = $pulp::params::enable_profiling,
   $profiling_directory       = $pulp::params::profiling_directory,
+  $ldap_url                  = $pulp::params::ldap_url,
+  $ldap_bind_dn              = $pulp::params::ldap_bind_dn,
+  $ldap_bind_password        = $pulp::params::ldap_bind_password,
+  $ldap_remote_user_attribute = $pulp::params::ldap_remote_user_attribute,
 ) inherits pulp::params {
   validate_bool($enable_katello)
   validate_bool($enable_crane)
@@ -450,6 +467,13 @@ class pulp (
     $real_yum_max_speed = to_bytes($yum_max_speed)
   } else {
     $real_yum_max_speed = undef
+  }
+
+  if $ldap_url {
+    validate_string($ldap_url)
+    validate_string($ldap_bind_dn)
+    validate_string($ldap_bind_password)
+    validate_string($ldap_remote_user_attribute)
   }
 
   include ::mongodb::client

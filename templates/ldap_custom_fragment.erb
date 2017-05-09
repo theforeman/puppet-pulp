@@ -1,0 +1,15 @@
+# pass everything that isn't a Basic auth request through to Pulp
+    SetEnvIfNoCase ^Authorization$ "Basic.*" USE_APACHE_AUTH=1
+    Order allow,deny
+    Allow from env=!USE_APACHE_AUTH
+    Satisfy Any
+
+    # configure basic auth
+    AuthType basic
+    AuthBasicProvider ldap
+    AuthName "Pulp"
+    AuthLDAPURL "<%= scope['pulp::ldap_url'] %>"
+    AuthLDAPBindDN "<%= scope['pulp::ldap_bind_dn'] %>"
+    AuthLDAPBindPassword "<%= scope['pulp::ldap_bind_password'] %>"
+    AuthLDAPRemoteUserAttribute <%= scope['pulp::ldap_remote_user_attribute'] %>
+    Require valid-user

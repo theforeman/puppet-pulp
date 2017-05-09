@@ -21,11 +21,23 @@ class pulp::apache {
       }
     }
 
+    $webservices_wsgi_directory = {
+      'path'     => 'webservices.wsgi',
+      'provider' => 'files',
+    }
+
+    if $::pulp::ldap_url {
+      include ::apache::mod::authnz_ldap
+      $ldap_custom_fragment = {
+        'custom_fragment' => template('pulp/ldap_custom_fragment.erb'),
+        'require'         => 'unmanaged',
+      }
+    } else {
+      $ldap_custom_fragment = {}
+    }
+
     $directories = [
-      {
-        'path'     => 'webservices.wsgi',
-        'provider' => 'files',
-      },
+      merge($webservices_wsgi_directory, $ldap_custom_fragment),
       {
         'path'     => '/usr/share/pulp/wsgi',
         'provider' => 'directory',
