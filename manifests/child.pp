@@ -5,8 +5,6 @@
 #
 class pulp::child (
   $parent_fqdn           = undef,
-  $parent_qpid_scheme    = 'ssl',
-  $parent_qpid_port      = '5671',
   $oauth_effective_user  = 'admin',
   $oauth_key             = 'key',
   $oauth_secret          = 'secret',
