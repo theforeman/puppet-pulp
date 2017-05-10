@@ -2,22 +2,12 @@
 # This file is managed centrally by modulesync
 #   https://github.com/katello/foreman-installer-modulesync
 rvm:
-  - 2.1.5
+  - 2.1.9
+  - 2.2.6
+  - 2.3.1
 env:
-  - PUPPET_VERSION=3.5 ONLY_OS=redhat-7-x86_64,centos-7-x86_64
-  - PUPPET_VERSION=3.5 FUTURE_PARSER=yes ONLY_OS=redhat-7-x86_64,centos-7-x86_64
-  - PUPPET_VERSION=4.0 ONLY_OS=redhat-7-x86_64,centos-7-x86_64
+  - PUPPET_VERSION=4.6 ONLY_OS=redhat-7-x86_64,centos-7-x86_64
 matrix:
   fast_finish: true
-  include:
-    # Only EL7 uses Ruby 2.0.0 to run Puppet 3.x
-    - rvm: 2.0.0
-      env: PUPPET_VERSION=3.5 ONLY_OS="centos-7-x86_64"
-    # Only Puppet 4.x supports Ruby 2.2. Also limit the OS set we test Ruby 2.2 with.
-    - rvm: 2.2.3
-      env: PUPPET_VERSION=4.0 ONLY_OS=redhat-7-x86_64,centos-7-x86_64
-    # Only Puppet >= 4.4 supports Ruby 2.3. Also limit the OS set we test Ruby 2.3 with.
-    - rvm: 2.3.0
-      env: PUPPET_VERSION=4.4 ONLY_OS=redhat-7-x86_64,centos-7-x86_64
 bundler_args: --without system_tests development
 sudo: false
