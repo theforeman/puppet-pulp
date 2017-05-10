@@ -97,6 +97,9 @@ class pulp::config {
     mode    => '0644',
   }
 
+  exec { '/usr/bin/pulp-gen-key-pair':
+    creates => $::pulp::rsa_key,
+  } ->
   file { $::pulp::rsa_key:
     owner => 'root',
     group => 'apache',
