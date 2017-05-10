@@ -125,7 +125,8 @@ class pulp::config {
 
   exec { 'run pulp-gen-ca':
     command => '/usr/bin/pulp-gen-ca-certificate',
-    creates => '/etc/pki/pulp/ca.crt',
+    creates => $::pulp::ca_cert,
+    require => File['/etc/pulp/server.conf'],
   }
 
   if $pulp::manage_squid {
