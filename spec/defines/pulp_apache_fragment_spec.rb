@@ -13,9 +13,8 @@ describe 'pulp::apache::fragment' do
         { :ssl_content => "some_string" }
       end
 
-      it do
-        should contain_concat__fragment("fragment_title").with_content('some_string')
-      end
+      it { is_expected.to compile.with_all_deps }
+      it { is_expected.to contain_concat__fragment("fragment_title").with_content('some_string') }
     end
 
   end

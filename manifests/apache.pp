@@ -78,6 +78,16 @@ class pulp::apache {
       add_default_charset        => 'UTF-8',
       custom_fragment            => template('pulp/etc/httpd/conf.d/_ssl_vhost.conf.erb'),
     }
+
+    # This file is installed by pulp-server but we have everything in the above vhost
+    file {'/etc/httpd/conf.d/pulp.conf':
+      ensure  => file,
+      content => "# This file is managed by puppet, do not alter.\n",
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      notify  => Service['httpd'],
+    }
   } else {
     file {'/etc/httpd/conf.d/pulp.conf':
       ensure  => file,
@@ -85,6 +95,7 @@ class pulp::apache {
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
+      notify  => Service['httpd'],
     }
   }
 
@@ -132,5 +143,6 @@ class pulp::apache {
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
+    notify  => Service['httpd'],
   }
 }
