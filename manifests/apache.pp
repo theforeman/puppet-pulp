@@ -86,6 +86,7 @@ class pulp::apache {
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
+      notify  => Service['httpd'],
     }
   } else {
     file {'/etc/httpd/conf.d/pulp.conf':
@@ -94,6 +95,7 @@ class pulp::apache {
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
+      notify  => Service['httpd'],
     }
   }
 
@@ -141,5 +143,6 @@ class pulp::apache {
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
+    notify  => Service['httpd'],
   }
 }

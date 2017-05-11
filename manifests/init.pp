@@ -454,8 +454,6 @@ class pulp (
   }
 
   include ::mongodb::client
-  include ::pulp::apache
-  include ::pulp::database
   include ::pulp::broker
 
   if $enable_crane {
@@ -469,9 +467,11 @@ class pulp (
     }
   }
 
-  class { '::pulp::install': } ->
-  class { '::pulp::config': } ~>
-  class { '::pulp::service': } ->
-  Class[pulp] ~>
-  Service['httpd']
+  contain ::pulp::install
+  contain ::pulp::config
+  contain ::pulp::database
+  contain ::pulp::service
+  contain ::pulp::apache
+
+  Class['pulp::install'] -> Class['pulp::config'] -> Class['pulp::database'] ~> Class['pulp::service', 'pulp::apache']
 }

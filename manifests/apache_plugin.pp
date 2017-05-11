@@ -6,6 +6,7 @@ define pulp::apache_plugin ($confd = true, $vhosts80 = true) {
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
+      notify  => Service['httpd'],
     }
   }
 
@@ -16,6 +17,7 @@ define pulp::apache_plugin ($confd = true, $vhosts80 = true) {
       owner   => 'apache',
       group   => 'apache',
       mode    => '0600',
+      notify  => Service['httpd'],
     }
   }
 }
