@@ -375,6 +375,8 @@ class pulp (
     $real_yum_max_speed = undef
   }
 
+  $manage_plugin_http = $manage_httpd or $manage_plugins_httpd
+
   if $ldap_url {
     assert_type(String, $ldap_url)
     assert_type(String, $ldap_bind_dn)
@@ -393,6 +395,10 @@ class pulp (
   Class['pulp::install'] -> Class['pulp::config'] -> Class['pulp::database'] ~> Class['pulp::service', 'pulp::apache']
 
   # Plugins
+  if $enable_katello {
+    include ::pulp::plugin::katello
+  }
+
   if $enable_crane {
     class { '::pulp::crane':
       cert     => $https_cert,
@@ -402,6 +408,30 @@ class pulp (
       data_dir => $crane_data_dir,
       debug    => $crane_debug,
     }
+  }
+
+  if $enable_docker {
+    include ::pulp::plugin::docker
+  }
+
+  if $enable_rpm {
+    include ::pulp::plugin::rpm
+  }
+
+  if $enable_puppet {
+    include ::pulp::plugin::puppet
+  }
+
+  if $enable_python {
+    include ::pulp::plugin::python
+  }
+
+  if $enable_ostree {
+    include ::pulp::plugin::ostree
+  }
+
+  if $enable_parent_node {
+    include ::pulp::plugin::parent_node
   }
 
   if $enable_admin {

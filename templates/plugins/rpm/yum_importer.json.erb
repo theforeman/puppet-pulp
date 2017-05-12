@@ -1,0 +1,7 @@
+{
+    "proxy_host": <%= @proxy_host ? "\"#{@proxy_host}\"" : 'null' %>,
+    "proxy_port": <%= @proxy_port || 'null' %>,
+    "proxy_username": <%= @proxy_username ? "\"#{@proxy_username}\"" : 'null' %>,
+    "proxy_password": <%= @proxy_password ? "\"#{@proxy_password}\"" : 'null' %>,
+    "max_speed": <%= @yum_max_speed || 'null' %>
+}

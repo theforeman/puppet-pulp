@@ -26,7 +26,7 @@ Alias /pulp/exports /var/www/pub/yum/https/exports
 <Directory /var/www/pub/yum/https>
     WSGIAccessScript /usr/share/pulp/wsgi/repo_auth.wsgi
     SSLRequireSSL
-    SSLVerifyClient <%= scope['pulp::ssl_verify_client'] %>
+    SSLVerifyClient <%= @ssl_verify_client %>
     SSLVerifyDepth 9
     SSLOptions +StdEnvVars +ExportCertData +FakeBasicAuth
     Options FollowSymLinks Indexes
@@ -43,7 +43,7 @@ Alias /pulp/isos /var/www/pub/https/isos
 <Directory /var/www/pub/https/isos>
     WSGIAccessScript /usr/share/pulp/wsgi/repo_auth.wsgi
     SSLRequireSSL
-    SSLVerifyClient <%= scope['pulp::ssl_verify_client'] %>
+    SSLVerifyClient <%= @ssl_verify_client %>
     SSLVerifyDepth 2
     SSLOptions +StdEnvVars +ExportCertData +FakeBasicAuth
     Options FollowSymLinks Indexes

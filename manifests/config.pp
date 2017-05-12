@@ -32,65 +32,6 @@ class pulp::config {
     }
   }
 
-  if $pulp::enable_rpm {
-    file { '/etc/pulp/server/plugins.conf.d/yum_importer.json':
-      ensure    => file,
-      content   => template('pulp/yum_importer.json.erb'),
-      owner     => 'root',
-      group     => 'root',
-      mode      => '0644',
-      show_diff => $pulp::show_conf_diff,
-    }
-
-    file { '/etc/pulp/server/plugins.conf.d/iso_importer.json':
-      ensure    => file,
-      content   => template('pulp/iso_importer.json.erb'),
-      owner     => 'root',
-      group     => 'root',
-      mode      => '0644',
-      show_diff => $pulp::show_conf_diff,
-    }
-  }
-
-  if $pulp::enable_docker {
-    file { '/etc/pulp/server/plugins.conf.d/docker_importer.json':
-      ensure    => file,
-      content   => template('pulp/docker_importer.json.erb'),
-      owner     => 'root',
-      group     => 'root',
-      mode      => '0644',
-      show_diff => $pulp::show_conf_diff,
-    }
-  }
-
-  if $pulp::enable_ostree {
-    file { '/etc/pulp/server/plugins.conf.d/ostree_importer.json':
-      ensure    => file,
-      content   => template('pulp/ostree_importer.json.erb'),
-      owner     => 'root',
-      group     => 'root',
-      mode      => '0644',
-      show_diff => $pulp::show_conf_diff,
-    }
-  }
-
-  if $pulp::enable_puppet {
-    exec { 'selinux_pulp_manage_puppet':
-      command => 'semanage boolean -m --on pulp_manage_puppet',
-      path    => '/sbin:/usr/sbin:/bin:/usr/bin',
-      onlyif  => 'getsebool pulp_manage_puppet | grep off',
-    }
-
-    file { '/etc/pulp/server/plugins.conf.d/puppet_importer.json':
-      ensure    => file,
-      content   => template('pulp/puppet_importer.json.erb'),
-      owner     => 'root',
-      group     => 'root',
-      mode      => '0644',
-      show_diff => $pulp::show_conf_diff,
-    }
-  }
-
   file { '/etc/default/pulp_workers':
     ensure  => file,
     content => template('pulp/systemd_pulp_workers'),

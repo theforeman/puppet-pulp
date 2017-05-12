@@ -363,8 +363,7 @@ Alias /pulp/ostree /var/www/pub/ostree/
       end
 
       it 'should configure apache for defining a parent node' do
-        is_expected.to contain_file('/etc/httpd/conf.d/pulp_nodes.conf').with(
-        :content => '#
+        is_expected.to contain_file('/etc/httpd/conf.d/pulp_nodes.conf').with_content('#
 # Apache configuration file for pulp web services and repositories
 #
 

@@ -153,31 +153,6 @@ class pulp::apache {
       purge   => true,
       require => Package['pulp-server'],
     }
-
-    if $::pulp::enable_rpm {
-      pulp::apache_plugin { 'rpm': }
-    }
-
-    if $::pulp::enable_docker {
-      include ::apache::mod::headers
-      pulp::apache_plugin { 'docker': vhosts80 => false }
-    }
-
-    if $::pulp::enable_puppet {
-      pulp::apache_plugin { 'puppet': }
-    }
-
-    if $::pulp::enable_python {
-      pulp::apache_plugin { 'python': }
-    }
-
-    if $::pulp::enable_ostree {
-      pulp::apache_plugin { 'ostree': vhosts80 => false }
-    }
-
-    if $::pulp::enable_parent_node {
-      pulp::apache_plugin { 'nodes': vhosts80 => false }
-    }
   }
 
   file {'/etc/httpd/conf.d/pulp_streamer.conf':

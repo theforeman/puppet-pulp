@@ -92,22 +92,22 @@ describe 'pulp::config' do
     end
 
     it "should produce valid json" do
-      should contain_file("/etc/pulp/server/plugins.conf.d/yum_importer.json").with_content(
-        /"proxy_host": "http:\/\/fake.com",/
-      ).with_content(
-        /"proxy_port": 7777,/
-      ).with_content(
-        /"proxy_username": "al",/
-      ).with_content(
-        /"proxy_password": "beproxyin"/
-      ).with({
+      should contain_file('/etc/pulp/server/plugins.conf.d/yum_importer.json').with({
         'ensure'    => 'file',
         'owner'     => 'root',
         'group'     => 'root',
         'mode'      => '0644',
         'show_diff' => false,
       })
-
+      verify_exact_contents(catalogue, '/etc/pulp/server/plugins.conf.d/yum_importer.json', [
+        '{',
+        '    "proxy_host": "http://fake.com",',
+        '    "proxy_port": 7777,',
+        '    "proxy_username": "al",',
+        '    "proxy_password": "beproxyin",',
+        '    "max_speed": null',
+        '}',
+      ])
     end
 
   end
