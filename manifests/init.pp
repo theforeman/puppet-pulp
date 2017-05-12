@@ -384,6 +384,15 @@ class pulp (
   include ::mongodb::client
   include ::pulp::broker
 
+  contain ::pulp::install
+  contain ::pulp::config
+  contain ::pulp::database
+  contain ::pulp::service
+  contain ::pulp::apache
+
+  Class['pulp::install'] -> Class['pulp::config'] -> Class['pulp::database'] ~> Class['pulp::service', 'pulp::apache']
+
+  # Plugins
   if $enable_crane {
     class { '::pulp::crane':
       cert     => $https_cert,
@@ -394,14 +403,6 @@ class pulp (
       debug    => $crane_debug,
     }
   }
-
-  contain ::pulp::install
-  contain ::pulp::config
-  contain ::pulp::database
-  contain ::pulp::service
-  contain ::pulp::apache
-
-  Class['pulp::install'] -> Class['pulp::config'] -> Class['pulp::database'] ~> Class['pulp::service', 'pulp::apache']
 
   if $enable_admin {
     if $ssl_username and $ssl_username != '' {
