@@ -23,6 +23,7 @@ describe 'pulp::apache' do
     end
 
     it { is_expected.to contain_file('/etc/pulp/vhosts80/')}
+    it { is_expected.to contain_file('/etc/httpd/conf.d/pulp.conf') }
 
     it 'should configure apache server with ssl' do
       is_expected.to contain_apache__vhost('pulp-https').with({

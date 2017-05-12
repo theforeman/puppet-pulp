@@ -107,6 +107,15 @@ class pulp::apache {
       # allow older yum clients to connect, see bz 647828
       custom_fragment            => 'SSLInsecureRenegotiation On',
     }
+
+    # This file is installed by pulp-server but we have everything in the above vhost
+    file {'/etc/httpd/conf.d/pulp.conf':
+      ensure  => file,
+      content => "# This file is managed by puppet, do not alter.\n",
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+    }
   } else {
     file {'/etc/httpd/conf.d/pulp.conf':
       ensure  => file,
