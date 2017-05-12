@@ -136,7 +136,14 @@ class pulp::apache {
   }
 
   if $::pulp::manage_httpd or $::pulp::manage_plugins_httpd {
-    pulp::apache_plugin {'content' : vhosts80 => false}
+    file { '/etc/httpd/conf.d/pulp_content.conf':
+      ensure  => file,
+      content => template('pulp/pulp_content.conf.erb'),
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      notify  => Service['httpd'],
+    }
 
     file { '/etc/pulp/vhosts80/':
       ensure  => directory,
