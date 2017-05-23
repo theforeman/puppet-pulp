@@ -53,7 +53,7 @@ class pulp::apache {
         $base_directories,
         {
           'path'            => '/pulp/api',
-          'provider'        => 'Location',
+          'provider'        => 'location',
           'custom_fragment' => "SSLUsername ${::pulp::ssl_username}",
         }
       )
