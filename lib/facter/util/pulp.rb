@@ -4,7 +4,8 @@ module Facter::Util::Pulp
     return nil if status.nil?
     # Strip color from command output
     status.gsub!(/\e\[([;\d]+)?m/, '')
-    /^This consumer is registered to the server\s\[(?<server_id>.*)\]\swith\sthe\sID\s\[(?<consumer_id>.*)\]\.$/.match(status)
+    /^This consumer is registered to the server\s\[(.*)\]\swith\sthe\sID\s\[(.*)\]\.$/.match(status)
+    result = {:server_id => $1, :consumer_id => $2}
   end
 
   def self.pulp_consumer_id
