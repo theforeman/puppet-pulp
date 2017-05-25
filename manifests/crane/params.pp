@@ -6,6 +6,6 @@ class pulp::crane::params {
   $debug = false
   $port = 5000
 
-  $data_dir = '/var/lib/crane/metadata'
+  $data_dir = '/var/lib/pulp/published/docker/v2/app'
   $data_dir_polling_interval = 60
 }
