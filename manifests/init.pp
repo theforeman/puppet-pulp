@@ -188,6 +188,8 @@
 #
 # $num_workers::                Number of Pulp workers to use.
 #
+# $enable_admin::               Whether to install and configure the admin command
+#
 # $enable_katello::             Whether to enable pulp katello plugin.
 #
 # $enable_crane::               Whether to enable crane docker repository
@@ -332,6 +334,7 @@ class pulp (
   Optional[String] $proxy_password = $::pulp::params::proxy_password,
   Optional[String] $yum_max_speed = $::pulp::params::yum_max_speed,
   Integer[0] $num_workers = $::pulp::params::num_workers,
+  Boolean $enable_admin = $::pulp::params::enable_admin,
   Boolean $enable_katello = $::pulp::params::enable_katello,
   Boolean $enable_crane = $::pulp::params::enable_crane,
   Optional[Integer[0]] $max_tasks_per_child = $::pulp::params::max_tasks_per_child,
@@ -399,4 +402,19 @@ class pulp (
   contain ::pulp::apache
 
   Class['pulp::install'] -> Class['pulp::config'] -> Class['pulp::database'] ~> Class['pulp::service', 'pulp::apache']
+
+  if $enable_admin {
+    class { '::pulp::admin':
+      enable_docker => $enable_docker,
+      enable_nodes  => $enable_parent_node,
+      enable_ostree => $enable_ostree,
+      enable_puppet => $enable_puppet,
+      enable_python => $enable_python,
+      enable_rpm    => $enable_rpm,
+      ca_path       => $ca_cert,
+      username      => $default_login,
+      password      => $default_password,
+      require       => Class['pulp::apache'],
+    }
+  }
 }
