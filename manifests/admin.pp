@@ -63,6 +63,10 @@
 #
 # $puppet_upload_chunk_size::      Maximum amount of data (in bytes) sent for an upload in a single request
 #
+# $username::                      The username to login with
+#
+# $password::                      The password to login with. If left undefined then no login will be performed.
+#
 class pulp::admin (
   String $version = $::pulp::admin::params::version,
   String $host = $::pulp::admin::params::host,
@@ -90,9 +94,12 @@ class pulp::admin (
   Boolean $enable_rpm = $::pulp::admin::params::enable_rpm,
   String $puppet_upload_working_dir = $::pulp::admin::params::puppet_upload_working_dir,
   Integer[0] $puppet_upload_chunk_size = $::pulp::admin::params::puppet_upload_chunk_size,
+  String $username = $::pulp::admin::params::username,
+  Optional[String] $password = $::pulp::admin::params::username,
 ) inherits pulp::admin::params {
   contain ::pulp::admin::install
   contain ::pulp::admin::config
+  contain ::pulp::admin::login
 
-  Class['pulp::admin::install'] -> Class['pulp::admin::config']
+  Class['pulp::admin::install'] -> Class['pulp::admin::config'] -> Class['pulp::admin::login']
 }
