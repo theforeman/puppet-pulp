@@ -1,9 +1,17 @@
-require File.expand_path('../../../util/pulp_util', __FILE__)
+require File.expand_path('../../../util/repo_provider', __FILE__)
 
-Puppet::Type.type(:pulp_puppetrepo).provide(:api) do
+Puppet::Type.type(:pulp_puppetrepo).provide(:api, :parent => PuppetX::Pulp::RepoProvider) do
   commands :pulp_admin => '/usr/bin/pulp-admin'
 
   mk_resource_methods
+
+  def self.repo_type
+    'puppet'
+  end
+
+  def repo_type
+    'puppet'
+  end
 
   # special getter methods for parameters that receive a file and write the content
   [:feed_ca_cert,
@@ -19,49 +27,13 @@ Puppet::Type.type(:pulp_puppetrepo).provide(:api) do
     end
   end
 
-  # this gets called for each resource
-  def initialize(resource={})
-    super(resource)
-    @property_flush = {}
-  end
-
-  def sym_to_bool(sym)
-    if sym == :true
-      true
-    elsif sym == :false
-      false
-    else
-      sym
-    end
-  end
-
-  def hash_to_params(params_hash)
-    param = nil
-    params = []
-    params_hash.each { |k, v|
-      if ! (v.nil?)
-        if v.kind_of?(Array)
-          param = [k, v.join(',')]
-        elsif v.kind_of?(Hash)
-          v.to_a.each { |pair|
-            param << [k, pair.join('=')]
-          }
-        else
-          param = [k, sym_to_bool(v)]
-        end
-        params << param
-      end
-    }
-    params
-  end
-
   def self.get_resource_properties(repo_id)
     hash = {}
 
     repo = @pulp.get_repo_info(repo_id)
-    if !repo
+    unless repo
       hash[:ensure] = :absent
-      return
+      return hash
     end
 
     hash[:display_name] = repo['display_name']
@@ -71,17 +43,17 @@ Puppet::Type.type(:pulp_puppetrepo).provide(:api) do
 
     repo['distributors'].each { |distributor|
       if distributor['id'] == 'puppet_distributor'
-        hash[:serve_http]       = distributor['config']['serve_http'] ? :true : :false
-        hash[:serve_https]      = distributor['config']['serve_https'] ? :true : :false
+        hash[:serve_http]       = distributor['config']['serve_http']
+        hash[:serve_https]      = distributor['config']['serve_https']
       end
     }
 
     repo['importers'].each { |importer|
       if importer['id'] == 'puppet_importer'
         hash[:feed]             = importer['config']['feed'] || ''
-        hash[:validate]         = importer['config']['validate'] ? :true : :false
+        hash[:validate]         = importer['config']['validate']
         hash[:feed_ca_cert]     = importer['config']['ssl_ca_cert']
-        hash[:verify_feed_ssl]  = importer['config']['ssl_validation'] ? :true : :false
+        hash[:verify_feed_ssl]  = importer['config']['ssl_validation']
         hash[:feed_cert]        = importer['config']['ssl_client_cert']
         hash[:feed_key]         = importer['config']['ssl_client_key']
         hash[:proxy_host]       = importer['config']['proxy_host']
@@ -102,40 +74,8 @@ Puppet::Type.type(:pulp_puppetrepo).provide(:api) do
     hash
   end
 
-  def self.instances
-    all=[]
-    @pulp = Puppet::Util::PulpUtil.new
-    @pulp.get_repos.each { |repo|
-      next if repo['notes']['_repo-type'] != 'puppet-repo'
-      hash_properties = get_resource_properties(repo['id'])
-      all << new(hash_properties)
-    }
-    all
-  end
-
-  def exists?
-    @property_hash[:ensure] == :present
-  end
-
-  def create
-    @property_flush[:ensure] = :present
-  end
-
-  def destroy
-    @property_flush[:ensure] = :absent
-  end
-
-  # iterates through the array of resources returned by self.instances
-  def self.prefetch(resources)
-    instances.each do |prov|
-      if resource = resources[prov.name]
-        resource.provider = prov
-      end
-    end
-  end
-
-  def set_repo
-    params_hash = {
+  def params_hash
+    {
       '--display-name'     => resource[:display_name],
       '--description'      => resource[:description],
       '--note'             => resource[:note],
@@ -155,32 +95,5 @@ Puppet::Type.type(:pulp_puppetrepo).provide(:api) do
       '--serve-https'      => resource[:serve_https],
       '--queries'          => resource[:queries],
     }
-
-    params= []
-
-    if @property_flush[:ensure] == :absent
-      # delete
-      action = 'delete'
-    elsif @property_flush[:ensure] == :present
-      # create
-      action = 'create'
-      params = hash_to_params(params_hash)
-    else
-      #update
-      action = 'update'
-      params = hash_to_params(params_hash)
-    end
-
-    arr = ['puppet', 'repo', action, '--repo-id', resource[:name], params]
-    pulp_admin(arr.flatten)
   end
-
-  def flush
-    set_repo
-
-    # Collect the resources again once they've been changed (that way `puppet
-    # resource` will show the correct values after changes have been made).
-    @property_hash = self.class.get_resource_properties(resource[:name])
-  end
-
 end

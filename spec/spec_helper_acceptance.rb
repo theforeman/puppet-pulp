@@ -44,5 +44,5 @@ shared_examples 'the example' do |name|
     File.read(path)
   end
 
-  it_behaves_like 'a idempotent resource'
+  include_examples 'a idempotent resource'
 end

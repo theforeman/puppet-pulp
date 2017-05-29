@@ -1,27 +1,17 @@
+require 'puppet/property/boolean'
+
 Puppet::Type.newtype(:pulp_puppetrepo) do
   @doc = <<-EOT
     doc 
   EOT
 
   autorequire(:file) do
-    ['/etc/pulp/admin/admin.conf']
-  end
-
-  def munge_boolean(value)
-    case value
-    when true, "true", :true
-      :true
-    when false, "false", :false
-      :false
-    else
-      fail("munge_boolean only takes booleans")
-    end
-  end
-
-  def munge_integer(value)
-    Integer(value)
-  rescue ArgumentError
-    fail("munge_integer only takes integers")
+    [
+      self[:conf_file],
+      self[:feed_ca_cert],
+      self[:feed_key],
+      self[:feed_cert],
+    ]
   end
 
   ensurable do
@@ -44,7 +34,7 @@ Puppet::Type.newtype(:pulp_puppetrepo) do
     desc "repo-id: uniquely identifies the rpm repo"
   end
 
-  newparam(:conf_file) do
+  newparam(:conf_file, :parent => Puppet::Parameter::Path) do
     desc "path to pulp-admin's config file. Defaults to /etc/pulp/admin/admin.conf"
     defaultto('/etc/pulp/admin/admin.conf')
   end
@@ -61,12 +51,9 @@ Puppet::Type.newtype(:pulp_puppetrepo) do
   end
 
   newproperty(:note) do
-    desc "adds/updates/deletes notes to programmatically identify the  resource"
+    desc "adds/updates/deletes notes to programmatically identify the resource"
     validate do |value|
-      if !value.kind_of?(Hash)
-        raise ArgumentError,
-        "Note property should be a hash"
-      end
+      raise ArgumentError, "Note property should be a hash" unless value.kind_of?(Hash)
     end
   end
 
@@ -74,29 +61,20 @@ Puppet::Type.newtype(:pulp_puppetrepo) do
     desc "URL of the external source repository to sync"
   end
 
-  newproperty(:validate, :boolean => true) do
-    desc 'if "true", the size and checksum of each synchronized file will
+  newproperty(:validate, :boolean => true, :parent => Puppet::Property::Boolean) do
+    desc 'Whether the size and checksum of each synchronized file will
     be verified against the repo metadata'
-    #  defaultto :false
-    newvalues(:true, :false)
-    munge do |value|
-      @resource.munge_boolean(value)
-    end
+    defaultto :false
   end
 
   newproperty(:feed_ca_cert) do
-    desc "full path to the CA certificate that should be used to
+    desc "Full path to the CA certificate that should be used to
     verify the external repo server's SSL certificate"
   end
 
-  newproperty(:verify_feed_ssl, :boolean => true) do
-    desc 'if "true", the feed\'s SSL certificate will be verified
-    against the feed_ca_cert'
-    # defaultto :false
-    newvalues(:true, :false)
-    munge do |value|
-      @resource.munge_boolean(value)
-    end
+  newproperty(:verify_feed_ssl, :boolean => true, :parent => Puppet::Property::Boolean) do
+    desc 'Whether the feed\'s SSL certificate will be verified against the feed_ca_cert'
+    defaultto :false
   end
 
   newproperty(:feed_cert) do
@@ -116,7 +94,7 @@ Puppet::Type.newtype(:pulp_puppetrepo) do
     desc "port on the proxy server to make requests"
     newvalues(/^\d+$/)
     munge do |value|
-      @resource.munge_integer(value)
+      Integer(value)
     end
   end
 
@@ -132,7 +110,7 @@ Puppet::Type.newtype(:pulp_puppetrepo) do
     desc "maximum number of downloads that will run concurrently"
     newvalues(/^\d+$/)
     munge do |value|
-      @resource.munge_integer(value)
+      Integer(value)
     end
   end
 
@@ -141,26 +119,18 @@ Puppet::Type.newtype(:pulp_puppetrepo) do
     when synchronizing the repo"
     newvalues(/^\d+$/)
     munge do |value|
-      @resource.munge_integer(value)
+      Integer(value)
     end
   end
 
-  newproperty(:serve_http, :boolean => true) do
+  newproperty(:serve_http, :boolean => true, :parent => Puppet::Property::Boolean) do
     desc 'if "true", the repository will be served over HTTP'
     defaultto :false
-    newvalues(:true, :false)
-    munge do |value|
-      @resource.munge_boolean(value)
-    end
   end
 
-  newproperty(:serve_https, :boolean => true) do
+  newproperty(:serve_https, :boolean => true, :parent => Puppet::Property::Boolean) do
     desc 'if "true", the repository will be served over HTTPS'
     defaultto :true
-    newvalues(:true, :false)
-    munge do |value|
-      @resource.munge_boolean(value)
-    end
   end
 
   # extra properties for puppet repos

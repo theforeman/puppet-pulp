@@ -1,3 +1,4 @@
+require 'puppet/property/boolean'
 # curl -E ~/.pulp/user-cert.pem "https://$(hostname)/pulp/api/v2/repositories/optymyze_puppet_forge/importers/puppet_importer/schedules/sync/?details=True" | python -mjson.tool
 
 Puppet::Type.newtype(:pulp_schedule) do
@@ -7,6 +8,18 @@ Puppet::Type.newtype(:pulp_schedule) do
 
   autorequire(:file) do
     ['/etc/pulp/admin/admin.conf']
+  end
+
+  autorequire(:pulp_isorepo) do
+    [self[:name]]
+  end
+
+  autorequire(:pulp_rpmrepo) do
+    [self[:name]]
+  end
+
+  autorequire(:pulp_puppetrepo) do
+    [self[:name]]
   end
 
   ensurable do
@@ -36,19 +49,9 @@ Puppet::Type.newtype(:pulp_schedule) do
     isrequired
   end
 
-  newproperty(:enabled, :boolean => true) do
+  newproperty(:enabled, :boolean => true, :parent => Puppet::Property::Boolean) do
     desc 'if "false", the schedule will exist but will not trigger any executions'
-    newvalues(:true, :false)
     defaultto :true
-
-    munge do |value|
-      case value
-      when true, "true", :true
-        :true
-      when false, "false", :false
-        :false
-      end
-    end
   end
 
   newproperty(:failure_threshold) do

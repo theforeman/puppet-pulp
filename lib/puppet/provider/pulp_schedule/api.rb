@@ -34,7 +34,7 @@ Puppet::Type.type(:pulp_schedule).provide(:api) do
     sync_id = nil
     # get_repo_syncs return an array with all schedules and the repo type
     schedules =  @pulp.get_repo_syncs(repo_id)
-    return all if !schedules[0]
+    return all unless schedules[0]
     all_schedules = schedules[0]
     $schedules_info['repo_type'][repo_id] = schedules[1]
 
@@ -72,13 +72,8 @@ Puppet::Type.type(:pulp_schedule).provide(:api) do
   end
 
   def self.instances
-    all = []
-
     @pulp = Puppet::Util::PulpUtil.new
-    @pulp.get_repos.each { |repo|
-      all << get_resource_properties(repo['id'])
-    }
-    all.flatten
+    @pulp.get_repos.map { |repo| new(get_resource_properties(repo['id'])) }.flatten
   end
 
   def exists?
@@ -124,7 +119,6 @@ Puppet::Type.type(:pulp_schedule).provide(:api) do
     repo_id = resource[:name]
 
     if @property_flush[:ensure] == :absent
-      # delete
       action = 'delete'
       if $schedules_info['repo_id'].has_key?(resource[:name])
         # this is a _main_ resource
@@ -135,7 +129,6 @@ Puppet::Type.type(:pulp_schedule).provide(:api) do
         params = ['--schedule-id', resource[:name]]
       end
     elsif @property_flush[:ensure] == :present
-      # create
       action = 'create'
       # because create doesn't reach get_resource_properties, set repo type and id here also
       @pulp = Puppet::Util::PulpUtil.new
@@ -143,7 +136,6 @@ Puppet::Type.type(:pulp_schedule).provide(:api) do
       $schedules_info['repo_type'][resource[:name]] = schedules[1]
       $schedules_info['repo_id'][resource[:name]] = resource[:name]
     else
-      # update
       params << ['--schedule-id', $schedules_info['repo_id'][resource[:name]]]
       params << ['--enabled', resource[:enabled]] if !resource[:enabled].nil?
       action = 'update'
