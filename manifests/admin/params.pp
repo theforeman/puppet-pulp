@@ -28,6 +28,7 @@ class pulp::admin::params {
   $puppet_upload_working_dir = '~/.pulp/puppet-uploads'
   $puppet_upload_chunk_size  = 1048576
 
+  $login_method = 'none'
   $username = 'admin'
   $password = undef
 }

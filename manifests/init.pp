@@ -404,6 +404,13 @@ class pulp (
   Class['pulp::install'] -> Class['pulp::config'] -> Class['pulp::database'] ~> Class['pulp::service', 'pulp::apache']
 
   if $enable_admin {
+    if $ssl_username and $ssl_username != '' {
+      warning('Using $ssl_username means pulp-admin login doesn\'t work. Falling back to file login but pulp_*repo providers won\'t work')
+      $login_method = 'file'
+    } else {
+      $login_method = 'login'
+    }
+
     class { '::pulp::admin':
       enable_docker => $enable_docker,
       enable_nodes  => $enable_parent_node,
@@ -412,6 +419,7 @@ class pulp (
       enable_python => $enable_python,
       enable_rpm    => $enable_rpm,
       ca_path       => $ca_cert,
+      login_method  => $login_method,
       username      => $default_login,
       password      => $default_password,
       require       => Class['pulp::apache'],
