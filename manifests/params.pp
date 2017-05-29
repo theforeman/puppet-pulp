@@ -32,7 +32,7 @@ class pulp::params {
   $serial_number_path = '/var/lib/pulp/sn.dat'
 
   $consumer_history_lifetime = 180
-  $oauth_enabled = true
+  $oauth_enabled = false
   $oauth_key = 'pulp'
   $oauth_secret = 'secret'
 
