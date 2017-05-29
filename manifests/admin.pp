@@ -63,6 +63,8 @@
 #
 # $puppet_upload_chunk_size::      Maximum amount of data (in bytes) sent for an upload in a single request
 #
+# $login_method::                  The method to ensure root can use pulp-admin. Choose none to disable this behaviour.
+#
 # $username::                      The username to login with
 #
 # $password::                      The password to login with. If left undefined then no login will be performed.
@@ -94,9 +96,14 @@ class pulp::admin (
   Boolean $enable_rpm = $::pulp::admin::params::enable_rpm,
   String $puppet_upload_working_dir = $::pulp::admin::params::puppet_upload_working_dir,
   Integer[0] $puppet_upload_chunk_size = $::pulp::admin::params::puppet_upload_chunk_size,
+  Enum['none', 'file', 'login'] $login_method = $::pulp::admin::params::login_method,
   String $username = $::pulp::admin::params::username,
   Optional[String] $password = $::pulp::admin::params::username,
 ) inherits pulp::admin::params {
+  if $login_method != 'none' {
+    assert_type(String, $password)
+  }
+
   contain ::pulp::admin::install
   contain ::pulp::admin::config
   contain ::pulp::admin::login
