@@ -89,7 +89,14 @@ class pulp::apache {
       ssl_verify_depth           => '3',
       wsgi_process_group         => 'pulp',
       wsgi_application_group     => 'pulp',
-      wsgi_daemon_process        => 'pulp user=apache group=apache processes=3 display-name=%{GROUP}',
+      wsgi_daemon_process        => join([
+          'pulp',
+          'user=apache',
+          'group=apache',
+          "processes=${::pulp::wsgi_processes}",
+          "maximum-requests=${::pulp::wsgi_max_requests}",
+          'display-name=%{GROUP}',
+      ], ' '),
       wsgi_pass_authorization    => 'On',
       wsgi_import_script         => '/usr/share/pulp/wsgi/webservices.wsgi',
       wsgi_import_script_options => {

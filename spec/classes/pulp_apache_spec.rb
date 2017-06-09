@@ -39,7 +39,7 @@ describe 'pulp::apache' do
         :ssl_verify_depth        => '3',
         :wsgi_process_group      => 'pulp',
         :wsgi_application_group  => 'pulp',
-        :wsgi_daemon_process     => 'pulp user=apache group=apache processes=3 display-name=%{GROUP}',
+        :wsgi_daemon_process     => 'pulp user=apache group=apache processes=3 maximum-requests=0 display-name=%{GROUP}',
         :wsgi_pass_authorization => 'On',
         :wsgi_import_script      => '/usr/share/pulp/wsgi/webservices.wsgi',
       })
