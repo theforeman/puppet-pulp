@@ -9,5 +9,13 @@ env:
   - PUPPET_VERSION=4.6 ONLY_OS=redhat-7-x86_64,centos-7-x86_64
 matrix:
   fast_finish: true
+  include:
+    # Acceptance tests
+    - rvm: 2.3.1
+      dist: trusty
+      env: PUPPET_INSTALL_TYPE=agent BEAKER_debug=true BEAKER_set=docker/centos-7
+      script: bundle exec rake beaker
+      services: docker
+      bundler_args: --without development
 bundler_args: --without system_tests development
 sudo: false

@@ -1,4 +1,7 @@
 ---
+.travis.yml:
+  beaker_sets:
+    - docker/centos-7
 Rakefile:
   param_docs_pattern:
     - manifests/admin.pp
