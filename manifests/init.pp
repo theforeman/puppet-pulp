@@ -232,7 +232,7 @@
 #
 # $max_keep_alive::             Configuration value for apache MaxKeepAliveRequests
 #
-# $wsgi_processes::             Number of WSGI processes to spown for pulp itself
+# $wsgi_processes::             Number of WSGI processes to spawn for pulp itself
 #
 # $wsgi_max_requests::          Maximum number of requests for each wsgi worker to process before
 #                               shutting down and restarting, useful to combat memory leaks.
