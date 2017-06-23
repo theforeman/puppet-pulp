@@ -232,6 +232,11 @@
 #
 # $max_keep_alive::             Configuration value for apache MaxKeepAliveRequests
 #
+# $wsgi_processes::             Number of WSGI processes to spawn for pulp itself
+#
+# $wsgi_max_requests::          Maximum number of requests for each wsgi worker to process before
+#                               shutting down and restarting, useful to combat memory leaks.
+#
 # $puppet_wsgi_processes::      Number of WSGI processes to spawn for the puppet webapp
 #
 # $migrate_db_timeout::         Change the timeout for pulp-manage-db
@@ -349,6 +354,8 @@ class pulp (
   String $node_oauth_secret = $::pulp::params::node_oauth_secret,
   Array[String] $disabled_authenticators = $::pulp::params::disabled_authenticators,
   Hash[String, String] $additional_wsgi_scripts = $::pulp::params::additional_wsgi_scripts,
+  Integer[1] $wsgi_processes = $::pulp::params::wsgi_processes,
+  Integer[0] $wsgi_max_requests = $::pulp::params::wsgi_max_requests,
   Integer[0] $puppet_wsgi_processes = $::pulp::params::puppet_wsgi_processes,
   Integer[0] $migrate_db_timeout = $::pulp::params::migrate_db_timeout,
   Boolean $show_conf_diff = $::pulp::params::show_conf_diff,

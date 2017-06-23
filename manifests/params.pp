@@ -112,6 +112,8 @@ class pulp::params {
 
   $yum_max_speed = undef
 
+  $wsgi_processes = 3
+  $wsgi_max_requests = 0
   $puppet_wsgi_processes = 3
   $show_conf_diff = false
 
