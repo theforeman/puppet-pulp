@@ -64,6 +64,7 @@ class pulp::params {
   $crane_port = 5000
   $crane_data_dir = '/var/lib/pulp/published/docker/v2/app'
 
+  $enable_admin = false
   $enable_katello = false
   $enable_crane = false
   $enable_rpm = true
