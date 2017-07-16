@@ -4,14 +4,18 @@
 #### Table of Contents
 
 1. [Overview](#overview)
-2. [Setup - The basics of getting started with pulp](#setup)
-    * [What pulp affects](#what-pulp-affects)
-    * [Setup requirements](#setup-requirements)
-    * [Beginning with pulp](#beginning-with-pulp)
-3. [Usage - Configuration options and additional functionality](#usage)
-4. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
-5. [Limitations - OS compatibility, etc.](#limitations)
-6. [Development - Guide for contributing to the module](#development)
+2. [Usage - The basics of getting started with pulp](#pulp)
+    * [Installation](#installation)
+    * [Security and external services](#security-and-external-services)
+    * [RPM provider](#rpm-provider)
+    * [Puppet provider](#puppet-provider)
+    * [ISO provider](#iso-provider)
+    * [Schedule provider](#schedule-provider)
+    * [Pulp admin](#pulp-admin)
+    * [Pulp child](#pulp-child)
+    * [Pulp consumer](#pulp-consumer)
+    * [Pulp Crane](#pulp-crane)
+3. [Development - Guide for contributing to the module](#development)
 
 ## Overview
 
