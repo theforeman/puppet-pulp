@@ -10,10 +10,6 @@ Puppet::Type.type(:pulp_isorepo).provide(:api, :parent => PuppetX::Pulp::RepoPro
     'iso'
   end
 
-  def repo_type
-    'iso'
-  end
-
   # special getter methods for parameters that receive a file and write the content
   [:feed_ca_cert,
     :feed_cert,

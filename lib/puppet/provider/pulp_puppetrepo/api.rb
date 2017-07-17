@@ -9,10 +9,6 @@ Puppet::Type.type(:pulp_puppetrepo).provide(:api, :parent => PuppetX::Pulp::Repo
     'puppet'
   end
 
-  def repo_type
-    'puppet'
-  end
-
   # special getter methods for parameters that receive a file and write the content
   [:feed_ca_cert,
     :feed_cert,
