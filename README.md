@@ -1,106 +1,258 @@
 [![Puppet Forge](http://img.shields.io/puppetforge/v/katello/pulp.svg)](https://forge.puppetlabs.com/katello/pulp)
 [![Build Status](https://travis-ci.org/Katello/puppet-pulp.svg?branch=master)](https://travis-ci.org/Katello/puppet-pulp)
+
 #### Table of Contents
 
 1. [Overview](#overview)
-2. [Setup - The basics of getting started with pulp](#setup)
-    * [What pulp affects](#what-pulp-affects)
-    * [Setup requirements](#setup-requirements)
-    * [Beginning with pulp](#beginning-with-pulp)
-3. [Usage - Configuration options and additional functionality](#usage)
-4. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
-5. [Limitations - OS compatibility, etc.](#limitations)
-6. [Development - Guide for contributing to the module](#development)
+2. [Usage - The basics of getting started with pulp](#pulp)
+    * [Installation](#installation)
+    * [Security and external services](#security-and-external-services)
+    * [RPM provider](#rpm-provider)
+    * [Puppet provider](#puppet-provider)
+    * [ISO provider](#iso-provider)
+    * [Schedule provider](#schedule-provider)
+    * [Pulp admin](#pulp-admin)
+    * [Pulp child](#pulp-child)
+    * [Pulp consumer](#pulp-consumer)
+    * [Pulp Crane](#pulp-crane)
+3. [Development - Guide for contributing to the module](#development)
 
 ## Overview
 
-This module is designed to setup a Pulp master or node.
+This module can be used to install and manage several aspects of a pulp installation.
 
-## Setup
+### Pulp
 
-### What pulp affects
+#### Installation
 
-* Installs and configures a Pulp master or node
+The main pulp server installation. This includes the Apache configuration and the various daemons.
 
-### Beginning with pulp
+```puppet
+include ::pulp
+```
 
-The very basic steps needed for a user to get the module up and running.
+Note that you need EPEL and a Pulp repository. For this we recommend [stahnma/epel](https://forge.puppet.com/stahnma/epel) and use of the ```pulp::repo::upstream``` or ```pulp::repo::katello```.
 
-If your most recent release breaks compatibility or requires particular steps for upgrading, you may wish to include an additional section here: Upgrading (For an example, see http://forge.puppetlabs.com/puppetlabs/firewall).
+```puppet
+include ::epel
+include ::pulp::repo::upstream
+class { '::pulp':
+  require => Class['epel', 'pulp::repo::upstream'],
+}
+```
 
-## Usage
+Plugins can be enabled as well:
 
-## Reference
+```puppet
+class { '::pulp':
+  enable_docker => true,
+  enable_ostree => true,
+  enable_puppet => true,
+  enable_python => true,
+  enable_rpm    => true,
+}
+```
 
-## Limitations
+By default a user admin will be created with a randomized password. This is configurable with the ```default_username``` and ```default_password``` parameters:
 
-* EL7 (RHEL7 / CentOS 7)
-* Requires Pulp 2.7.0 or higher.
-* Database authentication parameters are ignored when running MongoDB older than 2.6
+```puppet
+class { '::pulp':
+  default_username => 'user',
+  default_password => 'secret',
+}
+```
 
-## Pulp consumer
+#### Security and external services
 
-### Installation
+By default the MongoDB database is managed, but the ```manage_db``` parameter can be used to change this behaviour.
 
-    include pulp::consumer
+Likewise the broker is managed by default, but ```manage_broker``` is there. The implementation can be switched from the default ```qpid``` to ```rabbitmq```.
 
-### Register consumer
-The provider doesn't support yet updating notes or description.
+There are various types that can be used to manage providers, assuming the correct plugin is installed.
 
-    pulp_register{$::fqdn:
-    	user => 'admin',
-    	pass => 'admin'
-    }
+For security certificates can be used. For example on the webservice:
 
-## Pulp providers
+```puppet
+class { '::pulp':
+  https_cert   => '/path/to/public_key.pem',
+  https_key    => '/path/to/private_key.pem',
+  https_chain  => '/path/to/ca_chain.pem',
+  # Optionally you can change the accepted protocols
+  ssl_protocol => ['all', '-SSLv3', '-TLSv1', '-TLSv1.1'],
+}
+```
 
-### RPM provider
+The connection to the MongoDB server can also be encrypted:
 
-	pulp_rpmrepo { 'scl_ruby22_el7':
-	  checksum_type    => 'sha256',
-	  display_name     => 'scl_ruby22_el7',
-	  feed             => 'https://www.softwarecollections.org/repos/rhscl/rh-ruby22/epel-7-x86_64/',
-	  relative_url     => 'scl_ruby22/7Server',
-	  remove_missing   => 'true',
-	  retain_old_count => '1',
-	  serve_http       => 'true',
-	  serve_https      => 'true',
-	  validate         => 'true',
-	}
+```puppet
+class { '::pulp':
+  db_ssl          => true,
+  db_ssl_keyfile  => '/path/to/private_key.pem',
+  db_ssl_certfile => '/path/to/public_key.pem',
+  db_ca_path      => '/path/to/ca.pem',
+}
+```
 
-### Puppet provider
+Similarly the connection to the message broker can be encrypted:
 
-	pulp_puppetrepo { 'company_puppet_forge':
-	  display_name    => 'company_puppet_forge',
-	  max_downloads   => '10',
-	  serve_http      => 'true',
-	  serve_https     => 'true',
-	  validate        => 'true',
-	  verify_feed_ssl => 'false',
-	}
+```puppet
+class { '::pulp':
+  broker_url     => 'qpid://user:password@broker.example.com:5671',
+  broker_use_ssl => true,
+}
+```
 
-### ISO provider
+The email behaviour is configurable as well:
 
-	pulp_isorepo { 'optymyze_thirdparty':
-	  display_name    => 'files_thirdparty',
-	  feed            => 'https://pulp-server.company.net/pulp/isos/files_thirdparty/',
-	  max_downloads   => '10',
-	  remove_missing  => 'false',
-	  serve_http      => 'true',
-	  serve_https     => 'true',
-	  validate        => 'true',
-	  verify_feed_ssl => 'false',
-	}
+```puppet
+class { '::pulp':
+  email_host    => 'localhost',
+  email_port    => 25,
+  email_from    => 'admin@example.com',
+  email_enabled => true,
+}
+```
 
-### Schedule provider
+In case you need to connect through a proxy you can specify the host, port, username and password. Note the ```proxy_url``` parameter actually maps to the ```proxy_host``` parameter in the configs.
 
-	pulp_schedule { 'scl_ruby22_el7':
-	  enabled       => 'true',
-	  schedule_time => '2000-W01-6T12:00Z/P1W',
-	}
+```puppet
+class { '::pulp':
+  proxy_url      => 'proxy.example.com',
+  proxy_port     => 80,
+  proxy_username => 'user',
+  proxy_password => 'secret',
+}
+```
 
-	# force schedules to be added after the repos are created
-	Pulp_rpmrepo <| |> -> Pulp_schedule <| |>
+#### RPM provider
+
+```puppet
+pulp_rpmrepo { 'scl_ruby22_el7':
+  checksum_type    => 'sha256',
+  display_name     => 'scl_ruby22_el7',
+  feed             => 'https://www.softwarecollections.org/repos/rhscl/rh-ruby22/epel-7-x86_64/',
+  relative_url     => 'scl_ruby22/7Server',
+  remove_missing   => true,
+  retain_old_count => 1,
+  serve_http       => true,
+  serve_https      => true,
+  validate         => true,
+}
+```
+
+#### Puppet provider
+
+```puppet
+pulp_puppetrepo { 'company_puppet_forge':
+  display_name    => 'company_puppet_forge',
+  max_downloads   => 10,
+  serve_http      => true,
+  serve_https     => true,
+  validate        => true,
+  verify_feed_ssl => false,
+}
+```
+
+#### ISO provider
+
+```puppet
+pulp_isorepo { 'optymyze_thirdparty':
+  display_name    => 'files_thirdparty',
+  feed            => 'https://pulp-server.company.net/pulp/isos/files_thirdparty/',
+  max_downloads   => 10,
+  remove_missing  => false,
+  serve_http      => true,
+  serve_https     => true,
+  validate        => true,
+  verify_feed_ssl => false,
+}
+```
+
+#### Schedule provider
+
+```puppet
+pulp_schedule { 'scl_ruby22_el7':
+  enabled       => 'true',
+  schedule_time => '2000-W01-6T12:00Z/P1W',
+}
+
+# force schedules to be added after the repos are created
+Pulp_rpmrepo <| |> -> Pulp_schedule <| |>
+```
+
+### Pulp admin
+
+The easiest is to use ```enable_admin``` parameter. This ensures all plugins have their admin component installed as well as configuring the client to talk to the server using the ```default_username``` and ```default_password``` parameters.
+
+```puppet
+class { 'pulp':
+  enable_admin => true,
+}
+```
+
+On standalone machines it is also possible to only install the admin utility by directly using ```pulp::admin```:
+
+```puppet
+include ::pulp::admin
+```
+
+In this case plugins need to be managed explicitly.
+
+```puppet
+class { '::pulp::admin':
+  enable_docker => true,
+  enable_ostree => true,
+  enable_puppet => true,
+  enable_python => true,
+  enable_nodes  => true
+  enable_rpm    => true,
+}
+```
+
+### Pulp Child
+
+Manage a pulp child installation.
+
+```puppet
+include ::pulp::child
+```
+
+### Pulp consumer
+
+Manage pulp consumers.
+
+#### Installation
+
+```puppet
+include ::pulp::consumer
+```
+
+#### Register consumer
+
+```puppet
+pulp_register { $::fqdn:
+  user => 'admin',
+  pass => 'admin',
+}
+```
+
+### Pulp Crane
+
+Manage pulp crane, a minimal docker registry.
+
+You can either deploy it standalone:
+
+```puppet
+include ::pulp::crane
+```
+
+Or as part of a full Pulp installation:
+
+```puppet
+class { '::pulp':
+  enable_crane => true,
+}
+```
 
 ## Development
 
