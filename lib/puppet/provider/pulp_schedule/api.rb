@@ -30,50 +30,42 @@ Puppet::Type.type(:pulp_schedule).provide(:api) do
   end
 
   def self.get_resource_properties(repo_id)
-    all = []
-    sync_id = nil
     # get_repo_syncs return an array with all schedules and the repo type
     schedules =  @pulp.get_repo_syncs(repo_id)
-    return all unless schedules[0]
+    return [] unless schedules
+
     all_schedules = schedules[0]
     $schedules_info['repo_type'][repo_id] = schedules[1]
 
     # first get the lowest sync id
-    all_schedules.each { |schedule|
-      if sync_id && sync_id < schedule['_id']
-        sync_id = schedule['_id']
-      elsif !sync_id
-        sync_id = schedule['_id']
-      end
-    }
+    sync_id = all_schedules.map { |schedule| schedule['_id'] }.min
 
     # create resources
-    all_schedules.each { |schedule|
-      hash = {}
-      hash[:ensure] = :present
-      hash[:provider] = :pulp_schedule
-
-      # in case where we are the previously saved sync_id, we set this as the _main_ resource
+    all_schedules.map { |schedule|
       if sync_id == schedule['_id']
-        hash[:name] = repo_id
+        # in case where we are the previously saved sync_id, we set this as the _main_ resource
+        name = repo_id
         $schedules_info['repo_id'][repo_id] = schedule['_id']
       else
         # otherwise we create a dummy resource that can be purged if not needed
-        hash[:name] = schedule['_id']
+        name = schedule['_id']
         $schedules_info['schedule_id'][schedule['_id']] = repo_id
       end
 
-      hash[:schedule_time] = schedule['schedule']
-      hash[:enabled] = schedule['enabled'] == true ? :true : :false
-      hash[:failure_threshold] = schedule['failure_threshold']
-      all << new(hash)
+      new({
+        :ensure => :present,
+        :provider => :pulp_schedule,
+        :name => name,
+        :schedule_time => schedule['schedule'],
+        :enabled => schedule['enabled'],
+        :failure_threshold => schedule['failure_threshold'],
+      })
     }
-    all
   end
 
   def self.instances
     @pulp = Puppet::Util::PulpUtil.new
-    @pulp.get_repos.map { |repo| new(get_resource_properties(repo['id'])) }.flatten
+    @pulp.get_repos.map { |repo| get_resource_properties(repo['id']) }.flatten
   end
 
   def exists?
@@ -132,12 +124,14 @@ Puppet::Type.type(:pulp_schedule).provide(:api) do
       action = 'create'
       # because create doesn't reach get_resource_properties, set repo type and id here also
       @pulp = Puppet::Util::PulpUtil.new
-      schedules =  @pulp.get_repo_syncs(resource[:name])
+      schedules = @pulp.get_repo_syncs(resource[:name])
+      raise "[set_schedule] Failed to get repo #{repo_id}. Does it exist?" unless schedules
+
       $schedules_info['repo_type'][resource[:name]] = schedules[1]
       $schedules_info['repo_id'][resource[:name]] = resource[:name]
     else
       params << ['--schedule-id', $schedules_info['repo_id'][resource[:name]]]
-      params << ['--enabled', resource[:enabled]] if !resource[:enabled].nil?
+      params << ['--enabled', resource[:enabled]] unless resource[:enabled].nil?
       action = 'update'
     end
 
@@ -149,7 +143,7 @@ Puppet::Type.type(:pulp_schedule).provide(:api) do
     when 'iso-repo'
       type = 'iso'
     else
-      raise "[set_schedule] Unknown repo type #{$schedules_info['repo_type'][repo_id]} for repo_id #{repo_id}"
+      raise "[set_schedule] Unknown repo type '#{$schedules_info['repo_type'][repo_id]}' for repo_id #{repo_id}."
     end
 
     arr = [type, 'repo', 'sync', 'schedules', action, '--repo-id', repo_id, params]

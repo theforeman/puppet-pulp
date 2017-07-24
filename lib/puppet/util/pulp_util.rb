@@ -20,14 +20,15 @@ module Puppet
 
       def get_repos(type=nil)
         repos = request_api('/v2/repositories/')
-        repos.select { |repo| repo['notes']['_repo-type'] == type } if type
+        return repos.select { |repo| repo['notes']['_repo-type'] == type } if type
+        repos
       end
 
       def get_repo_syncs(repo_id)
         # returns an array with 2 values: an array of sync schedules and the repo type
         raise '[get_repo_syncs] Repo id should never be nil' unless repo_id and repo_id != ''
         info = request_api("/v2/repositories/#{repo_id}/")
-        return info if !info
+        return nil unless info
 
         # we need to see the repo type first
         case info['notes']['_repo-type']
@@ -38,8 +39,8 @@ module Puppet
         when 'iso-repo'
           importer = 'iso_importer'
         else
-          print "[get_repo_syncs] Unknown repo type #{info['notes']['_repo-type']} for repo #{repo_id}.\n"
-          return [[], nil]
+          Puppet.debug "[get_repo_syncs] Unknown repo type #{info['notes']['_repo-type']} for repo #{repo_id}.\n"
+          return nil
         end
         [request_api("/v2/repositories/#{repo_id}/importers/#{importer}/schedules/sync/?details=True"), info['notes']['_repo-type']]
       end
