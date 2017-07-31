@@ -6,10 +6,10 @@ class { '::pulp':
 }
 
 pulp_role { 'myrepo_admins':
+  ensure      => 'present',
   users       => ['alice', 'bob'],
   permissions => {
-                   '/'                        => ['READ','EXECUTE'],
-                   '/v2/repositories/myrepo/' => ['CREATE','READ','DELETE','EXECUTE','UPDATE']
-                 },
-  ensure      => 'present',
+    '/'                        => ['READ','EXECUTE'],
+    '/v2/repositories/myrepo/' => ['CREATE','READ','DELETE','EXECUTE','UPDATE'],
+  },
 }
