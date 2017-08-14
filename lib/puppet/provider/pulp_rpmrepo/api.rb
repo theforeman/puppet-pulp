@@ -9,10 +9,6 @@ Puppet::Type.type(:pulp_rpmrepo).provide(:api, :parent => PuppetX::Pulp::RepoPro
     'rpm'
   end
 
-  def repo_type
-    'rpm'
-  end
-
   # special getter methods for parameters that receive a file and write the content
   [:feed_ca_cert,
     :feed_cert,

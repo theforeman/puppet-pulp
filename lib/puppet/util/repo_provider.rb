@@ -13,10 +13,6 @@ class PuppetX::Pulp::RepoProvider < Puppet::Provider
   #   'x'
   # end
   #
-  # def repo_type
-  #   'x'
-  # end
-  #
   # def self.get_resource_properties(repo_id)
   #   # Get a hash of the current repo
   # end
@@ -84,7 +80,7 @@ class PuppetX::Pulp::RepoProvider < Puppet::Provider
       params = hash_to_params(params_hash)
     end
 
-    arr = [repo_type, 'repo', action, '--repo-id', resource[:name], params]
+    arr = [self.class.repo_type, 'repo', action, '--repo-id', resource[:name], params]
     pulp_admin(arr.flatten)
 
     # Collect the resources again once they've been changed (that way `puppet
