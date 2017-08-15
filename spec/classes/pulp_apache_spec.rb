@@ -236,6 +236,13 @@ Alias /pulp/docker/v2 /var/www/pub/docker/v2/web
     Options FollowSymlinks Indexes
 </Directory>
 
+<Directory /var/www/pub/docker/v2/web/*/manifests/list>
+    Header set Docker-Distribution-API-Version "registry/2.0"
+    Header set Content-Type "application/vnd.docker.distribution.manifest.list.v2+json"
+    SSLRequireSSL
+    Options FollowSymlinks Indexes
+</Directory>
+
 # Docker v1
 Alias /pulp/docker/v1 /var/www/pub/docker/v1/web
 <Directory /var/www/pub/docker/v1/web>
@@ -323,6 +330,7 @@ Alias /pulp/python /var/www/pub/python/
 
 <Directory /var/www/pub/python>
     Options FollowSymLinks Indexes
+    DirectoryIndex index.html index.json
 </Directory>
 ')
       end

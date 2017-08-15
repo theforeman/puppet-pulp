@@ -17,6 +17,7 @@ describe 'pulp::apache_plugin' do
         'Alias /pulp/python /var/www/pub/python/',
         '<Directory /var/www/pub/python>',
         '    Options FollowSymLinks Indexes',
+        '    DirectoryIndex index.html index.json',
         '</Directory>',
       ])
     end
