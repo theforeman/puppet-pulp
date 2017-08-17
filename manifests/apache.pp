@@ -73,7 +73,7 @@ class pulp::apache {
     apache::vhost { 'pulp-https':
       priority                   => '05',
       docroot                    => '/usr/share/pulp/wsgi',
-      port                       => 443,
+      port                       => $::pulp::https_ports,
       servername                 => $::fqdn,
       serveraliases              => [$::hostname],
       keepalive                  => 'on',

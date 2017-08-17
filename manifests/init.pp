@@ -100,7 +100,9 @@
 #
 # $https_key::                  Apache private certificate for ssl
 #
-# $https_chain::                apache chain file for ssl
+# $https_chain::                Apache chain file for ssl
+#
+# $https_ports::                Ports to listen on
 #
 # $ssl_username::               Value to use for SSLUsername directive in apache vhost. Defaults to SSL_CLIENT_S_DN_CN.
 #                               Set an empty string or false to unset directive.
