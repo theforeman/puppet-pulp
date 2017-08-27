@@ -3,6 +3,8 @@
 class pulp::params {
   $version = 'installed'
 
+  $manage_repo = false
+
   $db_name = 'pulp_database'
   $db_seeds = 'localhost:27017'
   $db_username = undef

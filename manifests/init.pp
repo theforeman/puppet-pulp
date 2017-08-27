@@ -13,6 +13,8 @@
 #
 # $crane_data_dir::             Directory containing docker v1/v2 artifacts published by pulp
 #
+# $manage_repo::                Whether to manage the pulp repository
+#
 # $oauth_key::                  Key to enable OAuth style authentication
 #
 # $oauth_secret::               Shared secret that can be used for OAuth style authentication
@@ -263,6 +265,7 @@ class pulp (
   String $version = $::pulp::params::version,
   Boolean $crane_debug = $::pulp::params::crane_debug,
   Integer[1, 65535] $crane_port = $::pulp::params::crane_port,
+  Boolean $manage_repo = $::pulp::params::manage_repo,
   Stdlib::Absolutepath $crane_data_dir = $::pulp::params::crane_data_dir,
   String $db_name = $::pulp::params::db_name,
   String $db_seeds = $::pulp::params::db_seeds,
@@ -379,6 +382,11 @@ class pulp (
     assert_type(String, $ldap_url)
     assert_type(String, $ldap_bind_dn)
     assert_type(String, $ldap_bind_password)
+  }
+
+  if $manage_repo {
+    include ::pulp::repo::upstream
+    Class['pulp::repo::upstream'] -> Class['pulp::install']
   }
 
   include ::mongodb::client

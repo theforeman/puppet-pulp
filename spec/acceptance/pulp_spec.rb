@@ -3,8 +3,9 @@ require 'spec_helper_acceptance'
 describe 'Scenario: install pulp' do
   let(:pp) do
     <<-EOS
-    class { '::pulp::repo::upstream': } ->
-    class { '::pulp': }
+    class { '::pulp':
+      manage_repo => true,
+    }
     EOS
   end
 
