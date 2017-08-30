@@ -401,6 +401,7 @@ class pulp (
       data_dir => $crane_data_dir,
       debug    => $crane_debug,
     }
+    contain ::pulp::crane
   }
 
   contain ::pulp::install
