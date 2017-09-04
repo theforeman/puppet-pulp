@@ -84,7 +84,7 @@ Puppet::Type.type(:pulp_role).provide(:api) do
 
     # Remove a key which should not be there anymore
     @permissions.each_key() do |k|
-      if ! should.has_key?(k)
+      unless should.has_key?(k)
         @permissions[k].each() do |perm|
           role_permission_mod("revoke", k, perm, name())
         end
