@@ -426,7 +426,7 @@ download_concurrency: <%= scope['pulp::lazy_download_concurrency'] %>
 #
 # Settings for profiling Pulp tasks
 #
-# enable:
+# enabled:
 #   This enables the cProfile Python module to profile individual tasks and
 #   store the output by task ID in a directory. Note that enabling this can
 #   impact performance.
@@ -436,5 +436,5 @@ download_concurrency: <%= scope['pulp::lazy_download_concurrency'] %>
 #   writeable and readable by Pulp.
 
 [profiling]
-enable: <%= scope['pulp::enable_profiling'] %>
+enabled: <%= scope['pulp::enable_profiling'] %>
 directory: <%= scope['pulp::profiling_directory'] %>
