@@ -26,9 +26,6 @@ Puppet::Type.type(:pulp_role).provide(:api) do
 
   def users
     users = @pulp.get_role_users(name())
-    if users.nil?
-      nil
-    end
 
     @users = users
     @users
@@ -51,9 +48,6 @@ Puppet::Type.type(:pulp_role).provide(:api) do
 
   def permissions
     permissions = @pulp.get_role_permissions(name())
-    if permissions.nil?
-      nil
-    end
 
     @permissions = permissions
     @permissions
