@@ -83,6 +83,7 @@ class pulp::apache {
       ssl_key                    => $::pulp::https_key,
       ssl_chain                  => $::pulp::https_chain,
       ssl_ca                     => $::pulp::ca_cert,
+      ssl_certs_dir              => '',
       ssl_verify_client          => 'optional',
       ssl_protocol               => $::pulp::ssl_protocol,
       ssl_options                => '+StdEnvVars +ExportCertData',
