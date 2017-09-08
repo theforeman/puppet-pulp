@@ -30,6 +30,7 @@ class pulp::child::apache (
     ssl_cert               => $ssl_cert,
     ssl_key                => $ssl_key,
     ssl_ca                 => $ssl_ca,
+    ssl_certs_dir          => '',
     ssl_verify_client      => 'optional',
     ssl_options            => '+StdEnvVars',
     ssl_verify_depth       => '3',
