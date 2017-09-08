@@ -5,6 +5,7 @@ class pulp::crane::apache {
   include ::apache::mod::headers
   include ::apache::mod::proxy
   include ::apache::mod::proxy_http
+  include ::apache::mod::wsgi
 
   apache::vhost { 'crane':
     servername          => $::fqdn,
