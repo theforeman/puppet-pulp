@@ -50,6 +50,23 @@ module Puppet
         request_api("/v2/repositories/#{repo_id}/?details=True")
       end
 
+      def get_role_info(role_id)
+        raise '[get_role_info] Role id should never be nil.' unless role_id
+        request_api("/v2/roles/#{role_id}/")
+      end
+
+      def get_role_users(role_id)
+        raise '[get_role_users] Role id should never be nil.' unless role_id
+        r = get_role_info(role_id)
+        r['users']
+      end
+
+      def get_role_permissions(role_id)
+        raise '[get_role_users] Role id should never be nil.' unless role_id
+        r = get_role_info(role_id)
+        r['permissions']
+      end
+
       private
 
       def parse_config(path)

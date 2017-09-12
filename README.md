@@ -255,6 +255,14 @@ class { '::pulp':
 }
 ```
 
+### Role provider
+
+	pulp_role { 'repo_admin':
+	  ensure      => 'present',
+	  users       => ['alice', 'bob'],
+	  permissions => {'/' => ['READ', 'CREATE'], '/pulp/api/v2/repositories/scl_ruby22_el7/' => ['READ', 'EXECUTE', 'UPDATE', 'CREATE', 'DELETE']},
+	}
+
 ## Development
 
 See the CONTRIBUTING guide for steps on how to make a change and get it accepted upstream.
