@@ -2,7 +2,7 @@ class pulp::child::apache (
   $servername = $::fqdn,
   $ssl_cert = $::pulp::child::ssl_cert,
   $ssl_key = $::pulp::child::ssl_key,
-  $ssl_ca = $::pulp::ca_cert,
+  $ssl_ca = $::pulp::https_ca_cert,
   $max_keep_alive = $::pulp::max_keep_alive,
   $ssl_username = $::pulp::ssl_username,
 ) {
@@ -18,6 +18,12 @@ class pulp::child::apache (
     $directories = undef
   }
 
+  if $ssl_ca {
+    $_ssl_ca = $ssl_ca
+  } else {
+    $_ssl_ca = $::pulp::ca_cert
+  }
+
   apache::vhost { 'pulp-node-ssl':
     servername             => $servername,
     docroot                => '/var/www/html',
@@ -29,7 +35,7 @@ class pulp::child::apache (
     ssl                    => true,
     ssl_cert               => $ssl_cert,
     ssl_key                => $ssl_key,
-    ssl_ca                 => $ssl_ca,
+    ssl_ca                 => $_ssl_ca,
     ssl_certs_dir          => '',
     ssl_verify_client      => 'optional',
     ssl_options            => '+StdEnvVars',

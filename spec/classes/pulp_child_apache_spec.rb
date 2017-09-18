@@ -22,9 +22,14 @@ describe 'pulp::child::apache' do
             .with_servername('foo.example.com')
             .with_ssl_cert('/etc/pki/pulp/ssl_apache.crt')
             .with_ssl_key('/etc/pki/pulp/ssl_apache.key')
-            .with_ssl_ca('/etc/pki/pulp/ca.crt')
+            .with_ssl_ca(nil)
             .with_max_keep_alive(10000)
             .with_ssl_username('SSL_CLIENT_S_DN_CN')
+        end
+
+        it do
+          is_expected.to contain_apache__vhost('pulp-node-ssl')
+            .with_ssl_ca('/etc/pki/pulp/ca.crt')
         end
       end
 

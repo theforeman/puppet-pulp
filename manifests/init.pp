@@ -104,6 +104,8 @@
 #
 # $https_chain::                apache chain file for ssl
 #
+# $https_ca_cert::              apache ca cert file for ssl, falls back to ca_cert if empty
+#
 # $ssl_username::               Value to use for SSLUsername directive in apache vhost. Defaults to SSL_CLIENT_S_DN_CN.
 #                               Set an empty string or false to unset directive.
 #
@@ -294,6 +296,7 @@ class pulp (
   Optional[Stdlib::Absolutepath] $https_cert = $::pulp::params::https_cert,
   Optional[Stdlib::Absolutepath] $https_key = $::pulp::params::https_key,
   Optional[Stdlib::Absolutepath] $https_chain = $::pulp::params::https_chain,
+  Optional[Stdlib::Absolutepath] $https_ca_cert = $::pulp::params::https_ca_cert,
   Variant[String, Boolean] $ssl_username = $::pulp::params::ssl_username,
   Integer $user_cert_expiration = $::pulp::params::user_cert_expiration,
   Integer $consumer_cert_expiration = $::pulp::params::consumer_cert_expiration,
@@ -396,7 +399,7 @@ class pulp (
     class { '::pulp::crane':
       cert     => $https_cert,
       key      => $https_key,
-      ca_cert  => $ca_cert,
+      ca_cert  => pick($https_ca_cert, $ca_cert),
       port     => $crane_port,
       data_dir => $crane_data_dir,
       debug    => $crane_debug,

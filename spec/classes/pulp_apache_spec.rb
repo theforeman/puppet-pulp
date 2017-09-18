@@ -33,6 +33,10 @@ describe 'pulp::apache' do
         :serveraliases           => [facts[:hostname]],
         :docroot                 => '/usr/share/pulp/wsgi',
         :ssl                     => true,
+        :ssl_cert                => '/etc/pki/pulp/ca.crt',
+        :ssl_key                 => '/etc/pki/pulp/ca.key',
+        :ssl_chain               => nil,
+        :ssl_ca                  => '/etc/pki/pulp/ca.crt',
         :ssl_verify_client       => 'optional',
         :ssl_protocol            => ['all', '-SSLv2', '-SSLv3'],
         :ssl_options             => '+StdEnvVars +ExportCertData',
@@ -42,6 +46,27 @@ describe 'pulp::apache' do
         :wsgi_daemon_process     => 'pulp user=apache group=apache processes=3 maximum-requests=0 display-name=%{GROUP}',
         :wsgi_pass_authorization => 'On',
         :wsgi_import_script      => '/usr/share/pulp/wsgi/webservices.wsgi',
+      })
+    end
+  end
+
+  context 'with https_ca_cert on ::pulp class set' do
+    let :pre_condition do
+      "class { 'pulp':
+        https_ca_cert => '/path/to/ca.crt',
+      }"
+    end
+
+    let :facts do
+      default_facts
+    end
+
+    it 'should configure apache server with ssl' do
+      is_expected.to contain_apache__vhost('pulp-https').with({
+        :ssl_cert  => '/etc/pki/pulp/ca.crt',
+        :ssl_key   => '/etc/pki/pulp/ca.key',
+        :ssl_chain => nil,
+        :ssl_ca    => '/path/to/ca.crt',
       })
     end
   end
