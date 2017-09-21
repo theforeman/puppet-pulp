@@ -1,13 +1,25 @@
+---
 fixtures:
   repositories:
-    stdlib:  "git://github.com/puppetlabs/puppetlabs-stdlib.git"
-    extlib:
-      repo: 'git://github.com/puppet-community/puppet-extlib'
-      ref:  'v0.11.3'
-    apache:  "git://github.com/puppetlabs/puppetlabs-apache.git"
-    concat:  "git://github.com/puppetlabs/puppetlabs-concat.git"
-    mongodb: "git://github.com/puppetlabs/puppetlabs-mongodb.git"
-    qpid:    "git://github.com/katello/puppet-qpid.git"
-    squid3:  "git://github.com/thias/puppet-squid3.git"
+    stdlib: "https://github.com/puppetlabs/puppetlabs-stdlib.git"
   symlinks:
     pulp: "#{source_dir}"
+  forge_modules:
+    extlib:
+      repo: puppet-extlib
+      ref: 1.1.0
+    apache:
+      repo: puppetlabs-apache
+      ref: 1.11.1
+    concat:
+      repo: puppetlabs-concat
+      ref: 2.2.1
+    mongodb:
+      repo: puppetlabs-mongodb
+      ref: 0.17.0
+    qpid:
+      repo: katello-qpid
+      ref: 2.2.0
+    squid3:
+      repo: thias-squid3
+      ref: 1.0.2
