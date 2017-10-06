@@ -46,12 +46,26 @@ Puppet::Type.type(:pulp_rpmbind).provide(:consumer) do
   end
 
   def create
-    consumer('rpm', 'bind', '--repo-id', @resource[:name])
+    output = consumer('rpm', 'bind', '--repo-id', @resource[:name])
+    raise "Repository [#{@resource[:name]}] does not exist on the server" if output =~ /does not exist/
+    wait_for_bind # 'pulp-consumer rpm bind' happens asynchronously in the background
     @property_hash[:ensure] = :present
   end
 
   def destroy
     consumer('rpm', 'unbind', '--repo-id', @resource[:name])
     @property_hash[:ensure] = :absent
+  end
+
+  def wait_for_bind
+    tries ||= 10
+    grep('-q', "^\\[#{@resource[:name]}\\]$", self.class.repo_file)
+  rescue Puppet::ExecutionFailure
+    raise "Pulp bind to #{@resource[:name]} failed" unless (tries -= 1) > 0
+    Puppet.debug("Waiting for pulp rpm bind to #{@resource[:name]} to take place")
+    sleep 0.25
+    retry
+  else
+    Puppet.debug("Pulp bind to #{@resource[:name]} was successful")
   end
 end
