@@ -12,7 +12,7 @@ describe Puppet::Type.type(:pulp_isorepo).provider(:api) do
       end
 
       describe 'instances' do
-        it 'should have an instance method' do
+        it 'should have an instances method' do
           expect(described_class).to respond_to :instances
         end
       end
