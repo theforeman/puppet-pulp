@@ -260,7 +260,7 @@ class { '::pulp':
 	pulp_role { 'repo_admin':
 	  ensure      => 'present',
 	  users       => ['alice', 'bob'],
-	  permissions => {'/' => ['READ', 'CREATE'], '/pulp/api/v2/repositories/scl_ruby22_el7/' => ['READ', 'EXECUTE', 'UPDATE', 'CREATE', 'DELETE']},
+	  permissions => {'/' => ['READ', 'CREATE'], '/v2/repositories/scl_ruby22_el7/' => ['READ', 'EXECUTE', 'UPDATE', 'CREATE', 'DELETE']},
 	}
 
 ## Development
