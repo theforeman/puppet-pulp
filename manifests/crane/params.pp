@@ -8,4 +8,6 @@ class pulp::crane::params {
 
   $data_dir = '/var/lib/crane/metadata'
   $data_dir_polling_interval = 60
+
+  $ssl_protocol = undef
 }

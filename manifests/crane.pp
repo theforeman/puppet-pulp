@@ -17,6 +17,8 @@
 # $data_dir::                   Directory containing docker v1/v2 artifacts published by pulp
 #
 # $data_dir_polling_interval::  The number of seconds between checks for updates to metadata files in the data_dir
+#
+# $ssl_protocol::               SSLProtocol configuration to use
 class pulp::crane (
   Boolean $debug = $::pulp::crane::params::debug,
   Integer[0, 65535] $port = $::pulp::crane::params::port,
@@ -25,6 +27,7 @@ class pulp::crane (
   Stdlib::Absolutepath $key = $::pulp::crane::params::key,
   Stdlib::Absolutepath $cert = $::pulp::crane::params::cert,
   Stdlib::Absolutepath $ca_cert = $::pulp::crane::params::ca_cert,
+  Optional[String] $ssl_protocol = $::pulp::crane::params::ssl_protocol,
 ) inherits pulp::crane::params {
   class { '::pulp::crane::install': } ~>
   class { '::pulp::crane::config': } ~>

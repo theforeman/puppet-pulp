@@ -23,6 +23,7 @@ class pulp::crane::apache {
     ssl_certs_dir       => '',
     ssl_verify_client   => 'optional',
     ssl_options         => '+StdEnvVars +ExportCertData +FakeBasicAuth',
+    ssl_protocol        => $::pulp::crane::ssl_protocol,
     ssl_verify_depth    => '3',
     ssl_proxyengine     => true,
   }

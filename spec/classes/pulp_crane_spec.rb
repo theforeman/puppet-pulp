@@ -12,6 +12,7 @@ describe 'pulp::crane' do
           :ca_cert                   => '/tmp/ca_cert.crt',
           :data_dir_polling_interval => 90,
           :debug                     => true,
+          :ssl_protocol              => '-all +TLSv1.2'
         }
       end
 
@@ -49,6 +50,7 @@ describe 'pulp::crane' do
           :ssl_cert          => '/tmp/cert.crt',
           :ssl_ca            => '/tmp/ca_cert.crt',
           :ssl_chain         => '/tmp/ca_cert.crt',
+          :ssl_protocol      => '-all +TLSv1.2'
         })
       end
     end
