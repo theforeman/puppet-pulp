@@ -86,6 +86,16 @@ Puppet::Type.type(:pulp_rpmrepo).provide(:api, :parent => PuppetX::Pulp::RepoPro
     hash[:ensure] = :present
     hash[:provider] = :pulp_rpmrepo
 
+    hash = Hash[hash.map do |k, v|
+      case v
+      when true
+        [k, :true]
+      when false
+        [k, :false]
+      else
+        [k, v]
+      end
+    end]
     Puppet.debug "Repo properties: #{hash.inspect}"
 
     hash
