@@ -1,3 +1,4 @@
+# The resources in this file serve as examples and are also used in the automated acceptance testing
 class { '::pulp':
   manage_repo  => true,
   # https://github.com/theforeman/puppet-pulp/issues/138
@@ -5,6 +6,10 @@ class { '::pulp':
   enable_admin => true,
 }
 
+# No parameters/properties are mandatory
+pulp_rpmrepo { 'defaults_example':}
+
+# But there are several you can set
 pulp_rpmrepo { 'Yummy':
   display_name      => 'Very tasty',
   description       => 'Yummy has the best food',
@@ -23,8 +28,8 @@ pulp_rpmrepo { 'Yummy':
   remove_missing    => true,
   retain_old_count  => 3,
   relative_url      => 'yummy',
-  serve_http        => true,
-  serve_https       => false,
+  serve_http        => 'TRUE', # Boolean properties accept actual booleans, or boolean like strings
+  serve_https       => 'no',
   generate_sqlite   => true,
   host_ca           => '/etc/pki/pulp/ca.crt',
   auth_ca           => '/etc/pki/pulp/ca.crt',
