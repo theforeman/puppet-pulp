@@ -229,24 +229,6 @@ task_result_history: 3
 # filter: (gidNumber=200)
 
 
-# = OAuth =
-#
-# Uncomment the below section with appropriate values to use OAuth
-# authentication.
-#
-# enabled: boolean; controls whether OAuth authentication is enabled
-#
-# oauth_key: string; key to enable OAuth style authentication
-#
-# oauth_secret: string; shared secret that can be used for OAuth style
-#     authentication
-
-[oauth]
-enabled: <%= scope['pulp::oauth_enabled'] %>
-oauth_key: <%= scope['pulp::oauth_key'] %>
-oauth_secret: <%= scope['pulp::oauth_secret'] %>
-
-
 # = Messaging =
 #
 # Controls Pulp's configuration of broker settings for communicating to the Consumer Agent.
