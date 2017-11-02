@@ -1,17 +1,16 @@
 # This file is managed centrally by modulesync
-#   https://github.com/Katello/foreman-installer-modulesync
+#   https://github.com/theforeman/foreman-installer-modulesync
 
 require 'puppetlabs_spec_helper/module_spec_helper'
 
 require 'rspec-puppet-facts'
 include RspecPuppetFacts
 
-                                                    # Original fact sources:
-add_custom_fact :concat_basedir, '/tmp'             # puppetlabs-concat
-add_custom_fact :mongodb_version, '2.4.14'          # puppetlabs-mongodb
-add_custom_fact :root_home, '/root'                 # puppetlabs-stdlib
-add_custom_fact :puppetversion, Puppet.version      # Facter, but excluded from rspec-puppet-facts
-add_custom_fact :puppet_environmentpath, Gem::Version.new(Puppet.version) >= Gem::Version.new('4.0') ? '/etc/puppetlabs/code/environments' : '' # puppetlabs-stdlib
+                                                                             # Original fact sources:
+add_custom_fact :concat_basedir, '/tmp'                                      # puppetlabs-concat
+add_custom_fact :puppetversion, Puppet.version                               # Facter, but excluded from rspec-puppet-facts
+add_custom_fact :puppet_environmentpath, '/etc/puppetlabs/code/environments' # puppetlabs-stdlib
+add_custom_fact :root_home, '/root'                                          # puppetlabs-stdlib
 
 # Workaround for no method in rspec-puppet to pass undef through :params
 class Undef
