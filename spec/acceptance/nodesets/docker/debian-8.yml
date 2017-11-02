@@ -3,15 +3,16 @@
 # https://github.com/voxpupuli/modulesync
 # https://github.com/theforeman/foreman-installer-modulesync
 HOSTS:
-  centos-7-x64.example.com:
-    platform: el-7-x86_64
+  debian-8-x64.example.com:
+    platform: debian-8-amd64
     hypervisor: docker
-    image: centos:7
+    image: debian:8
     docker_preserve_image: true
-    docker_cmd: '["/usr/sbin/init"]'
+    docker_cmd: '["/sbin/init"]'
     docker_image_commands:
-      - 'yum install -y crontabs initscripts iproute openssl sysvinit-tools tar wget which ss'
-      - 'systemctl mask getty@tty1.service'
+      - 'apt-get update && apt-get install -y cron locales-all net-tools wget'
+      - 'rm -f /usr/sbin/policy-rc.d'
+      - 'systemctl mask getty@tty1.service getty-static.service'
 CONFIG:
   trace_limit: 200
   masterless: true
