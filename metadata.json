@@ -4,8 +4,8 @@
   "author": "Katello",
   "summary": "Configure and install a Pulp server or node.",
   "license": "GPL-3.0+",
-  "source": "https://github.com/Katello/puppet-pulp.git",
-  "project_page": "https://github.com/Katello/puppet-pulp",
+  "source": "https://github.com/theforeman/puppet-pulp.git",
+  "project_page": "https://github.com/theforeman/puppet-pulp",
   "issues_url": "http://projects.theforeman.org/projects/katello/issues",
   "dependencies": [
     {
