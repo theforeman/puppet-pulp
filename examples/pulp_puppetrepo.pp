@@ -1,6 +1,6 @@
 class { '::pulp':
   manage_repo   => true,
-  # https://github.com/Katello/puppet-pulp/issues/138
+  # https://github.com/theforeman/puppet-pulp/issues/138
   ssl_username  => '',
   enable_admin  => true,
   enable_puppet => true,
@@ -8,7 +8,7 @@ class { '::pulp':
 
 # Workaround: if we previously had a pulp installation without puppet then
 # we need to migrate the database. This requires the services to be
-# stopped. https://github.com/Katello/puppet-pulp/issues/197
+# stopped. https://github.com/theforeman/puppet-pulp/issues/197
 exec { 'stop services':
   command     => '/bin/systemctl stop pulp_celerybeat pulp_workers pulp_resource_manager pulp_streamer && rm /var/lib/pulp/init.flag',
   subscribe   => Class['pulp::install'],

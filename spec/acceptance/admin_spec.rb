@@ -5,7 +5,7 @@ describe 'Scenario: pulp-admin' do
     <<-EOS
     class { '::pulp':
       manage_repo => true,
-      # https://github.com/Katello/puppet-pulp/issues/138
+      # https://github.com/theforeman/puppet-pulp/issues/138
       ssl_username => '',
       enable_admin => true,
     }
