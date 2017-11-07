@@ -12,8 +12,6 @@
 #
 # $enable_puppet::                 Install puppet extension. Only available on pulp 2.6 and higher
 #
-# $enable_nodes::                  Install nodes extension
-#
 # $enable_rpm::                    Install rpm extension
 #
 # $host::                          The pulp server hostname
@@ -93,7 +91,6 @@
 class pulp::consumer (
   String $version = $::pulp::consumer::params::version,
   Boolean $enable_puppet = $::pulp::consumer::params::enable_puppet,
-  Boolean $enable_nodes = $::pulp::consumer::params::enable_nodes,
   Boolean $enable_rpm = $::pulp::consumer::params::enable_rpm,
   String $host = $::pulp::consumer::params::host,
   Integer $port = $::pulp::consumer::params::port,

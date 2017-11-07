@@ -74,7 +74,6 @@ class pulp::params {
   $enable_ostree = false
   $enable_puppet = false
   $enable_python = false
-  $enable_parent_node = false
 
   $email_host = 'localhost'
   $email_port = 25
@@ -119,13 +118,6 @@ class pulp::params {
   $wsgi_max_requests = 0
   $puppet_wsgi_processes = 3
   $show_conf_diff = false
-
-  $node_certificate = '/etc/pki/pulp/nodes/node.crt'
-  $node_verify_ssl = true
-  $node_server_ca_cert = '/etc/pki/pulp/ca.crt'
-  $node_oauth_effective_user = 'admin'
-  $node_oauth_key = 'pulp'
-  $node_oauth_secret = 'secret'
 
   $enable_profiling = false
   $profiling_directory = '/var/lib/pulp/c_profiles'

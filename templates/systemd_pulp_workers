@@ -1,6 +1,6 @@
 # Configuration file for Pulp's Celery workers
 
-# Define the number of worker nodes you wish to have here. This defaults to the number of processors
+# Define the number of workers you wish to have here. This defaults to the number of processors
 # that are detected on the system if left commented here.
 PULP_CONCURRENCY=<%= scope['pulp::num_workers'] %>
 

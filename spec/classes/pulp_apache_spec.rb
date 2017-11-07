@@ -365,52 +365,6 @@ Alias /pulp/ostree /var/www/pub/ostree/
       end
     end
 
-    describe 'with enable_parent_node' do
-      let :pre_condition do
-        "class {'pulp': enable_parent_node => true}"
-      end
-
-      it 'should configure apache for defining a parent node' do
-        is_expected.to contain_file('/etc/httpd/conf.d/pulp_nodes.conf').with(
-        :content => '#
-# Apache configuration file for pulp web services and repositories
-#
-
-# -- HTTP Repositories ---------
-
-Alias /pulp/nodes/http/repos /var/www/pulp/nodes/http/repos
-
-<Directory /var/www/pulp/nodes/http/repos >
-  Options FollowSymLinks Indexes
-</Directory>
-
-# -- HTTPS Repositories ---------
-
-Alias /pulp/nodes/https/repos /var/www/pulp/nodes/https/repos
-
-<Directory /var/www/pulp/nodes/https/repos >
-  Options FollowSymLinks Indexes
-  SSLRequireSSL
-  SSLVerifyClient require
-  SSLVerifyDepth  5
-  SSLOptions +FakeBasicAuth
-  SSLRequire %{SSL_CLIENT_S_DN_O} eq "PULP" and %{SSL_CLIENT_S_DN_OU} eq "NODES"
-</Directory>
-
-Alias /pulp/nodes/content /var/www/pulp/nodes/content
-
-<Directory /var/www/pulp/nodes/content >
-  Options FollowSymLinks Indexes
-  SSLRequireSSL
-  SSLVerifyClient require
-  SSLVerifyDepth  5
-  SSLOptions +FakeBasicAuth
-  SSLRequire %{SSL_CLIENT_S_DN_O} eq "PULP" and %{SSL_CLIENT_S_DN_OU} eq "NODES"
-</Directory>
-')
-      end
-    end
-
     describe 'with ldap parameters' do
       let :pre_condition do
         "class {'pulp':
