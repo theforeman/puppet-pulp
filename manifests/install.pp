@@ -21,10 +21,6 @@ class pulp::install {
     package { ['pulp-katello']: ensure => $pulp::version, }
   }
 
-  if $pulp::enable_parent_node {
-    package { ['pulp-nodes-parent']: ensure => $pulp::version, }
-  }
-
   if $pulp::enable_rpm {
     package { ['pulp-rpm-plugins']: ensure => $pulp::version, }
   }

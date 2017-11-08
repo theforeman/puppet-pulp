@@ -168,10 +168,6 @@ class pulp::apache {
     if $::pulp::enable_ostree {
       pulp::apache_plugin { 'ostree': vhosts80 => false }
     }
-
-    if $::pulp::enable_parent_node {
-      pulp::apache_plugin { 'nodes': vhosts80 => false }
-    }
   }
 
   file {'/etc/httpd/conf.d/pulp_streamer.conf':

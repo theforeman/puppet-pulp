@@ -51,8 +51,6 @@
 #
 # $enable_docker::                 Install docker extension. Defaults to false.
 #
-# $enable_nodes::                  Install nodes extension. Defaults to false.
-#
 # $enable_python::                 Install python extension. Defaults to false.
 #
 # $enable_ostree::                 Install ostree extension. Defaults to false.
@@ -90,7 +88,6 @@ class pulp::admin (
   Integer[0] $wrap_width = $::pulp::admin::params::wrap_width,
   Boolean $enable_puppet = $::pulp::admin::params::enable_puppet,
   Boolean $enable_docker = $::pulp::admin::params::enable_docker,
-  Boolean $enable_nodes = $::pulp::admin::params::enable_nodes,
   Boolean $enable_python = $::pulp::admin::params::enable_python,
   Boolean $enable_ostree = $::pulp::admin::params::enable_ostree,
   Boolean $enable_rpm = $::pulp::admin::params::enable_rpm,

@@ -2,7 +2,6 @@
 class pulp::consumer::params {
   $version = 'installed'
   $enable_puppet = false
-  $enable_nodes = false
   $enable_rpm = true
 
   $host = $::fqdn

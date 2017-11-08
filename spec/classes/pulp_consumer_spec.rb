@@ -93,14 +93,6 @@ describe 'pulp::consumer' do
       end
     end
 
-    context 'install with nodes param' do
-      let(:params) do {
-          'enable_nodes' => true,
-        } end
-
-      it { should contain_package('pulp-nodes-consumer-extensions').with_ensure('installed') }
-    end
-
     context 'install with rpm param' do
       let(:params) do {
           'enable_rpm' => true,

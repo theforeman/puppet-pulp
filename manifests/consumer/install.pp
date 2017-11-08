@@ -28,12 +28,6 @@ class pulp::consumer::install {
     }
   }
 
-  if $pulp::consumer::enable_nodes {
-    package { 'pulp-nodes-consumer-extensions':
-      ensure => $pulp::consumer::version,
-    }
-  }
-
   if $pulp::consumer::enable_rpm {
     package { ['pulp-rpm-consumer-extensions', 'pulp-rpm-yumplugins', 'pulp-rpm-handlers']:
       ensure => $pulp::consumer::version,

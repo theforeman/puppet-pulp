@@ -66,14 +66,6 @@ describe 'pulp::admin' do
       it { should contain_package('pulp-docker-admin-extensions').with_ensure('installed') }
     end
 
-    context 'install with nodes param' do
-      let(:params) do {
-          'enable_nodes' => true,
-        } end
-
-      it { should contain_package('pulp-nodes-admin-extensions').with_ensure('installed') }
-    end
-
     context 'install with python param' do
       let(:params) do {
           'enable_python' => true,

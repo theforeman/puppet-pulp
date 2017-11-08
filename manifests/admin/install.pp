@@ -17,12 +17,6 @@ class pulp::admin::install {
     }
   }
 
-  if $pulp::admin::enable_nodes {
-    package { 'pulp-nodes-admin-extensions':
-      ensure => $pulp::admin::version,
-    }
-  }
-
   if $pulp::admin::enable_python {
     package { 'pulp-python-admin-extensions':
       ensure => $pulp::admin::version,

@@ -20,7 +20,6 @@ class pulp::admin::params {
   $wrap_width         = 80
   $enable_puppet      = false
   $enable_docker      = false
-  $enable_nodes       = false
   $enable_python      = false
   $enable_ostree      = false
   $enable_rpm         = true

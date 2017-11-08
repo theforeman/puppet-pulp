@@ -209,8 +209,6 @@
 #
 # $enable_ostree::              Whether to enable ostree plugin.
 #
-# $enable_parent_node::         Whether to enable pulp parent nodes.
-#
 # $enable_http::                Whether to enable http access to rpm repos.
 #
 # $manage_httpd::               Whether to install and configure the httpd server.
@@ -221,18 +219,6 @@
 # $manage_broker::              Whether install and configure the qpid or rabbitmq broker.
 #
 # $manage_db::                  Boolean to install and configure the mongodb.
-#
-# $node_certificate::           The absolute path to the node SSL certificate
-#
-# $node_verify_ssl::            Whether to verify node SSL
-#
-# $node_server_ca_cert::        Server cert for pulp node
-#
-# $node_oauth_effective_user::  Effective user for node OAuth
-#
-# $node_oauth_key::             The oauth key used to authenticate to the parent node
-#
-# $node_oauth_secret::          The oauth secret used to authenticate to the parent node
 #
 # $max_keep_alive::             Configuration value for apache MaxKeepAliveRequests
 #
@@ -346,18 +332,11 @@ class pulp (
   Boolean $enable_puppet = $::pulp::params::enable_puppet,
   Boolean $enable_python = $::pulp::params::enable_python,
   Boolean $enable_ostree = $::pulp::params::enable_ostree,
-  Boolean $enable_parent_node = $::pulp::params::enable_parent_node,
   Boolean $enable_http = $::pulp::params::enable_http,
   Boolean $manage_broker = $::pulp::params::manage_broker,
   Boolean $manage_db = $::pulp::params::manage_db,
   Boolean $manage_httpd = $::pulp::params::manage_httpd,
   Boolean $manage_plugins_httpd = $::pulp::params::manage_plugins_httpd,
-  Stdlib::Absolutepath $node_certificate = $::pulp::params::node_certificate,
-  Boolean $node_verify_ssl = $::pulp::params::node_verify_ssl,
-  Stdlib::Absolutepath $node_server_ca_cert = $::pulp::params::node_server_ca_cert,
-  String $node_oauth_effective_user = $::pulp::params::node_oauth_effective_user,
-  String $node_oauth_key = $::pulp::params::node_oauth_key,
-  String $node_oauth_secret = $::pulp::params::node_oauth_secret,
   Array[String] $disabled_authenticators = $::pulp::params::disabled_authenticators,
   Hash[String, String] $additional_wsgi_scripts = $::pulp::params::additional_wsgi_scripts,
   Integer[1] $wsgi_processes = $::pulp::params::wsgi_processes,
@@ -422,7 +401,6 @@ class pulp (
 
     class { '::pulp::admin':
       enable_docker => $enable_docker,
-      enable_nodes  => $enable_parent_node,
       enable_ostree => $enable_ostree,
       enable_puppet => $enable_puppet,
       enable_python => $enable_python,
