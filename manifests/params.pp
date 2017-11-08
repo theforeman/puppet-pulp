@@ -34,9 +34,6 @@ class pulp::params {
   $serial_number_path = '/var/lib/pulp/sn.dat'
 
   $consumer_history_lifetime = 180
-  $oauth_enabled = false
-  $oauth_key = 'pulp'
-  $oauth_secret = 'secret'
 
   $messaging_url = "tcp://${::fqdn}:5672"
   $messaging_transport = 'qpid'

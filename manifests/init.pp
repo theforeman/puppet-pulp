@@ -15,12 +15,6 @@
 #
 # $manage_repo::                Whether to manage the pulp repository
 #
-# $oauth_key::                  Key to enable OAuth style authentication
-#
-# $oauth_secret::               Shared secret that can be used for OAuth style authentication
-#
-# $oauth_enabled::              Controls whether OAuth authentication is enabled
-#
 # $messaging_url::              the url used to contact the broker: <protocol>://<host>:<port>/<virtual-host>
 #                               Supported <protocol>  values are 'tcp' or 'ssl' depending on if SSL should be used or not.
 #                               The <virtual-host> is optional, and is only applicable to RabbitMQ broker environments.
@@ -299,9 +293,6 @@ class pulp (
   Integer $consumer_cert_expiration = $::pulp::params::consumer_cert_expiration,
   Stdlib::Absolutepath $serial_number_path = $::pulp::params::serial_number_path,
   Integer[-1] $consumer_history_lifetime = $::pulp::params::consumer_history_lifetime,
-  Boolean $oauth_enabled = $::pulp::params::oauth_enabled,
-  String $oauth_key = $::pulp::params::oauth_key,
-  String $oauth_secret = $::pulp::params::oauth_secret,
   Integer[0] $max_keep_alive = $::pulp::params::max_keep_alive,
   String $messaging_url = $::pulp::params::messaging_url,
   Enum['qpid', 'rabbitmq'] $messaging_transport = $::pulp::params::messaging_transport,
