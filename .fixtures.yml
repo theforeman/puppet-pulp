@@ -1,7 +1,7 @@
 fixtures:
   repositories:
     stdlib:  "https://github.com/puppetlabs/puppetlabs-stdlib.git"
-    extlib:  "https://github.com/puppet-community/puppet-extlib"
+    extlib:  "https://github.com/voxpupuli/puppet-extlib.git"
     apache:  "https://github.com/puppetlabs/puppetlabs-apache.git"
     concat:  "https://github.com/puppetlabs/puppetlabs-concat.git"
     mongodb: "https://github.com/puppetlabs/puppetlabs-mongodb.git"
