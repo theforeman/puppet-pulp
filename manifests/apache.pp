@@ -114,6 +114,7 @@ class pulp::apache {
       add_default_charset        => 'UTF-8',
       # allow older yum clients to connect, see bz 647828
       custom_fragment            => 'SSLInsecureRenegotiation On',
+      additional_includes        => $::pulp::https_includes,
     }
 
     # This file is installed by pulp-server but we have everything in the above vhost
