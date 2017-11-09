@@ -4,7 +4,7 @@ fixtures:
     extlib:  "https://github.com/voxpupuli/puppet-extlib.git"
     apache:  "https://github.com/puppetlabs/puppetlabs-apache.git"
     concat:  "https://github.com/puppetlabs/puppetlabs-concat.git"
-    mongodb: "https://github.com/puppetlabs/puppetlabs-mongodb.git"
+    mongodb: "https://github.com/voxpupuli/puppet-mongodb.git"
     qpid:    "https://github.com/theforeman/puppet-qpid.git"
     squid3:  "https://github.com/thias/puppet-squid3.git"
   symlinks:
