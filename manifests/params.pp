@@ -57,6 +57,7 @@ class pulp::params {
   $https_cert = $ca_cert
   $https_key = $ca_key
   $https_chain = undef
+  $https_includes = undef
   $ssl_username = 'SSL_CLIENT_S_DN_CN'
   $enable_http = false
   $ssl_verify_client = 'require'

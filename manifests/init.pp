@@ -104,6 +104,8 @@
 #
 # $https_chain::                apache chain file for ssl
 #
+# $https_includes::             additional includes for https vhost
+#
 # $ssl_username::               Value to use for SSLUsername directive in apache vhost. Defaults to SSL_CLIENT_S_DN_CN.
 #                               Set an empty string or false to unset directive.
 #
@@ -294,6 +296,7 @@ class pulp (
   Optional[Stdlib::Absolutepath] $https_cert = $::pulp::params::https_cert,
   Optional[Stdlib::Absolutepath] $https_key = $::pulp::params::https_key,
   Optional[Stdlib::Absolutepath] $https_chain = $::pulp::params::https_chain,
+  Optional[Array] $https_includes = $::pulp::params::https_includes,
   Variant[String, Boolean] $ssl_username = $::pulp::params::ssl_username,
   Integer $user_cert_expiration = $::pulp::params::user_cert_expiration,
   Integer $consumer_cert_expiration = $::pulp::params::consumer_cert_expiration,
