@@ -203,6 +203,8 @@
 #
 # $enable_deb::                 Whether to enable deb plugin.
 #
+# $enable_iso::                 Whether to enable iso plugin.
+#
 # $enable_docker::              Whether to enable docker plugin.
 #
 # $enable_puppet::              Whether to enable puppet plugin.
@@ -346,6 +348,7 @@ class pulp (
   Boolean $enable_deb = $::pulp::params::enable_deb,
   Boolean $enable_docker = $::pulp::params::enable_docker,
   Boolean $enable_rpm = $::pulp::params::enable_rpm,
+  Boolean $enable_iso = $::pulp::params::enable_iso,
   Boolean $enable_puppet = $::pulp::params::enable_puppet,
   Boolean $enable_python = $::pulp::params::enable_python,
   Boolean $enable_ostree = $::pulp::params::enable_ostree,

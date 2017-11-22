@@ -3,7 +3,7 @@
   repo_url_prefixes = []
   repo_url_prefixes << "/pulp/deb" if scope['pulp::enable_deb']
   repo_url_prefixes << "/pulp/repos" if scope['pulp::enable_rpm']
-  repo_url_prefixes << "/pulp/isos" if scope['pulp::enable_rpm']
+  repo_url_prefixes << "/pulp/isos" if scope['pulp::enable_iso']
   repo_url_prefixes << "/pulp/ostree/web" if scope['pulp::enable_ostree']
 -%>
 

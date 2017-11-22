@@ -52,7 +52,9 @@ class pulp::config {
       mode      => '0644',
       show_diff => $pulp::show_conf_diff,
     }
+  }
 
+  if $pulp::enable_iso {
     file { '/etc/pulp/server/plugins.conf.d/iso_importer.json':
       ensure    => file,
       content   => template('pulp/iso_importer.json.erb'),
