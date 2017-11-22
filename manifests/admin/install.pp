@@ -11,6 +11,12 @@ class pulp::admin::install {
     }
   }
 
+  if $pulp::admin::enable_deb {
+    package { 'pulp-deb-admin-extensions':
+      ensure => $pulp::admin::version,
+    }
+  }
+
   if $pulp::admin::enable_docker {
     package { 'pulp-docker-admin-extensions':
       ensure => $pulp::admin::version,

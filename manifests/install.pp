@@ -29,6 +29,10 @@ class pulp::install {
     package { ['pulp-rpm-plugins']: ensure => $pulp::version, }
   }
 
+  if $pulp::enable_deb {
+    package { ['pulp-deb-plugins']: ensure => $pulp::version, }
+  }
+
   if $pulp::enable_docker {
     package { ['pulp-docker-plugins']: ensure => $pulp::version, }
   }
