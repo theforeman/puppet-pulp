@@ -172,8 +172,27 @@ Alias /pulp/exports /var/www/pub/yum/https/exports
     Options FollowSymLinks Indexes
 </Directory>
 
-# -- HTTPS ISOS
-Alias /pulp/isos /var/www/pub/https/isos
+# -- GPG Keys -------------------
+Alias /pulp/gpg /var/www/pub/gpg
+
+<Directory /var/www/pub/gpg/>
+    Options FollowSymLinks Indexes
+</Directory>
+')
+
+        verify_exact_contents(catalogue, '/etc/pulp/vhosts80/rpm.conf', ['Alias /pulp/exports /var/www/pub/yum/http/exports'])
+
+      end
+    end
+
+    describe 'with enable_iso' do
+      let :pre_condition do
+        "class {'pulp': enable_iso => true}"
+      end
+
+      it 'should configure apache for serving ISOs' do
+        is_expected.to contain_file('/etc/httpd/conf.d/pulp_iso.conf').with(
+        :content => 'Alias /pulp/isos /var/www/pub/https/isos
 
 <Directory /var/www/pub/https/isos>
     WSGIAccessScript /usr/share/pulp/wsgi/repo_auth.wsgi
@@ -188,20 +207,9 @@ Alias /pulp/isos /var/www/pub/https/isos
 <Directory /var/www/pub/http/isos >
     Options FollowSymLinks Indexes
 </Directory>
-
-
-# -- GPG Keys -------------------
-Alias /pulp/gpg /var/www/pub/gpg
-
-<Directory /var/www/pub/gpg/>
-    Options FollowSymLinks Indexes
-</Directory>
 ')
 
-        is_expected.to contain_file('/etc/pulp/vhosts80/rpm.conf').with(
-        :content => 'Alias /pulp/isos /var/www/pub/http/isos
-Alias /pulp/exports /var/www/pub/yum/http/exports
-')
+        verify_exact_contents(catalogue, '/etc/pulp/vhosts80/iso.conf', ['Alias /pulp/isos /var/www/pub/http/isos'])
       end
     end
 

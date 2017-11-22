@@ -1,0 +1,15 @@
+Alias /pulp/isos /var/www/pub/https/isos
+
+<Directory /var/www/pub/https/isos>
+    WSGIAccessScript /usr/share/pulp/wsgi/repo_auth.wsgi
+    SSLRequireSSL
+    SSLVerifyClient <%= scope['pulp::ssl_verify_client'] %>
+    SSLVerifyDepth 2
+    SSLOptions +StdEnvVars +ExportCertData +FakeBasicAuth
+    Options FollowSymLinks Indexes
+</Directory>
+
+# --- HTTP ISOS
+<Directory /var/www/pub/http/isos >
+    Options FollowSymLinks Indexes
+</Directory>

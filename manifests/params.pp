@@ -71,6 +71,7 @@ class pulp::params {
   $enable_crane = false
   $enable_rpm = true
   $enable_deb = false
+  $enable_iso = true
   $enable_docker = false
   $enable_ostree = false
   $enable_puppet = false
