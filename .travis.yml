@@ -1,14 +1,11 @@
 ---
 # This file is managed centrally by modulesync
 #   https://github.com/theforeman/foreman-installer-modulesync
-rvm:
-  - 2.1.9
-env:
-  matrix:
-    - PUPPET_VERSION=4.9
 matrix:
   fast_finish: true
   include:
+    - rvm: 2.1.9
+      env: PUPPET_VERSION=4.9
     - rvm: 2.4.1
       env: PUPPET_VERSION=5.0
     # Acceptance tests
