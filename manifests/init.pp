@@ -404,7 +404,9 @@ class pulp (
     contain ::pulp::crane
   }
 
-  contain ::pulp::install
+  # These are includes so the database upgrade isn't triggered when you notify Class['pulp']
+  include ::pulp::install
+  include ::pulp::upgrade
   contain ::pulp::config
   contain ::pulp::database
   contain ::pulp::service

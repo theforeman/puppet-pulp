@@ -6,16 +6,6 @@ class { '::pulp':
   enable_puppet => true,
 }
 
-# Workaround: if we previously had a pulp installation without puppet then
-# we need to migrate the database. This requires the services to be
-# stopped. https://github.com/theforeman/puppet-pulp/issues/197
-exec { 'stop services':
-  command     => '/bin/systemctl stop pulp_celerybeat pulp_workers pulp_resource_manager pulp_streamer && rm /var/lib/pulp/init.flag',
-  subscribe   => Class['pulp::install'],
-  before      => Class['pulp::database'],
-  refreshonly => true,
-}
-
 pulp_puppetrepo { 'SockPuppet':
   display_name    => 'Sock Puppet',
   description     => 'with kittens',
