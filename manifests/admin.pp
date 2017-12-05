@@ -49,6 +49,8 @@
 #
 # $enable_puppet::                 Install puppet extension. Defaults to false.
 #
+# $enable_deb::                    Install deb extension. Defaults to false.
+#
 # $enable_docker::                 Install docker extension. Defaults to false.
 #
 # $enable_nodes::                  Install nodes extension. Defaults to false.
@@ -89,6 +91,7 @@ class pulp::admin (
   Boolean $wrap_to_terminal = $::pulp::admin::params::wrap_to_terminal,
   Integer[0] $wrap_width = $::pulp::admin::params::wrap_width,
   Boolean $enable_puppet = $::pulp::admin::params::enable_puppet,
+  Boolean $enable_deb = $::pulp::admin::params::enable_deb,
   Boolean $enable_docker = $::pulp::admin::params::enable_docker,
   Boolean $enable_nodes = $::pulp::admin::params::enable_nodes,
   Boolean $enable_python = $::pulp::admin::params::enable_python,

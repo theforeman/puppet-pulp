@@ -19,6 +19,7 @@ class pulp::admin::params {
   $wrap_to_terminal   = false
   $wrap_width         = 80
   $enable_puppet      = false
+  $enable_deb         = false
   $enable_docker      = false
   $enable_nodes       = false
   $enable_python      = false

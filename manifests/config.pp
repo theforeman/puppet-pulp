@@ -22,7 +22,7 @@ class pulp::config {
     target => $pulp::ca_cert,
   }
 
-  if $pulp::enable_rpm {
+  if $pulp::enable_deb or $pulp::enable_ostree or $pulp::enable_rpm {
     file { '/etc/pulp/repo_auth.conf':
       ensure  => file,
       content => template('pulp/repo_auth.conf.erb'),
@@ -30,7 +30,20 @@ class pulp::config {
       group   => 'root',
       mode    => '0644',
     }
+  }
 
+  if $pulp::enable_deb {
+    file { '/etc/pulp/server/plugins.conf.d/deb_importer.json':
+      ensure    => file,
+      content   => template('pulp/deb_importer.json.erb'),
+      owner     => 'root',
+      group     => 'root',
+      mode      => '0644',
+      show_diff => $pulp::show_conf_diff,
+    }
+  }
+
+  if $pulp::enable_rpm {
     file { '/etc/pulp/server/plugins.conf.d/yum_importer.json':
       ensure    => file,
       content   => template('pulp/yum_importer.json.erb'),

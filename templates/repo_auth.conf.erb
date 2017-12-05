@@ -1,11 +1,18 @@
 # This file is managed by puppet. Changes may be overridden!
+<%-
+  repo_url_prefixes = []
+  repo_url_prefixes << "/pulp/deb" if scope['pulp::enable_deb']
+  repo_url_prefixes << "/pulp/repos" if scope['pulp::enable_rpm']
+  repo_url_prefixes << "/pulp/isos" if scope['pulp::enable_rpm']
+  repo_url_prefixes << "/pulp/ostree/web" if scope['pulp::enable_ostree']
+-%>
 
 [main]
 enabled: <%= scope['pulp::repo_auth'] ? "true" : "false" %>
 log_failed_cert: true
 log_failed_cert_verbose: false
 max_num_certs_in_chain: 100
-repo_url_prefixes: /pulp/repos,/pulp/ostree/web,/pulp/isos
+repo_url_prefixes: <%= repo_url_prefixes.join(",") %>
 # If this is true, the client certificate will be verified by Pulp against the per-repo certificate
 # authorities. If it is false, client certificates will not be checked for signature or expiration.
 # If you don't need per-repo CAs, it is recommended to set this to false and use your web server to
