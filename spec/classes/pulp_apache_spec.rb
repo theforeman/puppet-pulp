@@ -348,6 +348,7 @@ Alias /pulp/python /var/www/pub/python/
 #
 RedirectMatch "^/pulp/ostree/web/(.*?)/repodata/(.*)"  "/pulp/repos/$1/repodata/$2"
 RedirectMatch "^/pulp/ostree/web/(.*?)\.rpm"  "/pulp/repos/$1.rpm"
+RedirectMatch "^/pulp/katello/api/repositories/(.*?)/gpg_key_content"  "/katello/api/repositories/$1/gpg_key_content"
 
 # -- HTTPS Repositories ---------
 
