@@ -190,4 +190,6 @@ class pulp::apache {
     mode    => '0644',
     notify  => Service['httpd'],
   }
+  
+  selinux::boolean { 'httpd_use_openstack': }
 }
