@@ -265,6 +265,10 @@
 #
 # $ldap_remote_user_attribute:: LDAP Remote User Attribute. Defaults to 'sAMAccountName'
 #
+# $worker_timeout::             The amount of time (in seconds) before considering a worker as missing. If Pulp's
+#                               mongo database has slow I/O, then setting a higher number may resolve issues where workers are
+#                               going missing incorrectly. Defaults to 30.
+#
 class pulp (
   String $version = $::pulp::params::version,
   Boolean $crane_debug = $::pulp::params::crane_debug,
@@ -341,6 +345,7 @@ class pulp (
   Optional[String] $proxy_password = $::pulp::params::proxy_password,
   Optional[String] $yum_max_speed = $::pulp::params::yum_max_speed,
   Integer[0] $num_workers = $::pulp::params::num_workers,
+  Integer[0] $worker_timeout = $::pulp::params::worker_timeout,
   Boolean $enable_admin = $::pulp::params::enable_admin,
   Boolean $enable_katello = $::pulp::params::enable_katello,
   Boolean $enable_crane = $::pulp::params::enable_crane,

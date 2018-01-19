@@ -336,6 +336,10 @@ event_notification_url: <%= scope['pulp::messaging_event_notification_url'] %>
 # login_method: Select the SASL login method used to connect to the broker. This should be left
 #     unset except in special cases such as SSL client certificate authentication.
 
+# worker_timeout: The amount of time (in seconds) before considering a worker as missing. If Pulp's
+#     mongo database has slow I/O, then setting a higher number may resolve issues where workers are
+#     going missing incorrectly. Defaults to 30.
+
 [tasks]
 broker_url: <%= scope['pulp::broker_url'] %>
 celery_require_ssl: <%= scope['pulp::broker_use_ssl'] %>
@@ -349,6 +353,7 @@ certfile: <%= scope['pulp::messaging_client_cert'] %>
 <% unless [nil, :undefined, :undef, ''].include?(scope.lookupvar('pulp::tasks_login_method')) -%>
 login_method: <%= scope['pulp::tasks_login_method'] %>
 <% end -%>
+worker_timeout: <%= scope['pulp::worker_timeout'] %>
 
 # = Email =
 #
