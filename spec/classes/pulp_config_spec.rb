@@ -76,6 +76,23 @@ describe 'pulp::config' do
     end
   end
 
+  context 'with worker timeout' do
+    let :pre_condition do
+      "class {'pulp':
+        worker_timeout => 80,
+       }"
+    end
+
+    let :facts do
+      default_facts
+    end
+
+    it "should configure worker timeout param" do
+      should contain_file('/etc/pulp/server.conf').
+        with_content(/^worker_timeout: 80$/)
+    end
+  end
+
   context "with proxy configuration" do
     let :pre_condition do
       "class {'pulp':
