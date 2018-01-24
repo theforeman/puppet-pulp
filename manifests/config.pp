@@ -35,6 +35,7 @@ class pulp::config {
   if $pulp::enable_deb {
     file { '/etc/pulp/server/plugins.conf.d/deb_importer.json':
       ensure    => file,
+      notify    => Service['pulp_workers'],
       content   => template('pulp/deb_importer.json.erb'),
       owner     => 'root',
       group     => 'root',
@@ -46,6 +47,7 @@ class pulp::config {
   if $pulp::enable_rpm {
     file { '/etc/pulp/server/plugins.conf.d/yum_importer.json':
       ensure    => file,
+      notify    => Service['pulp_workers'],
       content   => template('pulp/yum_importer.json.erb'),
       owner     => 'root',
       group     => 'root',
@@ -57,6 +59,7 @@ class pulp::config {
   if $pulp::enable_iso {
     file { '/etc/pulp/server/plugins.conf.d/iso_importer.json':
       ensure    => file,
+      notify    => Service['pulp_workers'],
       content   => template('pulp/iso_importer.json.erb'),
       owner     => 'root',
       group     => 'root',
@@ -68,6 +71,7 @@ class pulp::config {
   if $pulp::enable_docker {
     file { '/etc/pulp/server/plugins.conf.d/docker_importer.json':
       ensure    => file,
+      notify    => Service['pulp_workers'],
       content   => template('pulp/docker_importer.json.erb'),
       owner     => 'root',
       group     => 'root',
@@ -79,6 +83,7 @@ class pulp::config {
   if $pulp::enable_ostree {
     file { '/etc/pulp/server/plugins.conf.d/ostree_importer.json':
       ensure    => file,
+      notify    => Service['pulp_workers'],
       content   => template('pulp/ostree_importer.json.erb'),
       owner     => 'root',
       group     => 'root',
@@ -96,6 +101,7 @@ class pulp::config {
 
     file { '/etc/pulp/server/plugins.conf.d/puppet_importer.json':
       ensure    => file,
+      notify    => Service['pulp_workers'],
       content   => template('pulp/puppet_importer.json.erb'),
       owner     => 'root',
       group     => 'root',
