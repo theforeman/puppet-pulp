@@ -201,6 +201,10 @@
 #
 # $enable_rpm::                 Whether to enable rpm plugin.
 #
+# $enable_deb::                 Whether to enable deb plugin.
+#
+# $enable_iso::                 Whether to enable iso plugin.
+#
 # $enable_docker::              Whether to enable docker plugin.
 #
 # $enable_puppet::              Whether to enable puppet plugin.
@@ -211,7 +215,7 @@
 #
 # $enable_parent_node::         Whether to enable pulp parent nodes.
 #
-# $enable_http::                Whether to enable http access to rpm repos.
+# $enable_http::                Whether to enable http access to deb/rpm repos.
 #
 # $manage_httpd::               Whether to install and configure the httpd server.
 #
@@ -260,6 +264,10 @@
 # $ldap_bind_password::         LDAP Password
 #
 # $ldap_remote_user_attribute:: LDAP Remote User Attribute. Defaults to 'sAMAccountName'
+#
+# $worker_timeout::             The amount of time (in seconds) before considering a worker as missing. If Pulp's
+#                               mongo database has slow I/O, then setting a higher number may resolve issues where workers are
+#                               going missing incorrectly. Defaults to 30.
 #
 class pulp (
   String $version = $::pulp::params::version,
@@ -337,12 +345,15 @@ class pulp (
   Optional[String] $proxy_password = $::pulp::params::proxy_password,
   Optional[String] $yum_max_speed = $::pulp::params::yum_max_speed,
   Integer[0] $num_workers = $::pulp::params::num_workers,
+  Integer[0] $worker_timeout = $::pulp::params::worker_timeout,
   Boolean $enable_admin = $::pulp::params::enable_admin,
   Boolean $enable_katello = $::pulp::params::enable_katello,
   Boolean $enable_crane = $::pulp::params::enable_crane,
   Optional[Integer[0]] $max_tasks_per_child = $::pulp::params::max_tasks_per_child,
+  Boolean $enable_deb = $::pulp::params::enable_deb,
   Boolean $enable_docker = $::pulp::params::enable_docker,
   Boolean $enable_rpm = $::pulp::params::enable_rpm,
+  Boolean $enable_iso = $::pulp::params::enable_iso,
   Boolean $enable_puppet = $::pulp::params::enable_puppet,
   Boolean $enable_python = $::pulp::params::enable_python,
   Boolean $enable_ostree = $::pulp::params::enable_ostree,
@@ -421,6 +432,7 @@ class pulp (
     }
 
     class { '::pulp::admin':
+      enable_deb    => $enable_deb,
       enable_docker => $enable_docker,
       enable_nodes  => $enable_parent_node,
       enable_ostree => $enable_ostree,

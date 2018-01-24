@@ -37,24 +37,6 @@ Alias /pulp/exports /var/www/pub/yum/https/exports
     Options FollowSymLinks Indexes
 </Directory>
 
-# -- HTTPS ISOS
-Alias /pulp/isos /var/www/pub/https/isos
-
-<Directory /var/www/pub/https/isos>
-    WSGIAccessScript /usr/share/pulp/wsgi/repo_auth.wsgi
-    SSLRequireSSL
-    SSLVerifyClient <%= scope['pulp::ssl_verify_client'] %>
-    SSLVerifyDepth 2
-    SSLOptions +StdEnvVars +ExportCertData +FakeBasicAuth
-    Options FollowSymLinks Indexes
-</Directory>
-
-# --- HTTP ISOS
-<Directory /var/www/pub/http/isos >
-    Options FollowSymLinks Indexes
-</Directory>
-
-
 # -- GPG Keys -------------------
 Alias /pulp/gpg /var/www/pub/gpg
 

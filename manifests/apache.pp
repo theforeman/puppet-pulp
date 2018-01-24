@@ -152,6 +152,14 @@ class pulp::apache {
       pulp::apache_plugin { 'rpm': }
     }
 
+    if $::pulp::enable_deb {
+      pulp::apache_plugin { 'deb': vhosts80 => false }
+    }
+
+    if $::pulp::enable_iso {
+      pulp::apache_plugin { 'iso': }
+    }
+
     if $::pulp::enable_docker {
       include ::apache::mod::headers
       pulp::apache_plugin { 'docker': vhosts80 => false }
