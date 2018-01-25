@@ -188,6 +188,8 @@
 #
 # $yum_max_speed::              The maximum download speed for a Pulp task, such as a sync. (e.g. "4 Kb" or 1Gb")
 #
+# $yum_gpg_sign_repo_metadata:: Whether yum repo metadata GPG signing will be enabled
+#
 # $num_workers::                Number of Pulp workers to use.
 #
 # $enable_admin::               Whether to install and configure the admin command
@@ -344,6 +346,7 @@ class pulp (
   Optional[String] $proxy_username = $::pulp::params::proxy_username,
   Optional[String] $proxy_password = $::pulp::params::proxy_password,
   Optional[String] $yum_max_speed = $::pulp::params::yum_max_speed,
+  Boolean $yum_gpg_sign_repo_metadata = $::pulp::params::yum_gpg_sign_repo_metadata,
   Integer[0] $num_workers = $::pulp::params::num_workers,
   Integer[0] $worker_timeout = $::pulp::params::worker_timeout,
   Boolean $enable_admin = $::pulp::params::enable_admin,
