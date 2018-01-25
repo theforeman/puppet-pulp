@@ -1,5 +1,32 @@
 # Change Log
 
+## [5.3.0](https://github.com/theforeman/puppet-pulp/tree/5.3.0) (2018-01-25)
+[Full Changelog](https://github.com/theforeman/puppet-pulp/compare/5.2.0...5.3.0)
+
+**Implemented enhancements:**
+
+- Allow use of puppet-qpid 4.X [\#305](https://github.com/theforeman/puppet-pulp/pull/305) ([ehelms](https://github.com/ehelms))
+- Allow puppet/mongodb 2.x [\#303](https://github.com/theforeman/puppet-pulp/pull/303) ([ekohl](https://github.com/ekohl))
+- Fixes \#22338 - add worker\_timeout param [\#299](https://github.com/theforeman/puppet-pulp/pull/299) ([chris1984](https://github.com/chris1984))
+- Fixes \#21957 - Pulp-Ostree.conf handle gpg content [\#298](https://github.com/theforeman/puppet-pulp/pull/298) ([parthaa](https://github.com/parthaa))
+- Make ISO support optional [\#294](https://github.com/theforeman/puppet-pulp/pull/294) ([sean797](https://github.com/sean797))
+- Add /pulp/deb to the authority of repo\_auth [\#293](https://github.com/theforeman/puppet-pulp/pull/293) ([mdellweg](https://github.com/mdellweg))
+- Switch to puppet/mongodb and correct puppet-extlib fixture [\#291](https://github.com/theforeman/puppet-pulp/pull/291) ([ekohl](https://github.com/ekohl))
+
+**Fixed bugs:**
+
+- Fixes \#22392 - add restart on config change [\#304](https://github.com/theforeman/puppet-pulp/pull/304) ([chris1984](https://github.com/chris1984))
+- Don't use type defaults for pulp\_rpmrepo properties [\#284](https://github.com/theforeman/puppet-pulp/pull/284) ([alexjfisher](https://github.com/alexjfisher))
+
+**Closed issues:**
+
+- pulp\_rpmrepo type \*properties\* should not have defaults [\#283](https://github.com/theforeman/puppet-pulp/issues/283)
+- SELinux File Type disagreement [\#250](https://github.com/theforeman/puppet-pulp/issues/250)
+
+**Merged pull requests:**
+
+- Update Github URLs [\#288](https://github.com/theforeman/puppet-pulp/pull/288) ([ekohl](https://github.com/ekohl))
+
 ## [5.2.0](https://github.com/theforeman/puppet-pulp/tree/5.2.0)
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/5.1.0...5.2.0)
 
