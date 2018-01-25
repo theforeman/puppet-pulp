@@ -20,8 +20,9 @@
     "proxy_password": null,
     <% end %>
     <% unless [nil, :undefined, :undef, ''].include?(scope['pulp::real_yum_max_speed']) -%>
-    "max_speed": <%= scope['pulp::real_yum_max_speed'] %>"
+    "max_speed": <%= scope['pulp::real_yum_max_speed'] %>,
     <% else %>
-    "max_speed": null
+    "max_speed": null,
     <% end %>
+    "gpg_sign_metadata": <%= scope['pulp::yum_gpg_sign_repo_metadata'] ? "true" : "false" %>
 }

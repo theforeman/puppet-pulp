@@ -117,6 +117,7 @@ class pulp::params {
   $worker_timeout = 30
 
   $yum_max_speed = undef
+  $yum_gpg_sign_repo_metadata = false
 
   $wsgi_processes = 3
   $wsgi_max_requests = 0
