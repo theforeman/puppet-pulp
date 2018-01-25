@@ -422,6 +422,7 @@ class pulp (
   contain ::pulp::apache
 
   Class['pulp::install'] -> Class['pulp::config'] -> Class['pulp::database'] ~> Class['pulp::service', 'pulp::apache']
+  Class['pulp::config'] ~> Class['pulp::service', 'pulp::apache']
 
   if $enable_admin {
     if $ssl_username and $ssl_username != '' {
