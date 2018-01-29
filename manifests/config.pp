@@ -88,10 +88,11 @@ class pulp::config {
   }
 
   if $pulp::enable_puppet {
-    exec { 'selinux_pulp_manage_puppet':
-      command => 'semanage boolean -m --on pulp_manage_puppet',
-      path    => '/sbin:/usr/sbin:/bin:/usr/bin',
-      onlyif  => 'getsebool pulp_manage_puppet | grep off',
+    if $::selinux {
+      selboolean { 'pulp_manage_puppet':
+        persistent => true,
+        value      => 'on',
+      }
     }
 
     file { '/etc/pulp/server/plugins.conf.d/puppet_importer.json':
