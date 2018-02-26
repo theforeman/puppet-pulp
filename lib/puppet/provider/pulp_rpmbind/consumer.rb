@@ -4,7 +4,7 @@ Puppet::Type.type(:pulp_rpmbind).provide(:consumer) do
   desc 'Bind/unbind to an RPM repo'
 
   confine osfamily: :redhat
-  commands consumer: '/bin/pulp-consumer'
+  commands consumer: 'pulp-consumer'
   commands grep:     '/bin/grep'
 
   def self.repo_file

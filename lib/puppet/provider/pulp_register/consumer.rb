@@ -1,7 +1,7 @@
 Puppet::Type.type(:pulp_register).provide(:consumer) do
   desc "Register/unregister a pulp consumer"
 
-  commands :consumer => '/bin/pulp-consumer'
+  commands :consumer => 'pulp-consumer'
   def exists?
     output = consumer('status')
     output.match(/This consumer is registered to the server/)
