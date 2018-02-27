@@ -61,6 +61,8 @@
 #
 # $enable_rpm::                    Install rpm extension. Defaults to true.
 #
+# $enable_iso::                    Install ISO extension. Defaults to true.
+#
 # $puppet_upload_working_dir::     Directory where status files for in progress uploads will be stored
 #
 # $puppet_upload_chunk_size::      Maximum amount of data (in bytes) sent for an upload in a single request
@@ -97,6 +99,7 @@ class pulp::admin (
   Boolean $enable_python = $::pulp::admin::params::enable_python,
   Boolean $enable_ostree = $::pulp::admin::params::enable_ostree,
   Boolean $enable_rpm = $::pulp::admin::params::enable_rpm,
+  Boolean $enable_iso = $::pulp::admin::params::enable_iso,
   String $puppet_upload_working_dir = $::pulp::admin::params::puppet_upload_working_dir,
   Integer[0] $puppet_upload_chunk_size = $::pulp::admin::params::puppet_upload_chunk_size,
   Enum['none', 'file', 'login'] $login_method = $::pulp::admin::params::login_method,

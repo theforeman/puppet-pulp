@@ -3,6 +3,8 @@ class { '::pulp':
   # https://github.com/theforeman/puppet-pulp/issues/138
   ssl_username => '',
   enable_admin => true,
+  enable_iso   => true,
+  enable_rpm   => false,
 }
 
 pulp_isorepo { 'DataMonster':

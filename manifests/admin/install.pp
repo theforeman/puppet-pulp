@@ -41,7 +41,7 @@ class pulp::admin::install {
     }
   }
 
-  if $pulp::admin::enable_rpm {
+  if $pulp::admin::enable_rpm or $pulp::admin::enable_iso {
     package { 'pulp-rpm-admin-extensions':
       ensure => $pulp::admin::version,
     }
