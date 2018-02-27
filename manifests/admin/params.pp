@@ -25,6 +25,7 @@ class pulp::admin::params {
   $enable_python      = false
   $enable_ostree      = false
   $enable_rpm         = true
+  $enable_iso         = true
 
   $puppet_upload_working_dir = '~/.pulp/puppet-uploads'
   $puppet_upload_chunk_size  = 1048576

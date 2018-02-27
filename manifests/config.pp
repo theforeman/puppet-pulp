@@ -22,7 +22,7 @@ class pulp::config {
     target => $pulp::ca_cert,
   }
 
-  if $pulp::enable_deb or $pulp::enable_ostree or $pulp::enable_rpm {
+  if $pulp::enable_deb or $pulp::enable_ostree or $pulp::enable_rpm or $pulp::enable_iso {
     file { '/etc/pulp/repo_auth.conf':
       ensure  => file,
       content => template('pulp/repo_auth.conf.erb'),

@@ -25,7 +25,7 @@ class pulp::install {
     package { ['pulp-nodes-parent']: ensure => $pulp::version, }
   }
 
-  if $pulp::enable_rpm {
+  if $pulp::enable_rpm or $pulp::enable_iso {
     package { ['pulp-rpm-plugins']: ensure => $pulp::version, }
   }
 
