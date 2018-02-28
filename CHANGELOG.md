@@ -1,5 +1,15 @@
 # Change Log
 
+## [5.4.0](https://github.com/theforeman/puppet-pulp/tree/5.4.0) (2018-02-28)
+
+[Full Changelog](https://github.com/theforeman/puppet-pulp/compare/5.3.0...5.4.0)
+
+**Implemented enhancements:**
+
+- Don't specify path to pulp-consumer [\#310](https://github.com/theforeman/puppet-pulp/pull/310) ([alexjfisher](https://github.com/alexjfisher))
+- Make enable\_iso not dependent on enable\_rpm  [\#309](https://github.com/theforeman/puppet-pulp/pull/309) ([sean797](https://github.com/sean797))
+- Allow the setting of vhost in consumer messaging section. [\#311](https://github.com/theforeman/puppet-pulp/pull/311) ([glbyers](https://github.com/glbyers))
+
 ## [5.3.0](https://github.com/theforeman/puppet-pulp/tree/5.3.0) (2018-01-25)
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/5.2.0...5.3.0)
 
