@@ -76,6 +76,8 @@
 #
 # $messaging_transport::           The AMQP transport name. Valid options are 'qpid' or 'rabbitmq'. The default is 'qpid'.
 #
+# $messaging_vhost::               The (optional) broker vhost. This is only valid when using 'rabbitmq' as the messaging_transport.
+#
 # $messaging_version::             Determines the version of packages related to the 'messaging transport protocol'.
 #
 # $messaging_cacert::              The (optional) absolute path to a PEM encoded CA certificate to validate the identity of the
@@ -123,6 +125,7 @@ class pulp::consumer (
   String $messaging_host = $::pulp::consumer::params::messaging_host,
   Integer[0, 65535] $messaging_port = $::pulp::consumer::params::messaging_port,
   String $messaging_transport = $::pulp::consumer::params::messaging_transport,
+  Optional[String] $messaging_vhost = $::pulp::consumer::params::messaging_vhost,
   String $messaging_version = $::pulp::consumer::params::messaging_version,
   Optional[Stdlib::Absolutepath] $messaging_cacert = $::pulp::consumer::params::messaging_cacert,
   Optional[Stdlib::Absolutepath] $messaging_clientcert = $::pulp::consumer::params::messaging_clientcert,
