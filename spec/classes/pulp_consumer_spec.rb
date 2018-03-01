@@ -151,7 +151,7 @@ describe 'pulp::consumer' do
           'messaging_vhost' => 'pulp',
         } end
 
-      it 'should set consumer.conf file' do
+      it 'should set vhost in the consumer.conf file' do
         should contain_file('/etc/pulp/consumer/consumer.conf').
           with_content(/^\[messaging\]$/).
           with_content(/^vhost: pulp$/).
