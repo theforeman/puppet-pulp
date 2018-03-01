@@ -146,6 +146,19 @@ describe 'pulp::consumer' do
       end
     end
 
+    context 'install with messaging_vhost param' do
+      let(:params) do {
+          'messaging_vhost' => 'pulp',
+        } end
+
+      it 'should set consumer.conf file' do
+        should contain_file('/etc/pulp/consumer/consumer.conf').
+          with_content(/^\[messaging\]$/).
+          with_content(/^vhost: pulp$/).
+          with_ensure('file')
+      end
+    end
+
     context 'install with params' do
       let(:params) do {
           'host' => 'pulp.company.net',
