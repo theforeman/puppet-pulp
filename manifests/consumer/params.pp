@@ -40,6 +40,7 @@ class pulp::consumer::params {
   $messaging_host = $host
   $messaging_port = 5672
   $messaging_transport = 'qpid'
+  $messaging_vhost = undef
   $messaging_cacert = undef
   $messaging_clientcert = undef
   $messaging_version = 'present'

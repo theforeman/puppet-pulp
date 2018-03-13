@@ -55,6 +55,7 @@ describe 'pulp::consumer' do
           with_content(/^host: foo.example.com$/).
           with_content(/^port: 5672$/).
           with_content(/^transport: qpid$/).
+          without_content(/^vhost:/).
           with_content(/^\[profile\]$/).
           with_content(/^minutes: 240$/).
           with_ensure('file')
@@ -142,6 +143,19 @@ describe 'pulp::consumer' do
           with_content(/^class=pulp_rpm.handlers.rpm.PackageHandler$/).
           with_content(/^\[package_group\]$/).
           with_content(/^class=pulp_rpm.handlers.rpm.GroupHandler$/).
+          with_ensure('file')
+      end
+    end
+
+    context 'install with messaging_vhost param' do
+      let(:params) do {
+          'messaging_vhost' => 'pulp',
+        } end
+
+      it 'should set vhost in the consumer.conf file' do
+        should contain_file('/etc/pulp/consumer/consumer.conf').
+          with_content(/^\[messaging\]$/).
+          with_content(/^vhost: pulp$/).
           with_ensure('file')
       end
     end
