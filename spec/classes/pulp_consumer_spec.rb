@@ -55,6 +55,7 @@ describe 'pulp::consumer' do
           with_content(/^host: foo.example.com$/).
           with_content(/^port: 5672$/).
           with_content(/^transport: qpid$/).
+          without_content(/^vhost:/).
           with_content(/^\[profile\]$/).
           with_content(/^minutes: 240$/).
           with_ensure('file')
