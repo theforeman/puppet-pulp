@@ -184,9 +184,16 @@ Alias /pulp/gpg /var/www/pub/gpg
     Options FollowSymLinks Indexes
 </Directory>
 ')
+      end
+    end
 
+    describe 'with enable_rpm and enable_http' do
+      let :pre_condition do
+        "class {'pulp': enable_rpm => true, enable_http => true}"
+      end
+
+      it 'should configure apache for serving rpm over http' do
         verify_exact_contents(catalogue, '/etc/httpd/conf.d/pulp-vhosts80/rpm.conf', ['Alias /pulp/exports /var/www/pub/yum/http/exports'])
-
       end
     end
 
@@ -213,7 +220,15 @@ Alias /pulp/gpg /var/www/pub/gpg
     Options FollowSymLinks Indexes
 </Directory>
 ')
+      end
+    end
 
+    describe 'with enable_iso and enable_http' do
+      let :pre_condition do
+        "class {'pulp': enable_iso => true, enable_http => true}"
+      end
+
+      it 'should configure apache for serving ISOs over http' do
         verify_exact_contents(catalogue, '/etc/httpd/conf.d/pulp-vhosts80/iso.conf', ['Alias /pulp/isos /var/www/pub/http/isos'])
       end
     end
@@ -319,10 +334,16 @@ WSGIScriptAlias /pulp_puppet/forge /usr/share/pulp/wsgi/puppet_forge.wsgi proces
 WSGIScriptAlias /v3 /usr/share/pulp/wsgi/puppet_forge.wsgi process-group=pulp_forge application-group=pulp_forge
 WSGIPassAuthorization On
 ')
+      end
+    end
 
-        is_expected.to contain_file('/etc/httpd/conf.d/pulp-vhosts80/puppet.conf').with(
-        :content => 'Alias /pulp/puppet /var/www/pub/puppet/http/repos
-')
+    describe 'with enable_puppet and enable_http' do
+      let :pre_condition do
+        "class {'pulp': enable_puppet => true, enable_http => true, puppet_wsgi_processes => 2}"
+      end
+
+      it 'should configure apache for serving puppet over http' do
+        verify_exact_contents(catalogue, '/etc/httpd/conf.d/pulp-vhosts80/puppet.conf', ['Alias /pulp/puppet /var/www/pub/puppet/http/repos'])
       end
     end
 

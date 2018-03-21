@@ -149,7 +149,7 @@ class pulp::apache {
     }
 
     if $pulp::enable_rpm {
-      pulp::apache_plugin { 'rpm': }
+      pulp::apache_plugin { 'rpm': vhosts80 => $pulp::enable_http }
     }
 
     if $pulp::enable_deb {
@@ -157,7 +157,7 @@ class pulp::apache {
     }
 
     if $pulp::enable_iso {
-      pulp::apache_plugin { 'iso': }
+      pulp::apache_plugin { 'iso': vhosts80 => $pulp::enable_http }
     }
 
     if $pulp::enable_docker {
@@ -166,11 +166,11 @@ class pulp::apache {
     }
 
     if $pulp::enable_puppet {
-      pulp::apache_plugin { 'puppet': }
+      pulp::apache_plugin { 'puppet': vhosts80 => $pulp::enable_http }
     }
 
     if $pulp::enable_python {
-      pulp::apache_plugin { 'python': }
+      pulp::apache_plugin { 'python': vhosts80 => $pulp::enable_http }
     }
 
     if $pulp::enable_ostree {
