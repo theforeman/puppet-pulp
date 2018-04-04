@@ -54,11 +54,11 @@ class { '::pulp':
 }
 ```
 
-By default a user admin will be created with a randomized password. This is configurable with the ```default_username``` and ```default_password``` parameters:
+By default a user admin will be created with a randomized password. This is configurable with the ```default_login``` and ```default_password``` parameters:
 
 ```puppet
 class { '::pulp':
-  default_username => 'user',
+  default_login    => 'user',
   default_password => 'secret',
 }
 ```
@@ -183,7 +183,7 @@ Pulp_rpmrepo <| |> -> Pulp_schedule <| |>
 
 ### Pulp admin
 
-The easiest is to use ```enable_admin``` parameter. This ensures all plugins have their admin component installed as well as configuring the client to talk to the server using the ```default_username``` and ```default_password``` parameters.
+The easiest is to use ```enable_admin``` parameter. This ensures all plugins have their admin component installed as well as configuring the client to talk to the server using the ```default_login``` and ```default_password``` parameters.
 
 ```puppet
 class { 'pulp':
