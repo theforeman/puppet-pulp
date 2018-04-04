@@ -58,7 +58,7 @@ By default a user admin will be created with a randomized password. This is conf
 
 ```puppet
 class { '::pulp':
-  default_login => 'user',
+  default_login    => 'user',
   default_password => 'secret',
 }
 ```
