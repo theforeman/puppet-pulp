@@ -186,7 +186,7 @@
 #
 # $proxy_password::             Proxy password for authentication
 #
-# $yum_max_speed::              The maximum download speed for a Pulp task, such as a sync. (e.g. "4 Kb" or 1Gb")
+# $yum_max_speed::              The maximum download speed for a Pulp task, such as a sync. (e.g. "4 kb" or "1 Gb")
 #
 # $yum_gpg_sign_repo_metadata:: Whether yum repo metadata GPG signing will be enabled
 #
