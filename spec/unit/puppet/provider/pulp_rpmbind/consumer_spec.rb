@@ -56,14 +56,14 @@ describe provider_class do
         context 'bind works first time' do
           it 'doesn\'t raise exception' do
             provider.expects(:grep)
-                    .with('-q', '^\[foo\]$', '/etc/yum.repos.d/pulp.repo')
+                    .with('-q', '--fixed-strings', '[foo]', '/etc/yum.repos.d/pulp.repo')
             expect { provider.wait_for_bind }.not_to raise_error
           end
         end
         context 'bind works after 2 retries' do
           it 'sleeps between retries and then succeeds' do
             provider.expects(:grep).times(3)
-                    .with('-q', '^\[foo\]$', '/etc/yum.repos.d/pulp.repo')
+                    .with('-q', '--fixed-strings', '[foo]', '/etc/yum.repos.d/pulp.repo')
                     .raises(Puppet::ExecutionFailure, '')
                     .raises(Puppet::ExecutionFailure, '')
                     .then.returns('')
@@ -74,7 +74,7 @@ describe provider_class do
         context 'bind doesn\'t complete after 10 retries' do
           it 'tries 10 times then raises exception' do
             provider.expects(:grep).times(10)
-                    .with('-q', '^\[foo\]$', '/etc/yum.repos.d/pulp.repo')
+                    .with('-q', '--fixed-strings', '[foo]', '/etc/yum.repos.d/pulp.repo')
                     .raises(Puppet::ExecutionFailure, '')
             expect { provider.wait_for_bind }
               .to raise_error(RuntimeError, 'Pulp bind to foo failed')

@@ -59,7 +59,7 @@ Puppet::Type.type(:pulp_rpmbind).provide(:consumer) do
 
   def wait_for_bind
     tries ||= 10
-    grep('-q', "^\\[#{@resource[:name]}\\]$", self.class.repo_file)
+    grep('-q', '--fixed-strings', "[#{@resource[:name]}]", self.class.repo_file)
   rescue Puppet::ExecutionFailure
     raise "Pulp bind to #{@resource[:name]} failed" unless (tries -= 1) > 0
     Puppet.debug("Waiting for pulp rpm bind to #{@resource[:name]} to take place")
