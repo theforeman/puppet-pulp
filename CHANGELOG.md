@@ -1,5 +1,15 @@
 # Change Log
 
+## [5.4.1](https://github.com/theforeman/puppet-pulp/tree/5.4.1) (2018-05-21)
+
+[Full Changelog](https://github.com/theforeman/puppet-pulp/compare/5.4.0...5.4.1)
+
+**Fixed bugs:**
+
+- Fix wait\_for\_bind grep being poorly escaped [\#317](https://github.com/theforeman/puppet-pulp/pull/317) ([alexjfisher](https://github.com/alexjfisher))
+- Fixes [\#23233](https://projects.theforeman.org/issues/23233) - updated yum\_max\_speed example to reflect to\_bytes parsing [\#315](https://github.com/theforeman/puppet-pulp/pull/315) ([chris1984](https://github.com/chris1984))
+- fixed wrong login parameter name in README [\#314](https://github.com/theforeman/puppet-pulp/pull/314) ([pseiler](https://github.com/pseiler))
+
 ## [5.4.0](https://github.com/theforeman/puppet-pulp/tree/5.4.0) (2018-02-28)
 
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/5.3.0...5.4.0)
@@ -17,15 +27,15 @@
 
 - Allow use of puppet-qpid 4.X [\#305](https://github.com/theforeman/puppet-pulp/pull/305) ([ehelms](https://github.com/ehelms))
 - Allow puppet/mongodb 2.x [\#303](https://github.com/theforeman/puppet-pulp/pull/303) ([ekohl](https://github.com/ekohl))
-- Fixes \#22338 - add worker\_timeout param [\#299](https://github.com/theforeman/puppet-pulp/pull/299) ([chris1984](https://github.com/chris1984))
-- Fixes \#21957 - Pulp-Ostree.conf handle gpg content [\#298](https://github.com/theforeman/puppet-pulp/pull/298) ([parthaa](https://github.com/parthaa))
+- Fixes [\#22338](https://projects.theforeman.org/issues/22338) - add worker\_timeout param [\#299](https://github.com/theforeman/puppet-pulp/pull/299) ([chris1984](https://github.com/chris1984))
+- Fixes [\#21957](https://projects.theforeman.org/issues/21957) - Pulp-Ostree.conf handle gpg content [\#298](https://github.com/theforeman/puppet-pulp/pull/298) ([parthaa](https://github.com/parthaa))
 - Make ISO support optional [\#294](https://github.com/theforeman/puppet-pulp/pull/294) ([sean797](https://github.com/sean797))
 - Add /pulp/deb to the authority of repo\_auth [\#293](https://github.com/theforeman/puppet-pulp/pull/293) ([mdellweg](https://github.com/mdellweg))
 - Switch to puppet/mongodb and correct puppet-extlib fixture [\#291](https://github.com/theforeman/puppet-pulp/pull/291) ([ekohl](https://github.com/ekohl))
 
 **Fixed bugs:**
 
-- Fixes \#22392 - add restart on config change [\#304](https://github.com/theforeman/puppet-pulp/pull/304) ([chris1984](https://github.com/chris1984))
+- Fixes [\#22392](https://projects.theforeman.org/issues/22392) - add restart on config change [\#304](https://github.com/theforeman/puppet-pulp/pull/304) ([chris1984](https://github.com/chris1984))
 - Don't use type defaults for pulp\_rpmrepo properties [\#284](https://github.com/theforeman/puppet-pulp/pull/284) ([alexjfisher](https://github.com/alexjfisher))
 
 **Closed issues:**
@@ -63,7 +73,7 @@
 
 - Explicitly set ssl\_certs\_dir to an empty string [\#275](https://github.com/theforeman/puppet-pulp/pull/275) ([ekohl](https://github.com/ekohl))
 - crane requires mod wsgi [\#274](https://github.com/theforeman/puppet-pulp/pull/274) ([sean797](https://github.com/sean797))
-- Fixes \#20865 - correct profiling configuration [\#273](https://github.com/theforeman/puppet-pulp/pull/273) ([iNecas](https://github.com/iNecas))
+- Fixes [\#20865](https://projects.theforeman.org/issues/20865) - correct profiling configuration [\#273](https://github.com/theforeman/puppet-pulp/pull/273) ([iNecas](https://github.com/iNecas))
 - Add basic provider for Pulp roles [\#234](https://github.com/theforeman/puppet-pulp/pull/234) ([ccnifo](https://github.com/ccnifo))
 
 ## [5.0.0](https://github.com/theforeman/puppet-pulp/tree/5.0.0) (2017-08-30)
@@ -134,8 +144,8 @@
 
 **Merged pull requests:**
 
-- Fixes \#20865 - correct profiling configuration [\#273](https://github.com/theforeman/puppet-pulp/pull/273) ([iNecas](https://github.com/iNecas))
-- fixes \#19740 - pulp\_docker.conf schema 2 [\#251](https://github.com/theforeman/puppet-pulp/pull/251) ([thomasmckay](https://github.com/thomasmckay))
+- Fixes [\#20865](https://projects.theforeman.org/issues/20865) - correct profiling configuration [\#273](https://github.com/theforeman/puppet-pulp/pull/273) ([iNecas](https://github.com/iNecas))
+- fixes [\#19740](https://projects.theforeman.org/issues/19740) - pulp\_docker.conf schema 2 [\#251](https://github.com/theforeman/puppet-pulp/pull/251) ([thomasmckay](https://github.com/thomasmckay))
 
 ## [4.3.2](https://github.com/theforeman/puppet-pulp/tree/4.3.2) (2017-08-28)
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/4.3.1...4.3.2)
@@ -162,7 +172,7 @@
 - Modulesync update [\#213](https://github.com/theforeman/puppet-pulp/pull/213) ([ekohl](https://github.com/ekohl))
 - fix readme [\#210](https://github.com/theforeman/puppet-pulp/pull/210) ([timogoebel](https://github.com/timogoebel))
 - broker service may not run on the same node [\#209](https://github.com/theforeman/puppet-pulp/pull/209) ([timogoebel](https://github.com/timogoebel))
-- Fixes \#17219 - bump squid3 to 1.0.2 [\#208](https://github.com/theforeman/puppet-pulp/pull/208) ([Klaas-](https://github.com/Klaas-))
+- Fixes [\#17219](https://projects.theforeman.org/issues/17219) - bump squid3 to 1.0.2 [\#208](https://github.com/theforeman/puppet-pulp/pull/208) ([Klaas-](https://github.com/Klaas-))
 - Remove code to support EL6 [\#202](https://github.com/theforeman/puppet-pulp/pull/202) ([ekohl](https://github.com/ekohl))
 
 ## [4.2.0](https://github.com/theforeman/puppet-pulp/tree/4.2.0) (2017-03-10)
@@ -173,10 +183,10 @@
 - Use the correct variable for ca\_cert [\#203](https://github.com/theforeman/puppet-pulp/pull/203) ([ekohl](https://github.com/ekohl))
 - Fix linting errors [\#198](https://github.com/theforeman/puppet-pulp/pull/198) ([ehelms](https://github.com/ehelms))
 - Messaging transport version [\#195](https://github.com/theforeman/puppet-pulp/pull/195) ([khdevel](https://github.com/khdevel))
-- Fixes \#18484 - Enables ostree-importer proxy settings [\#194](https://github.com/theforeman/puppet-pulp/pull/194) ([parthaa](https://github.com/parthaa))
+- Fixes [\#18484](https://projects.theforeman.org/issues/18484) - Enables ostree-importer proxy settings [\#194](https://github.com/theforeman/puppet-pulp/pull/194) ([parthaa](https://github.com/parthaa))
 - Update modulesync config [\#192](https://github.com/theforeman/puppet-pulp/pull/192) ([ekohl](https://github.com/ekohl))
-- Fixes \#16253 - Add max speed var to Katello [\#189](https://github.com/theforeman/puppet-pulp/pull/189) ([chris1984](https://github.com/chris1984))
-- Refs \#17298 - Add max tasks per Pulp worker [\#173](https://github.com/theforeman/puppet-pulp/pull/173) ([mbacovsky](https://github.com/mbacovsky))
+- Fixes [\#16253](https://projects.theforeman.org/issues/16253) - Add max speed var to Katello [\#189](https://github.com/theforeman/puppet-pulp/pull/189) ([chris1984](https://github.com/chris1984))
+- Refs [\#17298](https://projects.theforeman.org/issues/17298) - Add max tasks per Pulp worker [\#173](https://github.com/theforeman/puppet-pulp/pull/173) ([mbacovsky](https://github.com/mbacovsky))
 
 ## [4.1.0](https://github.com/theforeman/puppet-pulp/tree/4.1.0) (2017-01-24)
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/4.0.0...4.1.0)
@@ -199,11 +209,11 @@
 
 **Merged pull requests:**
 
-- Fixes \#16941 - Check perms on Pulp key [\#182](https://github.com/theforeman/puppet-pulp/pull/182) ([chris1984](https://github.com/chris1984))
-- Fixes \#16946 - add step to verify Pulp CA [\#181](https://github.com/theforeman/puppet-pulp/pull/181) ([chris1984](https://github.com/chris1984))
+- Fixes [\#16941](https://projects.theforeman.org/issues/16941) - Check perms on Pulp key [\#182](https://github.com/theforeman/puppet-pulp/pull/182) ([chris1984](https://github.com/chris1984))
+- Fixes [\#16946](https://projects.theforeman.org/issues/16946) - add step to verify Pulp CA [\#181](https://github.com/theforeman/puppet-pulp/pull/181) ([chris1984](https://github.com/chris1984))
 - version compared as number [\#180](https://github.com/theforeman/puppet-pulp/pull/180) ([PascalBourdier](https://github.com/PascalBourdier))
 - Add Pulp profiling option [\#178](https://github.com/theforeman/puppet-pulp/pull/178) ([ehelms](https://github.com/ehelms))
-- fixes \#17590 - add repo\_url\_prefixes to repo\_auth.conf [\#177](https://github.com/theforeman/puppet-pulp/pull/177) ([stbenjam](https://github.com/stbenjam))
+- fixes [\#17590](https://projects.theforeman.org/issues/17590) - add repo\_url\_prefixes to repo\_auth.conf [\#177](https://github.com/theforeman/puppet-pulp/pull/177) ([stbenjam](https://github.com/stbenjam))
 - module sync update [\#176](https://github.com/theforeman/puppet-pulp/pull/176) ([jlsherrill](https://github.com/jlsherrill))
 - Remove potential for circular dependency when using Apache [\#174](https://github.com/theforeman/puppet-pulp/pull/174) ([ehelms](https://github.com/ehelms))
 - fixes GH-171 - add a show\_conf\_diff param, defaults to false [\#172](https://github.com/theforeman/puppet-pulp/pull/172) ([ccnifo](https://github.com/ccnifo))
@@ -239,12 +249,12 @@
 - Fix typo in variable name in params.pp [\#162](https://github.com/theforeman/puppet-pulp/pull/162) ([stbenjam](https://github.com/stbenjam))
 - Modulesync update [\#161](https://github.com/theforeman/puppet-pulp/pull/161) ([ehelms](https://github.com/ehelms))
 - Remove trailing spaces [\#160](https://github.com/theforeman/puppet-pulp/pull/160) ([stbenjam](https://github.com/stbenjam))
-- Fixes \#16343 - Redirect fix for Atomic Hosts [\#158](https://github.com/theforeman/puppet-pulp/pull/158) ([parthaa](https://github.com/parthaa))
+- Fixes [\#16343](https://projects.theforeman.org/issues/16343) - Redirect fix for Atomic Hosts [\#158](https://github.com/theforeman/puppet-pulp/pull/158) ([parthaa](https://github.com/parthaa))
 - Do not attempt to write `vhosts80` file too early [\#156](https://github.com/theforeman/puppet-pulp/pull/156) ([beav](https://github.com/beav))
 - allow configuration of puppet wsgi processes [\#155](https://github.com/theforeman/puppet-pulp/pull/155) ([jlsherrill](https://github.com/jlsherrill))
 - fixes GH-150 - Eliminate duplicate, broken requires on mongodb [\#153](https://github.com/theforeman/puppet-pulp/pull/153) ([ccnifo](https://github.com/ccnifo))
 - Pin extlib since they dropped 1.8.7 support [\#152](https://github.com/theforeman/puppet-pulp/pull/152) ([stbenjam](https://github.com/stbenjam))
-- refs \#15217 - puppet 4 support [\#151](https://github.com/theforeman/puppet-pulp/pull/151) ([stbenjam](https://github.com/stbenjam))
+- refs [\#15217](https://projects.theforeman.org/issues/15217) - puppet 4 support [\#151](https://github.com/theforeman/puppet-pulp/pull/151) ([stbenjam](https://github.com/stbenjam))
 - Mongodb fact refactor [\#115](https://github.com/theforeman/puppet-pulp/pull/115) ([walkamongus](https://github.com/walkamongus))
 
 ## [3.3.1](https://github.com/theforeman/puppet-pulp/tree/3.3.1) (2016-06-10)
@@ -252,17 +262,17 @@
 
 **Merged pull requests:**
 
-- refs \#15326 - remove mongo authentication [\#149](https://github.com/theforeman/puppet-pulp/pull/149) ([stbenjam](https://github.com/stbenjam))
+- refs [\#15326](https://projects.theforeman.org/issues/15326) - remove mongo authentication [\#149](https://github.com/theforeman/puppet-pulp/pull/149) ([stbenjam](https://github.com/stbenjam))
 - allow adding chainfile for https certificate [\#148](https://github.com/theforeman/puppet-pulp/pull/148) ([jlambert121](https://github.com/jlambert121))
-- fixes \#15014 - restore pulp db init flag [\#145](https://github.com/theforeman/puppet-pulp/pull/145) ([stbenjam](https://github.com/stbenjam))
+- fixes [\#15014](https://projects.theforeman.org/issues/15014) - restore pulp db init flag [\#145](https://github.com/theforeman/puppet-pulp/pull/145) ([stbenjam](https://github.com/stbenjam))
 
 ## [3.3.0](https://github.com/theforeman/puppet-pulp/tree/3.3.0) (2016-05-19)
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/3.2.1...3.3.0)
 
 **Merged pull requests:**
 
-- refs \#15058 - mongo auth only on newer mongos [\#147](https://github.com/theforeman/puppet-pulp/pull/147) ([stbenjam](https://github.com/stbenjam))
-- refs \#15058 - support auth for mongo [\#146](https://github.com/theforeman/puppet-pulp/pull/146) ([stbenjam](https://github.com/stbenjam))
+- refs [\#15058](https://projects.theforeman.org/issues/15058) - mongo auth only on newer mongos [\#147](https://github.com/theforeman/puppet-pulp/pull/147) ([stbenjam](https://github.com/stbenjam))
+- refs [\#15058](https://projects.theforeman.org/issues/15058) - support auth for mongo [\#146](https://github.com/theforeman/puppet-pulp/pull/146) ([stbenjam](https://github.com/stbenjam))
 - allow browsing root of repos [\#144](https://github.com/theforeman/puppet-pulp/pull/144) ([jlambert121](https://github.com/jlambert121))
 - Add paths for puppet-lint docs check [\#140](https://github.com/theforeman/puppet-pulp/pull/140) ([stbenjam](https://github.com/stbenjam))
 - Pulp streamer requires mod\_proxy module [\#139](https://github.com/theforeman/puppet-pulp/pull/139) ([ehelms](https://github.com/ehelms))
@@ -272,7 +282,7 @@
 
 **Merged pull requests:**
 
-- Fixes \#14361 - Setting a couple missing squid options [\#137](https://github.com/theforeman/puppet-pulp/pull/137) ([daviddavis](https://github.com/daviddavis))
+- Fixes [\#14361](https://projects.theforeman.org/issues/14361) - Setting a couple missing squid options [\#137](https://github.com/theforeman/puppet-pulp/pull/137) ([daviddavis](https://github.com/daviddavis))
 - update to add defaultsite to squid conf [\#136](https://github.com/theforeman/puppet-pulp/pull/136) ([beav](https://github.com/beav))
 
 ## [3.2.0](https://github.com/theforeman/puppet-pulp/tree/3.2.0) (2016-03-16)
@@ -291,8 +301,8 @@
 
 - adds pulp streamer service [\#130](https://github.com/theforeman/puppet-pulp/pull/130) ([cfouant](https://github.com/cfouant))
 - Add KeepAlive support [\#128](https://github.com/theforeman/puppet-pulp/pull/128) ([jlsherrill](https://github.com/jlsherrill))
-- Refs \#13625 - Install ostree via puppet-pulp [\#127](https://github.com/theforeman/puppet-pulp/pull/127) ([parthaa](https://github.com/parthaa))
-- Fixes \#13451 - enables lazy sync [\#122](https://github.com/theforeman/puppet-pulp/pull/122) ([cfouant](https://github.com/cfouant))
+- Refs [\#13625](https://projects.theforeman.org/issues/13625) - Install ostree via puppet-pulp [\#127](https://github.com/theforeman/puppet-pulp/pull/127) ([parthaa](https://github.com/parthaa))
+- Fixes [\#13451](https://projects.theforeman.org/issues/13451) - enables lazy sync [\#122](https://github.com/theforeman/puppet-pulp/pull/122) ([cfouant](https://github.com/cfouant))
 
 ## [3.0.0](https://github.com/theforeman/puppet-pulp/tree/3.0.0) (2016-02-10)
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/2.1.0...3.0.0)
@@ -301,13 +311,13 @@
 
 - do not specify ca cert in apache pulp.conf [\#126](https://github.com/theforeman/puppet-pulp/pull/126) ([jlsherrill](https://github.com/jlsherrill))
 - Ensure JSON is wrapped in quotations [\#125](https://github.com/theforeman/puppet-pulp/pull/125) ([ehelms](https://github.com/ehelms))
-- Fixes \#13607 - Adding pulp.conf [\#124](https://github.com/theforeman/puppet-pulp/pull/124) ([parthaa](https://github.com/parthaa))
+- Fixes [\#13607](https://projects.theforeman.org/issues/13607) - Adding pulp.conf [\#124](https://github.com/theforeman/puppet-pulp/pull/124) ([parthaa](https://github.com/parthaa))
 - Fix importer JSON to produce correct JSON [\#123](https://github.com/theforeman/puppet-pulp/pull/123) ([ehelms](https://github.com/ehelms))
 - Fix wsgi paths for 2.8 [\#121](https://github.com/theforeman/puppet-pulp/pull/121) ([ehelms](https://github.com/ehelms))
 - Include apache::mod::headers when using docker [\#120](https://github.com/theforeman/puppet-pulp/pull/120) ([ehelms](https://github.com/ehelms))
 - Removes ssl\_ca\_cert parameter that duplicates the ca\_cert parameter [\#119](https://github.com/theforeman/puppet-pulp/pull/119) ([ehelms](https://github.com/ehelms))
 - fix template :undef checks and yum proxy variables [\#117](https://github.com/theforeman/puppet-pulp/pull/117) ([walkamongus](https://github.com/walkamongus))
-- Fixes \#13431 - Apache changes for pulp 2.8 [\#116](https://github.com/theforeman/puppet-pulp/pull/116) ([parthaa](https://github.com/parthaa))
+- Fixes [\#13431](https://projects.theforeman.org/issues/13431) - Apache changes for pulp 2.8 [\#116](https://github.com/theforeman/puppet-pulp/pull/116) ([parthaa](https://github.com/parthaa))
 
 ## [2.1.0](https://github.com/theforeman/puppet-pulp/tree/2.1.0) (2016-02-01)
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/2.0.0...2.1.0)
@@ -315,8 +325,8 @@
 **Merged pull requests:**
 
 - Remove inclusion of concat\_native [\#118](https://github.com/theforeman/puppet-pulp/pull/118) ([ehelms](https://github.com/ehelms))
-- Fixes \#13394 - Added xsendfile support for pulp 2.8 [\#113](https://github.com/theforeman/puppet-pulp/pull/113) ([parthaa](https://github.com/parthaa))
-- fixes \#13189 - allows authentication with username and certificate [\#112](https://github.com/theforeman/puppet-pulp/pull/112) ([cfouant](https://github.com/cfouant))
+- Fixes [\#13394](https://projects.theforeman.org/issues/13394) - Added xsendfile support for pulp 2.8 [\#113](https://github.com/theforeman/puppet-pulp/pull/113) ([parthaa](https://github.com/parthaa))
+- fixes [\#13189](https://projects.theforeman.org/issues/13189) - allows authentication with username and certificate [\#112](https://github.com/theforeman/puppet-pulp/pull/112) ([cfouant](https://github.com/cfouant))
 - Config file updates, ostree support, and bugfix [\#85](https://github.com/theforeman/puppet-pulp/pull/85) ([beav](https://github.com/beav))
 
 ## [2.0.0](https://github.com/theforeman/puppet-pulp/tree/2.0.0) (2015-11-20)
@@ -344,11 +354,11 @@
 
 **Merged pull requests:**
 
-- fixes \#12094 Added parent param to ensure pulp-nodes-parent is installed [\#108](https://github.com/theforeman/puppet-pulp/pull/108) ([johnpmitsch](https://github.com/johnpmitsch))
+- fixes [\#12094](https://projects.theforeman.org/issues/12094) Added parent param to ensure pulp-nodes-parent is installed [\#108](https://github.com/theforeman/puppet-pulp/pull/108) ([johnpmitsch](https://github.com/johnpmitsch))
 - Drop puppet-foreman in favor of extlib for cache\_data [\#106](https://github.com/theforeman/puppet-pulp/pull/106) ([ehelms](https://github.com/ehelms))
 - Remove direct references to Service\['qpidd'\] [\#103](https://github.com/theforeman/puppet-pulp/pull/103) ([ehelms](https://github.com/ehelms))
-- fixes \#12033: set topic\_exchange using the messaging\_topic\_exchange param [\#102](https://github.com/theforeman/puppet-pulp/pull/102) ([bbuckingham](https://github.com/bbuckingham))
-- Refs \#11998 - support plugin httpd files without manage\_httpd [\#101](https://github.com/theforeman/puppet-pulp/pull/101) ([jlsherrill](https://github.com/jlsherrill))
+- fixes [\#12033](https://projects.theforeman.org/issues/12033): set topic\_exchange using the messaging\_topic\_exchange param [\#102](https://github.com/theforeman/puppet-pulp/pull/102) ([bbuckingham](https://github.com/bbuckingham))
+- Refs [\#11998](https://projects.theforeman.org/issues/11998) - support plugin httpd files without manage\_httpd [\#101](https://github.com/theforeman/puppet-pulp/pull/101) ([jlsherrill](https://github.com/jlsherrill))
 
 ## [1.0.0](https://github.com/theforeman/puppet-pulp/tree/1.0.0) (2015-09-08)
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/0.1.3...1.0.0)
@@ -380,22 +390,22 @@
 - Update 0.1-stable for modulesync [\#89](https://github.com/theforeman/puppet-pulp/pull/89) ([stbenjam](https://github.com/stbenjam))
 - Prepare puppet-pulp for release [\#88](https://github.com/theforeman/puppet-pulp/pull/88) ([stbenjam](https://github.com/stbenjam))
 - fix config.pp [\#87](https://github.com/theforeman/puppet-pulp/pull/87) ([cristifalcas](https://github.com/cristifalcas))
-- fixes \#10716 - migrate pulp when new pulp plugins are installed [\#86](https://github.com/theforeman/puppet-pulp/pull/86) ([stbenjam](https://github.com/stbenjam))
+- fixes [\#10716](https://projects.theforeman.org/issues/10716) - migrate pulp when new pulp plugins are installed [\#86](https://github.com/theforeman/puppet-pulp/pull/86) ([stbenjam](https://github.com/stbenjam))
 - Consumer [\#83](https://github.com/theforeman/puppet-pulp/pull/83) ([cristifalcas](https://github.com/cristifalcas))
 - Require qpidd to be started before migrating the database. [\#82](https://github.com/theforeman/puppet-pulp/pull/82) ([ehelms](https://github.com/ehelms))
 - make pulp configurable [\#80](https://github.com/theforeman/puppet-pulp/pull/80) ([cristifalcas](https://github.com/cristifalcas))
 - fix including apache configuration [\#79](https://github.com/theforeman/puppet-pulp/pull/79) ([cristifalcas](https://github.com/cristifalcas))
 - autorequire the goferd service for the provider [\#77](https://github.com/theforeman/puppet-pulp/pull/77) ([cristifalcas](https://github.com/cristifalcas))
-- Fixes \#10885 - Allow customizing mongodb path [\#73](https://github.com/theforeman/puppet-pulp/pull/73) ([adamruzicka](https://github.com/adamruzicka))
-- Fixes \#10885 - Allow customizing mongodb path [\#72](https://github.com/theforeman/puppet-pulp/pull/72) ([adamruzicka](https://github.com/adamruzicka))
-- Refs \#10385: Don't redirect standard err to standard out for mongodb … [\#68](https://github.com/theforeman/puppet-pulp/pull/68) ([ehelms](https://github.com/ehelms))
-- Refs \#10616 - add ssl virt host fragment type [\#67](https://github.com/theforeman/puppet-pulp/pull/67) ([jlsherrill](https://github.com/jlsherrill))
-- Refs \#10616 - add ssl virt host fragment type [\#66](https://github.com/theforeman/puppet-pulp/pull/66) ([jlsherrill](https://github.com/jlsherrill))
+- Fixes [\#10885](https://projects.theforeman.org/issues/10885) - Allow customizing mongodb path [\#73](https://github.com/theforeman/puppet-pulp/pull/73) ([adamruzicka](https://github.com/adamruzicka))
+- Fixes [\#10885](https://projects.theforeman.org/issues/10885) - Allow customizing mongodb path [\#72](https://github.com/theforeman/puppet-pulp/pull/72) ([adamruzicka](https://github.com/adamruzicka))
+- Refs [\#10385](https://projects.theforeman.org/issues/10385): Don't redirect standard err to standard out for mongodb … [\#68](https://github.com/theforeman/puppet-pulp/pull/68) ([ehelms](https://github.com/ehelms))
+- Refs [\#10616](https://projects.theforeman.org/issues/10616) - add ssl virt host fragment type [\#67](https://github.com/theforeman/puppet-pulp/pull/67) ([jlsherrill](https://github.com/jlsherrill))
+- Refs [\#10616](https://projects.theforeman.org/issues/10616) - add ssl virt host fragment type [\#66](https://github.com/theforeman/puppet-pulp/pull/66) ([jlsherrill](https://github.com/jlsherrill))
 - Remove qpid and mongodb declaration [\#65](https://github.com/theforeman/puppet-pulp/pull/65) ([cristifalcas](https://github.com/cristifalcas))
 - move httpd config to a separate class [\#64](https://github.com/theforeman/puppet-pulp/pull/64) ([cristifalcas](https://github.com/cristifalcas))
 - fix spaces [\#63](https://github.com/theforeman/puppet-pulp/pull/63) ([cristifalcas](https://github.com/cristifalcas))
 - updates for consumer class [\#62](https://github.com/theforeman/puppet-pulp/pull/62) ([cristifalcas](https://github.com/cristifalcas))
-- Refs \#10385: repoquery doesn't omit the errors, so we account for that. [\#58](https://github.com/theforeman/puppet-pulp/pull/58) ([ehelms](https://github.com/ehelms))
+- Refs [\#10385](https://projects.theforeman.org/issues/10385): repoquery doesn't omit the errors, so we account for that. [\#58](https://github.com/theforeman/puppet-pulp/pull/58) ([ehelms](https://github.com/ehelms))
 - Fixing some documentation in admin.pp [\#57](https://github.com/theforeman/puppet-pulp/pull/57) ([timhughes](https://github.com/timhughes))
 - Updates from modulesync. [\#56](https://github.com/theforeman/puppet-pulp/pull/56) ([ehelms](https://github.com/ehelms))
 
@@ -405,7 +415,7 @@
 **Merged pull requests:**
 
 - Update to 0.1.1 [\#54](https://github.com/theforeman/puppet-pulp/pull/54) ([ehelms](https://github.com/ehelms))
-- Fixes \#10385: Omit errors from yum info when acquiring version. [\#53](https://github.com/theforeman/puppet-pulp/pull/53) ([ehelms](https://github.com/ehelms))
+- Fixes [\#10385](https://projects.theforeman.org/issues/10385): Omit errors from yum info when acquiring version. [\#53](https://github.com/theforeman/puppet-pulp/pull/53) ([ehelms](https://github.com/ehelms))
 - Pin rspec version on 1.8.7 [\#47](https://github.com/theforeman/puppet-pulp/pull/47) ([stbenjam](https://github.com/stbenjam))
 - use preffix enable\_ for extra packages [\#45](https://github.com/theforeman/puppet-pulp/pull/45) ([cristifalcas](https://github.com/cristifalcas))
 - add consumer [\#41](https://github.com/theforeman/puppet-pulp/pull/41) ([cristifalcas](https://github.com/cristifalcas))
@@ -414,27 +424,27 @@
 **Merged pull requests:**
 
 - fix services on el7 [\#42](https://github.com/theforeman/puppet-pulp/pull/42) ([cristifalcas](https://github.com/cristifalcas))
-- fixes \#9479: fix usage with centos [\#39](https://github.com/theforeman/puppet-pulp/pull/39) ([dustints](https://github.com/dustints))
-- fixes \#9204 - fix failing tests due to qpid module's validations [\#34](https://github.com/theforeman/puppet-pulp/pull/34) ([stbenjam](https://github.com/stbenjam))
+- fixes [\#9479](https://projects.theforeman.org/issues/9479): fix usage with centos [\#39](https://github.com/theforeman/puppet-pulp/pull/39) ([dustints](https://github.com/dustints))
+- fixes [\#9204](https://projects.theforeman.org/issues/9204) - fix failing tests due to qpid module's validations [\#34](https://github.com/theforeman/puppet-pulp/pull/34) ([stbenjam](https://github.com/stbenjam))
 - add initial admin support [\#33](https://github.com/theforeman/puppet-pulp/pull/33) ([cristifalcas](https://github.com/cristifalcas))
-- Fixes \#8478 - set the version of mongodb we are using [\#31](https://github.com/theforeman/puppet-pulp/pull/31) ([iNecas](https://github.com/iNecas))
-- Fixes \#8266: Allow setting the number of Pulp workers to be used. [\#30](https://github.com/theforeman/puppet-pulp/pull/30) ([ehelms](https://github.com/ehelms))
-- refs \#7779 - Updating to add support for pulp docker [\#29](https://github.com/theforeman/puppet-pulp/pull/29) ([bbuckingham](https://github.com/bbuckingham))
-- fixes \#7296, BZ1135127 - switching to relying on apache for cert validat... [\#28](https://github.com/theforeman/puppet-pulp/pull/28) ([mccun934](https://github.com/mccun934))
-- Refs \#6736: Updating to standard layout and basic tests. [\#27](https://github.com/theforeman/puppet-pulp/pull/27) ([ehelms](https://github.com/ehelms))
-- fixes \#7115 - specify cert options for nodes.conf [\#25](https://github.com/theforeman/puppet-pulp/pull/25) ([jlsherrill](https://github.com/jlsherrill))
-- Refs \#7077/BZ1127242: generate random password for pulp user. [\#24](https://github.com/theforeman/puppet-pulp/pull/24) ([waldenraines](https://github.com/waldenraines))
-- fixes \#7006 - require mongo and qpidd before pulp-manage-db [\#23](https://github.com/theforeman/puppet-pulp/pull/23) ([jlsherrill](https://github.com/jlsherrill))
-- Refs \#6530: Ensure null for proxy\_port if not defined. [\#22](https://github.com/theforeman/puppet-pulp/pull/22) ([ehelms](https://github.com/ehelms))
-- Fixes \#6530: Ensure proxy configs work if not all values specified. [\#21](https://github.com/theforeman/puppet-pulp/pull/21) ([ehelms](https://github.com/ehelms))
-- Refs \#6360 - enable pulp\_manage\_puppet selinux boolean [\#20](https://github.com/theforeman/puppet-pulp/pull/20) ([lzap](https://github.com/lzap))
-- Refs \#5639: Adds proxy options for Pulp plugins. [\#19](https://github.com/theforeman/puppet-pulp/pull/19) ([ehelms](https://github.com/ehelms))
+- Fixes [\#8478](https://projects.theforeman.org/issues/8478) - set the version of mongodb we are using [\#31](https://github.com/theforeman/puppet-pulp/pull/31) ([iNecas](https://github.com/iNecas))
+- Fixes [\#8266](https://projects.theforeman.org/issues/8266): Allow setting the number of Pulp workers to be used. [\#30](https://github.com/theforeman/puppet-pulp/pull/30) ([ehelms](https://github.com/ehelms))
+- refs [\#7779](https://projects.theforeman.org/issues/7779) - Updating to add support for pulp docker [\#29](https://github.com/theforeman/puppet-pulp/pull/29) ([bbuckingham](https://github.com/bbuckingham))
+- fixes [\#7296](https://projects.theforeman.org/issues/7296), BZ1135127 - switching to relying on apache for cert validat... [\#28](https://github.com/theforeman/puppet-pulp/pull/28) ([mccun934](https://github.com/mccun934))
+- Refs [\#6736](https://projects.theforeman.org/issues/6736): Updating to standard layout and basic tests. [\#27](https://github.com/theforeman/puppet-pulp/pull/27) ([ehelms](https://github.com/ehelms))
+- fixes [\#7115](https://projects.theforeman.org/issues/7115) - specify cert options for nodes.conf [\#25](https://github.com/theforeman/puppet-pulp/pull/25) ([jlsherrill](https://github.com/jlsherrill))
+- Refs [\#7077](https://projects.theforeman.org/issues/7077)/BZ1127242: generate random password for pulp user. [\#24](https://github.com/theforeman/puppet-pulp/pull/24) ([waldenraines](https://github.com/waldenraines))
+- fixes [\#7006](https://projects.theforeman.org/issues/7006) - require mongo and qpidd before pulp-manage-db [\#23](https://github.com/theforeman/puppet-pulp/pull/23) ([jlsherrill](https://github.com/jlsherrill))
+- Refs [\#6530](https://projects.theforeman.org/issues/6530): Ensure null for proxy\_port if not defined. [\#22](https://github.com/theforeman/puppet-pulp/pull/22) ([ehelms](https://github.com/ehelms))
+- Fixes [\#6530](https://projects.theforeman.org/issues/6530): Ensure proxy configs work if not all values specified. [\#21](https://github.com/theforeman/puppet-pulp/pull/21) ([ehelms](https://github.com/ehelms))
+- Refs [\#6360](https://projects.theforeman.org/issues/6360) - enable pulp\_manage\_puppet selinux boolean [\#20](https://github.com/theforeman/puppet-pulp/pull/20) ([lzap](https://github.com/lzap))
+- Refs [\#5639](https://projects.theforeman.org/issues/5639): Adds proxy options for Pulp plugins. [\#19](https://github.com/theforeman/puppet-pulp/pull/19) ([ehelms](https://github.com/ehelms))
 - Fixes 5992 and 5993 - update pulp-katello to install qpid-dependencies [\#18](https://github.com/theforeman/puppet-pulp/pull/18) ([jmontleon](https://github.com/jmontleon))
-- fixes \#5845 - using new pulp httpd config files for 2.4 [\#17](https://github.com/theforeman/puppet-pulp/pull/17) ([jlsherrill](https://github.com/jlsherrill))
-- Refs \#5377: Ensure Pulp 2.4 services are run after config. [\#16](https://github.com/theforeman/puppet-pulp/pull/16) ([ehelms](https://github.com/ehelms))
-- Refs \#5377: Updates for Pulp 2.4 support. [\#15](https://github.com/theforeman/puppet-pulp/pull/15) ([ehelms](https://github.com/ehelms))
-- Refs \#5423 - fixes pulp node setting on the capsule [\#14](https://github.com/theforeman/puppet-pulp/pull/14) ([iNecas](https://github.com/iNecas))
-- Fixing \#5299: variables not used properly. [\#13](https://github.com/theforeman/puppet-pulp/pull/13) ([omaciel](https://github.com/omaciel))
+- fixes [\#5845](https://projects.theforeman.org/issues/5845) - using new pulp httpd config files for 2.4 [\#17](https://github.com/theforeman/puppet-pulp/pull/17) ([jlsherrill](https://github.com/jlsherrill))
+- Refs [\#5377](https://projects.theforeman.org/issues/5377): Ensure Pulp 2.4 services are run after config. [\#16](https://github.com/theforeman/puppet-pulp/pull/16) ([ehelms](https://github.com/ehelms))
+- Refs [\#5377](https://projects.theforeman.org/issues/5377): Updates for Pulp 2.4 support. [\#15](https://github.com/theforeman/puppet-pulp/pull/15) ([ehelms](https://github.com/ehelms))
+- Refs [\#5423](https://projects.theforeman.org/issues/5423) - fixes pulp node setting on the capsule [\#14](https://github.com/theforeman/puppet-pulp/pull/14) ([iNecas](https://github.com/iNecas))
+- Fixing [\#5299](https://projects.theforeman.org/issues/5299): variables not used properly. [\#13](https://github.com/theforeman/puppet-pulp/pull/13) ([omaciel](https://github.com/omaciel))
 - Fix mongodb error waiting for service. [\#12](https://github.com/theforeman/puppet-pulp/pull/12) ([dgoodwin](https://github.com/dgoodwin))
 - Cleaning up certs related files. [\#11](https://github.com/theforeman/puppet-pulp/pull/11) ([ehelms](https://github.com/ehelms))
 - Changing apache to an include and including extra RPMs to install with P... [\#10](https://github.com/theforeman/puppet-pulp/pull/10) ([ehelms](https://github.com/ehelms))
