@@ -1,6 +1,14 @@
 # Change Log
 
-## [5.4.1](https://github.com/theforeman/puppet-pulp/tree/5.4.1) (2018-05-21)
+## [5.4.2](https://github.com/theforeman/puppet-pulp/tree/5.4.2) (2018-05-30)
+
+[Full Changelog](https://github.com/theforeman/puppet-pulp/compare/5.4.1...5.4.2)
+
+**Merged pull requests:**
+
+- Allow puppetlabs-apache 3.x [\#318](https://github.com/theforeman/puppet-pulp/pull/318) ([ekohl](https://github.com/ekohl))
+
+## [5.4.1](https://github.com/theforeman/puppet-pulp/tree/5.4.1) (2018-05-23)
 
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/5.4.0...5.4.1)
 
