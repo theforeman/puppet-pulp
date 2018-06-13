@@ -121,6 +121,8 @@ class pulp::params {
 
   $yum_max_speed = undef
   $yum_gpg_sign_repo_metadata = false
+  $yum_gpg_key_id = undef
+  $yum_gpg_cmd = undef
 
   $wsgi_processes = 3
   $wsgi_max_requests = 0
