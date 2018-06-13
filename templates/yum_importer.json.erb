@@ -24,5 +24,15 @@
     <% else %>
     "max_speed": null,
     <% end %>
-    "gpg_sign_metadata": <%= scope['pulp::yum_gpg_sign_repo_metadata'] ? "true" : "false" %>
+    "gpg_sign_metadata": <%= scope['pulp::yum_gpg_sign_repo_metadata'] ? "true" : "false" %>,
+    <% unless [nil, :undefined, :undef, ''].include?(scope['pulp::yum_gpg_key_id']) -%>
+    "gpg_key_id": <%= scope['pulp::yum_gpg_key_id'] %>,
+    <% else %>
+    "gpg_key_id": null,
+    <% end %>
+    <% unless [nil, :undefined, :undef, ''].include?(scope['pulp::yum_gpg_cmd']) -%>
+    "gpg_cmd": <%= scope['pulp::yum_gpg_cmd'] %>
+    <% else %>
+    "gpg_cmd": null
+    <% end %>
 }
