@@ -283,6 +283,9 @@
 # @param yum_gpg_cmd
 #   Custom GPG command/script to use for yum repo metadata signing
 #
+# @param yum_regenerate_repomd_signatures
+#   Whether to regenerate existing yum repo metadata GPG signatures
+#
 # @param num_workers
 #   Number of Pulp workers to use.
 #
@@ -487,6 +490,7 @@ class pulp (
   Boolean $yum_gpg_sign_repo_metadata = $pulp::params::yum_gpg_sign_repo_metadata,
   Optional[String] $yum_gpg_key_id = $pulp::params::yum_gpg_key_id,
   Optional[String] $yum_gpg_cmd = $pulp::params::yum_gpg_cmd,
+  Boolean $yum_regenerate_repomd_signatures = $pulp::params::yum_regenerate_repomd_signatures,
   Integer[0] $num_workers = $pulp::params::num_workers,
   Integer[0] $worker_timeout = $pulp::params::worker_timeout,
   Boolean $enable_admin = $pulp::params::enable_admin,
@@ -567,6 +571,10 @@ class pulp (
 
   Class['pulp::install'] -> Class['pulp::config'] -> Class['pulp::database'] ~> Class['pulp::service', 'pulp::apache']
   Class['pulp::config'] ~> Class['pulp::service', 'pulp::apache']
+
+  if $yum_gpg_sign_repo_metadata {
+    contain ::pulp::repomd_signatures
+  }
 
   if $enable_admin {
     if $ssl_username and $ssl_username != '' {
