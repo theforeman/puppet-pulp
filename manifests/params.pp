@@ -59,6 +59,8 @@ class pulp::params {
   $https_chain = undef
   $ssl_username = 'SSL_CLIENT_S_DN_CN'
   $enable_http = false
+  $http_port = 80
+  $https_port = 443
   $ssl_verify_client = 'require'
   $ssl_protocol = ['all', '-SSLv2', '-SSLv3']
 
