@@ -327,6 +327,8 @@ class pulp (
   Optional[String] $tasks_login_method = $::pulp::params::tasks_login_method,
   String $email_host = $::pulp::params::email_host,
   Integer[1, 65535] $email_port = $::pulp::params::email_port,
+  Integer[1, 65535] $http_port = $::pulp::params::http_port,
+  Integer[1, 65535] $https_port = $::pulp::params::https_port,
   String $email_from = $::pulp::params::email_from,
   Boolean $email_enabled = $::pulp::params::email_enabled,
   Boolean $manage_squid = $::pulp::params::manage_squid,
