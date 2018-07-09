@@ -219,6 +219,10 @@
 #
 # $enable_http::                Whether to enable http access to deb/rpm repos.
 #
+# $http_port::                  HTTP port Apache will listen
+#
+# $https_port::                 HTTPS port Apache will listen
+#
 # $manage_httpd::               Whether to install and configure the httpd server.
 #
 # $manage_plugins_httpd::       Whether to install the enabled pulp plugins apache configs even if $manage_httpd is
