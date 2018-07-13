@@ -145,23 +145,7 @@ class pulp::config {
   }
 
   if $pulp::manage_squid {
-    class { 'squid3':
-      use_deprecated_opts           => false,
-      http_port                     => [ '3128 accel defaultsite=127.0.0.1:8751' ],
-      acl                           => [ 'Safe_ports port 3128' ],
-      http_access                   => [ 'allow localhost', 'deny to_localhost', 'deny all' ],
-      cache                         => [ 'allow all' ],
-      maximum_object_size           => '5 GB',
-      maximum_object_size_in_memory => '100 MB',
-      cache_dir                     => [ 'aufs /var/spool/squid 10000 16 256' ],
-      template                      => 'short',
-      config_hash                   => {
-        cache_peer          => '127.0.0.1 parent 8751 0 no-digest no-query originserver name=PulpStreamer',
-        cache_peer_access   => 'PulpStreamer allow all',
-        range_offset_limit  => 'none',
-        minimum_object_size => '0 kB',
-      },
-    }
+    contain pulp::squid
   }
 
   if $pulp::enable_profiling {
