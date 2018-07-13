@@ -33,8 +33,8 @@
       "version_requirement": ">= 2.0.0 < 5.0.0"
     },
     {
-      "name": "thias/squid3",
-      "version_requirement": "1.0.2"
+      "name": "puppet/squid",
+      "version_requirement": ">= 2.0.0 < 3.0.0"
     }
   ],
   "requirements": [
