@@ -1,4 +1,12 @@
-# Change Log
+# Changelog
+
+## [5.5.0](https://github.com/theforeman/puppet-pulp/tree/5.5.0) (2018-07-16)
+
+[Full Changelog](https://github.com/theforeman/puppet-pulp/compare/5.4.2...5.5.0)
+
+**Implemented enhancements:**
+
+- allow to change Apache http and https port [\#325](https://github.com/theforeman/puppet-pulp/pull/325) ([maxadamo](https://github.com/maxadamo))
 
 ## [5.4.2](https://github.com/theforeman/puppet-pulp/tree/5.4.2) (2018-05-30)
 
@@ -24,9 +32,9 @@
 
 **Implemented enhancements:**
 
+- Allow the setting of vhost in consumer messaging section. [\#311](https://github.com/theforeman/puppet-pulp/pull/311) ([glbyers](https://github.com/glbyers))
 - Don't specify path to pulp-consumer [\#310](https://github.com/theforeman/puppet-pulp/pull/310) ([alexjfisher](https://github.com/alexjfisher))
 - Make enable\_iso not dependent on enable\_rpm  [\#309](https://github.com/theforeman/puppet-pulp/pull/309) ([sean797](https://github.com/sean797))
-- Allow the setting of vhost in consumer messaging section. [\#311](https://github.com/theforeman/puppet-pulp/pull/311) ([glbyers](https://github.com/glbyers))
 
 ## [5.3.0](https://github.com/theforeman/puppet-pulp/tree/5.3.0) (2018-01-25)
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/5.2.0...5.3.0)
@@ -35,6 +43,7 @@
 
 - Allow use of puppet-qpid 4.X [\#305](https://github.com/theforeman/puppet-pulp/pull/305) ([ehelms](https://github.com/ehelms))
 - Allow puppet/mongodb 2.x [\#303](https://github.com/theforeman/puppet-pulp/pull/303) ([ekohl](https://github.com/ekohl))
+- Add support for enabling repo metadata GPG signing [\#302](https://github.com/theforeman/puppet-pulp/pull/302) ([PaulSD](https://github.com/PaulSD))
 - Fixes [\#22338](https://projects.theforeman.org/issues/22338) - add worker\_timeout param [\#299](https://github.com/theforeman/puppet-pulp/pull/299) ([chris1984](https://github.com/chris1984))
 - Fixes [\#21957](https://projects.theforeman.org/issues/21957) - Pulp-Ostree.conf handle gpg content [\#298](https://github.com/theforeman/puppet-pulp/pull/298) ([parthaa](https://github.com/parthaa))
 - Make ISO support optional [\#294](https://github.com/theforeman/puppet-pulp/pull/294) ([sean797](https://github.com/sean797))
@@ -163,6 +172,7 @@
 - Refactor the class inclusions and chaining [\#239](https://github.com/theforeman/puppet-pulp/pull/239) ([ekohl](https://github.com/ekohl))
 
 ## [4.3.1](https://github.com/theforeman/puppet-pulp/tree/4.3.1) (2017-07-13)
+
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/4.3.0...4.3.1)
 
 **Merged pull requests:**
@@ -170,6 +180,7 @@
 - Run pulp-gen-key-pair to create the rsa key [\#238](https://github.com/theforeman/puppet-pulp/pull/238) ([ekohl](https://github.com/ekohl))
 
 ## [4.3.0](https://github.com/theforeman/puppet-pulp/tree/4.3.0) (2017-04-07)
+
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/4.2.0...4.3.0)
 
 **Merged pull requests:**
@@ -184,6 +195,7 @@
 - Remove code to support EL6 [\#202](https://github.com/theforeman/puppet-pulp/pull/202) ([ekohl](https://github.com/ekohl))
 
 ## [4.2.0](https://github.com/theforeman/puppet-pulp/tree/4.2.0) (2017-03-10)
+
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/4.1.0...4.2.0)
 
 **Merged pull requests:**
@@ -197,6 +209,7 @@
 - Refs [\#17298](https://projects.theforeman.org/issues/17298) - Add max tasks per Pulp worker [\#173](https://github.com/theforeman/puppet-pulp/pull/173) ([mbacovsky](https://github.com/mbacovsky))
 
 ## [4.1.0](https://github.com/theforeman/puppet-pulp/tree/4.1.0) (2017-01-24)
+
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/4.0.0...4.1.0)
 
 **Merged pull requests:**
@@ -209,6 +222,7 @@
 - add an iso provider [\#183](https://github.com/theforeman/puppet-pulp/pull/183) ([cristifalcas](https://github.com/cristifalcas))
 
 ## [4.0.0](https://github.com/theforeman/puppet-pulp/tree/4.0.0) (2016-12-20)
+
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/3.5.0...4.0.0)
 
 **Closed issues:**
@@ -229,6 +243,7 @@
 - Modulesync [\#169](https://github.com/theforeman/puppet-pulp/pull/169) ([stbenjam](https://github.com/stbenjam))
 
 ## [3.5.0](https://github.com/theforeman/puppet-pulp/tree/3.5.0) (2016-10-17)
+
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/3.4.0...3.5.0)
 
 **Closed issues:**
@@ -245,6 +260,7 @@
 - SSLUsername directive breaks FakeBasicAuth [\#163](https://github.com/theforeman/puppet-pulp/pull/163) ([llabrat](https://github.com/llabrat))
 
 ## [3.4.0](https://github.com/theforeman/puppet-pulp/tree/3.4.0) (2016-09-12)
+
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/3.3.1...3.4.0)
 
 **Closed issues:**
@@ -266,6 +282,7 @@
 - Mongodb fact refactor [\#115](https://github.com/theforeman/puppet-pulp/pull/115) ([walkamongus](https://github.com/walkamongus))
 
 ## [3.3.1](https://github.com/theforeman/puppet-pulp/tree/3.3.1) (2016-06-10)
+
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/3.3.0...3.3.1)
 
 **Merged pull requests:**
@@ -275,6 +292,7 @@
 - fixes [\#15014](https://projects.theforeman.org/issues/15014) - restore pulp db init flag [\#145](https://github.com/theforeman/puppet-pulp/pull/145) ([stbenjam](https://github.com/stbenjam))
 
 ## [3.3.0](https://github.com/theforeman/puppet-pulp/tree/3.3.0) (2016-05-19)
+
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/3.2.1...3.3.0)
 
 **Merged pull requests:**
@@ -286,6 +304,7 @@
 - Pulp streamer requires mod\_proxy module [\#139](https://github.com/theforeman/puppet-pulp/pull/139) ([ehelms](https://github.com/ehelms))
 
 ## [3.2.1](https://github.com/theforeman/puppet-pulp/tree/3.2.1) (2016-03-28)
+
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/3.2.0...3.2.1)
 
 **Merged pull requests:**
@@ -294,6 +313,7 @@
 - update to add defaultsite to squid conf [\#136](https://github.com/theforeman/puppet-pulp/pull/136) ([beav](https://github.com/beav))
 
 ## [3.2.0](https://github.com/theforeman/puppet-pulp/tree/3.2.0) (2016-03-16)
+
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/3.1.0...3.2.0)
 
 **Merged pull requests:**
@@ -303,6 +323,7 @@
 - update vhosts80/rpm.conf to support http lazy sync [\#132](https://github.com/theforeman/puppet-pulp/pull/132) ([jlsherrill](https://github.com/jlsherrill))
 
 ## [3.1.0](https://github.com/theforeman/puppet-pulp/tree/3.1.0) (2016-02-23)
+
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/3.0.0...3.1.0)
 
 **Merged pull requests:**
@@ -313,6 +334,7 @@
 - Fixes [\#13451](https://projects.theforeman.org/issues/13451) - enables lazy sync [\#122](https://github.com/theforeman/puppet-pulp/pull/122) ([cfouant](https://github.com/cfouant))
 
 ## [3.0.0](https://github.com/theforeman/puppet-pulp/tree/3.0.0) (2016-02-10)
+
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/2.1.0...3.0.0)
 
 **Merged pull requests:**
@@ -328,6 +350,7 @@
 - Fixes [\#13431](https://projects.theforeman.org/issues/13431) - Apache changes for pulp 2.8 [\#116](https://github.com/theforeman/puppet-pulp/pull/116) ([parthaa](https://github.com/parthaa))
 
 ## [2.1.0](https://github.com/theforeman/puppet-pulp/tree/2.1.0) (2016-02-01)
+
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/2.0.0...2.1.0)
 
 **Merged pull requests:**
@@ -338,6 +361,7 @@
 - Config file updates, ostree support, and bugfix [\#85](https://github.com/theforeman/puppet-pulp/pull/85) ([beav](https://github.com/beav))
 
 ## [2.0.0](https://github.com/theforeman/puppet-pulp/tree/2.0.0) (2015-11-20)
+
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/1.0.2...2.0.0)
 
 **Merged pull requests:**
@@ -345,6 +369,7 @@
 - consolidate node parent params into one parameter [\#111](https://github.com/theforeman/puppet-pulp/pull/111) ([jlsherrill](https://github.com/jlsherrill))
 
 ## [1.0.2](https://github.com/theforeman/puppet-pulp/tree/1.0.2) (2015-10-21)
+
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/1.0.1...1.0.2)
 
 **Merged pull requests:**
@@ -352,6 +377,7 @@
 - Ensure broker service running before Pulp services and DB manage [\#109](https://github.com/theforeman/puppet-pulp/pull/109) ([ehelms](https://github.com/ehelms))
 
 ## [1.0.1](https://github.com/theforeman/puppet-pulp/tree/1.0.1) (2015-10-15)
+
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/1.0.0...1.0.1)
 
 **Closed issues:**
@@ -369,6 +395,7 @@
 - Refs [\#11998](https://projects.theforeman.org/issues/11998) - support plugin httpd files without manage\_httpd [\#101](https://github.com/theforeman/puppet-pulp/pull/101) ([jlsherrill](https://github.com/jlsherrill))
 
 ## [1.0.0](https://github.com/theforeman/puppet-pulp/tree/1.0.0) (2015-09-08)
+
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/0.1.3...1.0.0)
 
 **Closed issues:**
@@ -383,6 +410,7 @@
 - Use qpid::tools class [\#97](https://github.com/theforeman/puppet-pulp/pull/97) ([ehelms](https://github.com/ehelms))
 
 ## [0.1.3](https://github.com/theforeman/puppet-pulp/tree/0.1.3) (2015-08-11)
+
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/0.1.2...0.1.3)
 
 **Merged pull requests:**
@@ -391,6 +419,7 @@
 - Add forge and travis badges to README [\#90](https://github.com/theforeman/puppet-pulp/pull/90) ([stbenjam](https://github.com/stbenjam))
 
 ## [0.1.2](https://github.com/theforeman/puppet-pulp/tree/0.1.2) (2015-07-20)
+
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/0.1.1...0.1.2)
 
 **Merged pull requests:**
@@ -418,6 +447,7 @@
 - Updates from modulesync. [\#56](https://github.com/theforeman/puppet-pulp/pull/56) ([ehelms](https://github.com/ehelms))
 
 ## [0.1.1](https://github.com/theforeman/puppet-pulp/tree/0.1.1) (2015-05-08)
+
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/0.1.0...0.1.1)
 
 **Merged pull requests:**
@@ -429,6 +459,9 @@
 - add consumer [\#41](https://github.com/theforeman/puppet-pulp/pull/41) ([cristifalcas](https://github.com/cristifalcas))
 
 ## [0.1.0](https://github.com/theforeman/puppet-pulp/tree/0.1.0) (2015-03-11)
+
+[Full Changelog](https://github.com/theforeman/puppet-pulp/compare/3b030c03b485d702844a3208bd68be2a04b88bed...0.1.0)
+
 **Merged pull requests:**
 
 - fix services on el7 [\#42](https://github.com/theforeman/puppet-pulp/pull/42) ([cristifalcas](https://github.com/cristifalcas))
@@ -466,4 +499,4 @@
 
 
 
-\* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
+\* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
