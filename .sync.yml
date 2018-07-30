@@ -11,5 +11,10 @@ Rakefile:
     - manifests/admin.pp
     - manifests/consumer.pp
     - manifests/init.pp
+spec/spec_helper.rb:
+  custom_facts:
+    - name: systemd
+      value: true
+      source: puppet-systemd
 spec/spec_helper_acceptance.rb:
   install_epel: true
