@@ -7,5 +7,6 @@ fixtures:
     mongodb: "https://github.com/voxpupuli/puppet-mongodb.git"
     qpid:    "https://github.com/theforeman/puppet-qpid.git"
     squid3:  "https://github.com/thias/puppet-squid3.git"
+    systemd: 'https://github.com/camptocamp/puppet-systemd.git'
   symlinks:
     pulp: "#{source_dir}"
