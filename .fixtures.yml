@@ -6,6 +6,7 @@ fixtures:
     concat:  "https://github.com/puppetlabs/puppetlabs-concat.git"
     mongodb: "https://github.com/voxpupuli/puppet-mongodb.git"
     qpid:    "https://github.com/theforeman/puppet-qpid.git"
+    systemd: 'https://github.com/camptocamp/puppet-systemd.git'
     squid3:  "https://github.com/thias/puppet-squid3.git"
   symlinks:
     pulp: "#{source_dir}"
