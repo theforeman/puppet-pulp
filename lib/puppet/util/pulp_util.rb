@@ -47,7 +47,7 @@ module Puppet
 
       def get_repo_info(repo_id)
         raise '[get_repo_info] Repo id should never be nil.' unless repo_id and repo_id != ''
-        request_api("/v2/repositories/#{repo_id}/?details=True")
+        request_api("/v2/repositories/#{repo_id}/?distributors=True&importers=True")
       end
 
       def get_role_info(role_id)
