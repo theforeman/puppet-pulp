@@ -15,8 +15,13 @@
     "proxy_username": null,
     <% end %>
     <% unless [nil, :undefined, :undef, ''].include?(scope['pulp::proxy_password']) -%>
-    "proxy_password": "<%= scope['pulp::proxy_password'] %>"
+    "proxy_password": "<%= scope['pulp::proxy_password'] %>",
     <% else %>
-    "proxy_password": null
+    "proxy_password": null,
+    <% end %>
+    <% unless [nil, :undefined, :undef, ''].include?(scope['pulp::real_yum_max_speed']) -%>
+    "max_speed": <%= scope['pulp::real_yum_max_speed'] %>
+    <% else %>
+    "max_speed": null
     <% end %>
 }
