@@ -54,5 +54,24 @@ describe 'pulp::crane' do
         })
       end
     end
+
+    context 'with ssl_chain parameter set' do
+      let :params do
+        {
+          :cert      => '/tmp/cert.crt',
+          :key       => '/tmp/cert.key',
+          :ca_cert   => '/tmp/ca_cert.crt',
+          :ssl_chain => '/tmp/chain.crt',
+        }
+      end
+
+      let :facts do
+        on_supported_os['redhat-7-x86_64']
+      end
+
+      it 'should use ssl_chain parameter in apache vhost' do
+        is_expected.to contain_apache__vhost('crane').with_ssl_chain('/tmp/chain.crt')
+      end
+    end
   end
 end

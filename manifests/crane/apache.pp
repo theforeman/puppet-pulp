@@ -7,6 +7,9 @@ class pulp::crane::apache {
   include ::apache::mod::proxy_http
   include ::apache::mod::wsgi
 
+  # For backwards compatiblity, we still need to default ssl_chain to ca_cert...
+  $ssl_chain = pick($::pulp::crane::ssl_chain, $::pulp::crane::ca_cert)
+
   apache::vhost { 'crane':
     servername          => $::fqdn,
     docroot             => '/usr/share/crane/',
@@ -18,7 +21,7 @@ class pulp::crane::apache {
     ssl                 => true,
     ssl_cert            => $::pulp::crane::cert,
     ssl_key             => $::pulp::crane::key,
-    ssl_chain           => $::pulp::crane::ca_cert,
+    ssl_chain           => $ssl_chain,
     ssl_ca              => $::pulp::crane::ca_cert,
     ssl_certs_dir       => '',
     ssl_verify_client   => 'optional',
