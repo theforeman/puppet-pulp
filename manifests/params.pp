@@ -86,7 +86,7 @@ class pulp::params {
   $email_enabled = false
 
   $manage_squid = false
-  $lazy_redirect_host = downcase($::fqdn)
+  $lazy_redirect_host = undef
   $lazy_redirect_port = undef
   $lazy_redirect_path = '/streamer/'
   $lazy_https_retrieval = false
