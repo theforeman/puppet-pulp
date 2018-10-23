@@ -1,4 +1,5 @@
 {
+    "remove_missing": true,
     <% unless [nil, :undefined, :undef, ''].include?(scope['pulp::proxy_url']) -%>
     "proxy_host": "<%= scope['pulp::proxy_url'] %>",
     <% else %>
