@@ -176,6 +176,7 @@ Alias /pulp/exports /var/www/pub/yum/https/exports
 Alias /pulp/gpg /var/www/pub/gpg
 
 <Directory /var/www/pub/gpg/>
+    Options ProxyPass
     Options FollowSymLinks Indexes
 </Directory>
 ')
