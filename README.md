@@ -1,6 +1,6 @@
 [![Puppet Forge](https://img.shields.io/puppetforge/v/katello/pulp.svg)](https://forge.puppetlabs.com/katello/pulp)
 [![Build Status](https://travis-ci.org/theforeman/puppet-pulp.svg?branch=master)](https://travis-ci.org/theforeman/puppet-pulp)
-[![puppetmodule.info docs](https://www.puppetmodule.info/images/badge.png)](https://www.puppetmodule.info/m/katello-pulp)
+[![puppetmodule.info docs](http://www.puppetmodule.info/images/badge.png)](http://www.puppetmodule.info/m/katello-pulp)
 
 #### Table of Contents
 
