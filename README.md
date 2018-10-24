@@ -1,6 +1,6 @@
-[![Puppet Forge](http://img.shields.io/puppetforge/v/katello/pulp.svg)](https://forge.puppetlabs.com/katello/pulp)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/katello/pulp.svg)](https://forge.puppetlabs.com/katello/pulp)
 [![Build Status](https://travis-ci.org/theforeman/puppet-pulp.svg?branch=master)](https://travis-ci.org/theforeman/puppet-pulp)
-[![puppetmodule.info docs](http://www.puppetmodule.info/images/badge.png)](http://www.puppetmodule.info/m/katello-pulp)
+[![puppetmodule.info docs](https://www.puppetmodule.info/images/badge.png)](https://www.puppetmodule.info/m/katello-pulp)
 
 #### Table of Contents
 
@@ -32,7 +32,7 @@ The main pulp server installation. This includes the Apache configuration and th
 include ::pulp
 ```
 
-Note that you need EPEL and a Pulp repository. For this we recommend [stahnma/epel](https://forge.puppet.com/stahnma/epel) and use of the ```pulp::repo::upstream``` or ```pulp::repo::katello```.
+Note that you need EPEL and a Pulp repository. For this we recommend [stahnma/epel](https://forge.puppet.com/stahnma/epel) and use of the ```pulp::repo::upstream``` class.
 
 ```puppet
 include ::epel
@@ -257,11 +257,13 @@ class { '::pulp':
 
 ### Role provider
 
-	pulp_role { 'repo_admin':
-	  ensure      => 'present',
-	  users       => ['alice', 'bob'],
-	  permissions => {'/' => ['READ', 'CREATE'], '/v2/repositories/scl_ruby22_el7/' => ['READ', 'EXECUTE', 'UPDATE', 'CREATE', 'DELETE']},
-	}
+```puppet
+pulp_role { 'repo_admin':
+  ensure      => 'present',
+  users       => ['alice', 'bob'],
+  permissions => {'/' => ['READ', 'CREATE'], '/v2/repositories/scl_ruby22_el7/' => ['READ', 'EXECUTE', 'UPDATE', 'CREATE', 'DELETE']},
+}
+```
 
 ## Development
 
