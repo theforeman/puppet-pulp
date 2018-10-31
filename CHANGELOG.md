@@ -1,5 +1,14 @@
 # Changelog
 
+## [5.7.0](https://github.com/theforeman/puppet-pulp/tree/5.7.0) (2018-10-31)
+
+[Full Changelog](https://github.com/theforeman/puppet-pulp/compare/5.6.0...5.7.0)
+
+**Implemented enhancements:**
+
+- Add remove\_missing to pulp\_deb [\#344](https://github.com/theforeman/puppet-pulp/pull/344) ([mdellweg](https://github.com/mdellweg))
+- don't set a default lazy\_redirect\_host [\#343](https://github.com/theforeman/puppet-pulp/pull/343) ([evgeni](https://github.com/evgeni))
+
 ## [5.6.0](https://github.com/theforeman/puppet-pulp/tree/5.6.0) (2018-10-08)
 
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/5.5.0...5.6.0)
