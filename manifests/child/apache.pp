@@ -1,12 +1,12 @@
 class pulp::child::apache (
-  $servername = $::fqdn,
-  $ssl_cert = $::pulp::child::ssl_cert,
-  $ssl_key = $::pulp::child::ssl_key,
-  $ssl_ca = $::pulp::ca_cert,
-  $max_keep_alive = $::pulp::max_keep_alive,
-  $ssl_username = $::pulp::ssl_username,
+  $servername = $facts['fqdn'],
+  $ssl_cert = $pulp::child::ssl_cert,
+  $ssl_key = $pulp::child::ssl_key,
+  $ssl_ca = $pulp::ca_cert,
+  $max_keep_alive = $pulp::max_keep_alive,
+  $ssl_username = $pulp::ssl_username,
 ) {
-  include ::apache
+  include apache
 
   if $ssl_username and !empty($ssl_username) {
     $directories = {

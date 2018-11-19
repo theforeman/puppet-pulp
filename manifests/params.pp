@@ -19,7 +19,7 @@ class pulp::params {
   $db_write_concern = undef
   $migrate_db_timeout = 300
 
-  $server_name = downcase($::fqdn)
+  $server_name = downcase($facts['fqdn'])
   $key_url = '/pulp/gpg'
   $ks_url = '/pulp/ks'
   $debugging_mode = false
@@ -39,7 +39,7 @@ class pulp::params {
   $oauth_key = 'pulp'
   $oauth_secret = 'secret'
 
-  $messaging_url = "tcp://${::fqdn}:5672"
+  $messaging_url = "tcp://${facts['fqdn']}:5672"
   $messaging_transport = 'qpid'
   $messaging_auth_enabled = true
   $messaging_ca_cert = undef
@@ -49,7 +49,7 @@ class pulp::params {
   $messaging_event_notification_url = undef
   $messaging_version = 'present'
 
-  $broker_url = "qpid:///guest@${::fqdn}:5672"
+  $broker_url = "qpid:///guest@${facts['fqdn']}:5672"
   $broker_use_ssl = false
   $tasks_login_method = undef
 
@@ -83,7 +83,7 @@ class pulp::params {
 
   $email_host = 'localhost'
   $email_port = 25
-  $email_from = "no-reply@${::domain}"
+  $email_from = "no-reply@${facts['domain']}"
   $email_enabled = false
 
   $manage_squid = false
@@ -115,7 +115,7 @@ class pulp::params {
   $proxy_password = undef
 
   $max_keep_alive = 10000
-  $num_workers = min($::processorcount, 8)
+  $num_workers = min($facts['processorcount'], 8)
   $max_tasks_per_child = undef
   $worker_timeout = 30
 

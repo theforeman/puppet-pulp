@@ -113,9 +113,9 @@ class pulp::config {
   }
 
   exec { '/usr/bin/pulp-gen-key-pair':
-    creates => $::pulp::rsa_key,
+    creates => $pulp::rsa_key,
   } ->
-  file { $::pulp::rsa_key:
+  file { $pulp::rsa_key:
     owner => 'root',
     group => 'apache',
     mode  => '0640',
@@ -140,12 +140,12 @@ class pulp::config {
 
   exec { 'run pulp-gen-ca':
     command => '/usr/bin/pulp-gen-ca-certificate',
-    creates => $::pulp::ca_cert,
+    creates => $pulp::ca_cert,
     require => File['/etc/pulp/server.conf'],
   }
 
   if $pulp::manage_squid {
-    class { '::squid3':
+    class { 'squid3':
       use_deprecated_opts           => false,
       http_port                     => [ '3128 accel defaultsite=127.0.0.1:8751' ],
       acl                           => [ 'Safe_ports port 3128' ],
