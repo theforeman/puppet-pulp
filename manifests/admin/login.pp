@@ -1,8 +1,8 @@
 class pulp::admin::login (
-  $login_method = $::pulp::admin::login_method,
-  $username = $::pulp::admin::username,
-  $password = $::pulp::admin::password,
-  $id_cert_filename = $::pulp::admin::id_cert_filename,
+  $login_method = $pulp::admin::login_method,
+  $username = $pulp::admin::username,
+  $password = $pulp::admin::password,
+  $id_cert_filename = $pulp::admin::id_cert_filename,
 ) {
   file { '/root/.pulp':
     ensure => directory,

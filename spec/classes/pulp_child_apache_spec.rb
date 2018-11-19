@@ -9,7 +9,7 @@ describe 'pulp::child::apache' do
 
       describe "with inherited parameters" do
         let :pre_condition do
-          'include ::pulp
+          'include pulp
           class {"::pulp::child":
             parent_fqdn => "parent.example.com",
           }'

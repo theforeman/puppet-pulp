@@ -8,13 +8,13 @@ class pulp::broker {
 
   if $pulp::manage_broker {
     if $pulp::messaging_transport == 'qpid' {
-      include ::qpid
+      include qpid
     } elsif $pulp::messaging_transport == 'rabbitmq' {
-      include ::rabbitmq
+      include rabbitmq
     }
   } else {
     if $pulp::messaging_transport == 'qpid' {
-      include ::qpid::tools
+      include qpid::tools
 
       Class['qpid::tools'] -> Class['pulp::service']
     }

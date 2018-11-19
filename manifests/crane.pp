@@ -34,9 +34,9 @@ class pulp::crane (
   Optional[String] $ssl_protocol = undef,
 ){
 
-  contain ::pulp::crane::install
-  contain ::pulp::crane::config
-  contain ::pulp::crane::apache
+  contain pulp::crane::install
+  contain pulp::crane::config
+  contain pulp::crane::apache
 
   Class['pulp::crane::install']
   ~> Class['pulp::crane::config']

@@ -29,14 +29,14 @@ This module can be used to install and manage several aspects of a pulp installa
 The main pulp server installation. This includes the Apache configuration and the various daemons.
 
 ```puppet
-include ::pulp
+include pulp
 ```
 
 Note that you need EPEL and a Pulp repository. For this we recommend [stahnma/epel](https://forge.puppet.com/stahnma/epel) and use of the ```pulp::repo::upstream``` class.
 
 ```puppet
-include ::epel
-include ::pulp::repo::upstream
+include epel
+include pulp::repo::upstream
 class { '::pulp':
   require => Class['epel', 'pulp::repo::upstream'],
 }
@@ -194,13 +194,13 @@ class { 'pulp':
 On standalone machines it is also possible to only install the admin utility by directly using ```pulp::admin```:
 
 ```puppet
-include ::pulp::admin
+include pulp::admin
 ```
 
 In this case plugins need to be managed explicitly.
 
 ```puppet
-class { '::pulp::admin':
+class { 'pulp::admin':
   enable_docker => true,
   enable_ostree => true,
   enable_puppet => true,
@@ -215,7 +215,7 @@ class { '::pulp::admin':
 Manage a pulp child installation.
 
 ```puppet
-include ::pulp::child
+include pulp::child
 ```
 
 ### Pulp consumer
@@ -225,13 +225,13 @@ Manage pulp consumers.
 #### Installation
 
 ```puppet
-include ::pulp::consumer
+include pulp::consumer
 ```
 
 #### Register consumer
 
 ```puppet
-pulp_register { $::fqdn:
+pulp_register { $facts['fqdn']:
   user => 'admin',
   pass => 'admin',
 }
@@ -244,13 +244,13 @@ Manage pulp crane, a minimal docker registry.
 You can either deploy it standalone:
 
 ```puppet
-include ::pulp::crane
+include pulp::crane
 ```
 
 Or as part of a full Pulp installation:
 
 ```puppet
-class { '::pulp':
+class { 'pulp':
   enable_crane => true,
 }
 ```

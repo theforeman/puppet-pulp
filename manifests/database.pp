@@ -1,7 +1,7 @@
 # Set up the pulp database
 class pulp::database {
   if $pulp::manage_db {
-    include ::mongodb::server
+    include mongodb::server
 
     Service['mongodb'] -> Class['pulp::service']
     Service['mongodb'] -> Exec['migrate_pulp_db']
