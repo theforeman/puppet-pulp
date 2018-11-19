@@ -8,3 +8,6 @@ fixtures:
     qpid:    "https://github.com/theforeman/puppet-qpid.git"
     squid3:  "https://github.com/thias/puppet-squid3.git"
     systemd: 'https://github.com/camptocamp/puppet-systemd.git'
+    yumrepo_core:
+      repo: "https://github.com/puppetlabs/puppetlabs-yumrepo_core"
+      puppet_version: ">= 6.0.0"
