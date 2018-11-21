@@ -94,6 +94,7 @@ default_login: <%= scope['pulp::default_login'] %>
 default_password: <%= scope['pulp::default_password'] %>
 debugging_mode: <%= scope['pulp::debugging_mode'] %>
 log_level: <%= scope['pulp::log_level'] %>
+log_type: <%= scope['pulp::log_type'] %>
 <% unless [nil, :undefined, :undef, ''].include?(scope.lookupvar('pulp::server_working_directory')) -%>
 working_directory: <%= scope['pulp::server_working_directory'] %>
 <% end -%>
