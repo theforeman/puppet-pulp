@@ -1,6 +1,8 @@
 define pulp::apache_plugin ($confd = true, $vhosts80 = true) {
+  include apache
+
   if $confd {
-    file { "/etc/httpd/conf.d/pulp_${name}.conf":
+    file { "${apache::confd_dir}/pulp_${name}.conf":
       ensure  => file,
       content => template("pulp/etc/httpd/conf.d/pulp_${name}.conf.erb"),
       owner   => 'root',
@@ -11,7 +13,7 @@ define pulp::apache_plugin ($confd = true, $vhosts80 = true) {
   }
 
   if $vhosts80 {
-    file { "/etc/pulp/vhosts80/${name}.conf":
+    file { "${apache::confd_dir}/pulp-vhosts80/${name}.conf":
       ensure  => file,
       content => template("pulp/vhosts80/${name}.conf"),
       owner   => 'apache',
