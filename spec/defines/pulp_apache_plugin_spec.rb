@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 describe 'pulp::apache_plugin' do
-  let :title do
-    'python'
+  let :facts do
+    on_supported_os['redhat-7-x86_64']
   end
 
-  let :pre_condition do
-    'service { "httpd": }'
+  let :title do
+    'python'
   end
 
   context 'with default parameters' do
@@ -23,7 +23,7 @@ describe 'pulp::apache_plugin' do
     end
 
     it do
-      verify_exact_contents(catalogue, '/etc/pulp/vhosts80/python.conf', [])
+      verify_exact_contents(catalogue, '/etc/httpd/conf.d/pulp-vhosts80/python.conf', [])
     end
   end
 
@@ -37,6 +37,6 @@ describe 'pulp::apache_plugin' do
 
     it { is_expected.to compile.with_all_deps }
     it { is_expected.not_to contain_file('/etc/httpd/conf.d/pulp_python.conf') }
-    it { is_expected.not_to contain_file('/etc/pulp/vhosts80/python.conf') }
+    it { is_expected.not_to contain_file('/etc/httpd/conf.d/pulp-vhosts80/python.conf') }
   end
 end

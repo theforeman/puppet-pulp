@@ -17,7 +17,7 @@ class pulp::apache {
         port                => $pulp::http_port,
         servername          => $facts['fqdn'],
         serveraliases       => [$facts['hostname']],
-        additional_includes => '/etc/pulp/vhosts80/*.conf',
+        additional_includes => "${apache::confd_dir}/pulp-vhosts80/*.conf",
       }
     }
 
@@ -139,7 +139,7 @@ class pulp::apache {
   if $pulp::manage_httpd or $pulp::manage_plugins_httpd {
     pulp::apache_plugin {'content' : vhosts80 => false}
 
-    file { '/etc/pulp/vhosts80/':
+    file { "${apache::confd_dir}/pulp-vhosts80/":
       ensure  => directory,
       owner   => 'apache',
       group   => 'apache',

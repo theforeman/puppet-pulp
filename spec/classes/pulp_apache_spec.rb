@@ -22,7 +22,7 @@ describe 'pulp::apache' do
       is_expected.to contain_class('apache::mod::ssl')
     end
 
-    it { is_expected.to contain_file('/etc/pulp/vhosts80/')}
+    it { is_expected.to contain_file('/etc/httpd/conf.d/pulp-vhosts80/')}
     it { is_expected.to contain_file('/etc/httpd/conf.d/pulp.conf') }
 
     it 'should configure apache server with ssl' do
@@ -88,7 +88,7 @@ describe 'pulp::apache' do
           :servername              => facts[:fqdn],
           :serveraliases           => [facts[:hostname]],
           :docroot                 => '/usr/share/pulp/wsgi',
-          :additional_includes     => '/etc/pulp/vhosts80/*.conf',
+          :additional_includes     => '/etc/httpd/conf.d/pulp-vhosts80/*.conf',
         })
       end
     end
@@ -180,7 +180,7 @@ Alias /pulp/gpg /var/www/pub/gpg
 </Directory>
 ')
 
-        verify_exact_contents(catalogue, '/etc/pulp/vhosts80/rpm.conf', ['Alias /pulp/exports /var/www/pub/yum/http/exports'])
+        verify_exact_contents(catalogue, '/etc/httpd/conf.d/pulp-vhosts80/rpm.conf', ['Alias /pulp/exports /var/www/pub/yum/http/exports'])
 
       end
     end
@@ -209,7 +209,7 @@ Alias /pulp/gpg /var/www/pub/gpg
 </Directory>
 ')
 
-        verify_exact_contents(catalogue, '/etc/pulp/vhosts80/iso.conf', ['Alias /pulp/isos /var/www/pub/http/isos'])
+        verify_exact_contents(catalogue, '/etc/httpd/conf.d/pulp-vhosts80/iso.conf', ['Alias /pulp/isos /var/www/pub/http/isos'])
       end
     end
 
@@ -315,7 +315,7 @@ WSGIScriptAlias /v3 /usr/share/pulp/wsgi/puppet_forge.wsgi process-group=pulp_fo
 WSGIPassAuthorization On
 ')
 
-        is_expected.to contain_file('/etc/pulp/vhosts80/puppet.conf').with(
+        is_expected.to contain_file('/etc/httpd/conf.d/pulp-vhosts80/puppet.conf').with(
         :content => 'Alias /pulp/puppet /var/www/pub/puppet/http/repos
 ')
       end
