@@ -92,6 +92,8 @@
 # $log_level::                  The desired logging level. Options are: CRITICAL, ERROR, WARNING, INFO, DEBUG, and
 #                               NOTSET.
 #
+# $log_type::                   The desired logging type: Options are: syslog, console
+#
 # $server_working_directory::   Path to where pulp workers can create working directories needed to complete tasks
 #
 # $rsa_key::                    The RSA private key used for authentication.
