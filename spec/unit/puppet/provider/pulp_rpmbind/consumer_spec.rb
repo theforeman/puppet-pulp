@@ -14,9 +14,7 @@ describe provider_class do
     context "on #{os}" do
       before :each do
         Facter.clear
-        facts.each do |k, v|
-          Facter.stubs(:fact).with(k).returns Facter.add(k) { setcode { v } }
-        end
+        facts.each { |k, v| Facter.add(k) { setcode { v } } }
       end
 
       describe 'instances' do
@@ -34,18 +32,18 @@ describe provider_class do
       describe '#create' do
         context 'repository exists on server' do
           it 'calls pulp-consumer and waits for bind to complete' do
-            provider.expects(:consumer)
+            expect(provider).to receive(:consumer)
                     .with('rpm', 'bind', '--repo-id', 'foo')
-                    .returns('Bind tasks successfully created:')
-            provider.expects(:wait_for_bind)
-            expect(provider.create)
+                    .and_return('Bind tasks successfully created:')
+            expect(provider).to receive(:wait_for_bind)
+            expect { provider.create }.not_to raise_error
           end
         end
         context 'repository does not exist on server' do
           it 'raises error' do
-            provider.expects(:consumer)
+            expect(provider).to receive(:consumer)
                     .with('rpm', 'bind', '--repo-id', 'foo')
-                    .returns('Repository [foo] does not exist on the server')
+                    .and_return('Repository [foo] does not exist on the server')
             expect { provider.create }
               .to raise_error(RuntimeError, 'Repository [foo] does not exist on the server')
           end
@@ -55,27 +53,28 @@ describe provider_class do
       describe '#wait_for_bind' do
         context 'bind works first time' do
           it 'doesn\'t raise exception' do
-            provider.expects(:grep)
+            expect(provider).to receive(:grep)
                     .with('-q', '--fixed-strings', '[foo]', '/etc/yum.repos.d/pulp.repo')
             expect { provider.wait_for_bind }.not_to raise_error
           end
         end
         context 'bind works after 2 retries' do
           it 'sleeps between retries and then succeeds' do
-            provider.expects(:grep).times(3)
+            expect(provider).to receive(:grep)
                     .with('-q', '--fixed-strings', '[foo]', '/etc/yum.repos.d/pulp.repo')
-                    .raises(Puppet::ExecutionFailure, '')
-                    .raises(Puppet::ExecutionFailure, '')
-                    .then.returns('')
-            provider.expects(:sleep).twice
+                    .twice.and_raise(Puppet::ExecutionFailure, '')
+            expect(provider).to receive(:grep)
+                    .with('-q', '--fixed-strings', '[foo]', '/etc/yum.repos.d/pulp.repo')
+                    .once.and_return('')
+            expect(provider).to receive(:sleep).twice
             expect { provider.wait_for_bind }.not_to raise_error
           end
         end
         context 'bind doesn\'t complete after 10 retries' do
           it 'tries 10 times then raises exception' do
-            provider.expects(:grep).times(10)
+            expect(provider).to receive(:grep).exactly(10).times
                     .with('-q', '--fixed-strings', '[foo]', '/etc/yum.repos.d/pulp.repo')
-                    .raises(Puppet::ExecutionFailure, '')
+                    .and_raise(Puppet::ExecutionFailure, '')
             expect { provider.wait_for_bind }
               .to raise_error(RuntimeError, 'Pulp bind to foo failed')
           end

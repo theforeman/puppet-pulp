@@ -6,9 +6,7 @@ describe Puppet::Type.type(:pulp_isorepo).provider(:api) do
     context "on #{os}" do
       before :each do
         Facter.clear
-        facts.each do |k, v|
-          Facter.stubs(:fact).with(k).returns Facter.add(k) { setcode { v } }
-        end
+        facts.each { |k, v| Facter.add(k) { setcode { v } } }
       end
 
       describe 'instances' do
@@ -37,7 +35,7 @@ describe Puppet::Type.type(:pulp_isorepo).provider(:api) do
 
       context 'without repos' do
         before :each do
-          Puppet::Util::PulpUtil.any_instance.expects(:get_repos).with('iso-repo').returns([])
+          expect_any_instance_of(Puppet::Util::PulpUtil).to receive(:get_repos).with('iso-repo').and_return([])
         end
 
         it { expect(described_class.instances.size).to eq 0 }
@@ -97,8 +95,8 @@ describe Puppet::Type.type(:pulp_isorepo).provider(:api) do
             "id" => "DataMonster",
             "_href" => "/pulp/api/v2/repositories/DataMonster/",
           }
-          Puppet::Util::PulpUtil.any_instance.expects(:get_repos).with('iso-repo').returns([{'id' => 'DataMonster'}])
-          Puppet::Util::PulpUtil.any_instance.expects(:get_repo_info).with('DataMonster').returns(item)
+          expect_any_instance_of(Puppet::Util::PulpUtil).to receive(:get_repos).with('iso-repo').and_return([{'id' => 'DataMonster'}])
+          expect_any_instance_of(Puppet::Util::PulpUtil).to receive(:get_repo_info).with('DataMonster').and_return(item)
         end
 
         it { expect(described_class.instances.size).to eq 1 }
