@@ -103,7 +103,7 @@ class pulp::params {
   $reset_cache = false
 
   $default_login = 'admin'
-  $default_password = cache_data('foreman_cache_data', 'pulp_password', random_password(32))
+  $default_password = extlib::cache_data('foreman_cache_data', 'pulp_password', extlib::random_password(32))
 
   $repo_auth = false
   $disabled_authenticators = []
