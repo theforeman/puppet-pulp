@@ -1,5 +1,18 @@
 # Changelog
 
+## [5.8.0](https://github.com/theforeman/puppet-pulp/tree/5.8.0) (2019-01-14)
+
+[Full Changelog](https://github.com/theforeman/puppet-pulp/compare/5.7.0...5.8.0)
+
+**Implemented enhancements:**
+
+- Allow puppetlabs/apache 4.x [\#355](https://github.com/theforeman/puppet-pulp/pull/355) ([ekohl](https://github.com/ekohl))
+- Use extlib namespaced functions [\#354](https://github.com/theforeman/puppet-pulp/pull/354) ([ekohl](https://github.com/ekohl))
+- Allow extlib 3.x [\#351](https://github.com/theforeman/puppet-pulp/pull/351) ([ekohl](https://github.com/ekohl))
+- Add log\_type parameter [\#349](https://github.com/theforeman/puppet-pulp/pull/349) ([ehelms](https://github.com/ehelms))
+- Add Puppet 6 support [\#348](https://github.com/theforeman/puppet-pulp/pull/348) ([ekohl](https://github.com/ekohl))
+- Add max\_speed to iso\_importer [\#338](https://github.com/theforeman/puppet-pulp/pull/338) ([sean797](https://github.com/sean797))
+
 ## [5.7.0](https://github.com/theforeman/puppet-pulp/tree/5.7.0) (2018-10-31)
 
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/5.6.0...5.7.0)
