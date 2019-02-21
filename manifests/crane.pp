@@ -27,6 +27,7 @@ class pulp::crane (
   Stdlib::Absolutepath $ca_cert,
 
   Boolean $debug = false,
+  Stdlib::Fqdn $server_name = $::fqdn,
   Stdlib::Port $port = 5000,
   Stdlib::Absolutepath $data_dir = '/var/lib/crane/metadata',
   Integer[0] $data_dir_polling_interval = 60,

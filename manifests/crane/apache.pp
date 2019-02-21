@@ -11,7 +11,7 @@ class pulp::crane::apache {
   $ssl_chain = pick($pulp::crane::ssl_chain, $pulp::crane::ca_cert)
 
   apache::vhost { 'crane':
-    servername          => $facts['fqdn'],
+    servername          => $pulp::crane::server_name,
     docroot             => '/usr/share/crane/',
     wsgi_script_aliases => {
       '/' => '/usr/share/crane/crane.wsgi',
