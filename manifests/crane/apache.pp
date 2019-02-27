@@ -5,7 +5,8 @@ class pulp::crane::apache {
   include apache::mod::headers
   include apache::mod::proxy
   include apache::mod::proxy_http
-  include apache::mod::wsgi
+
+  include pulp::apache::mod_wsgi
 
   # For backwards compatiblity, we still need to default ssl_chain to ca_cert...
   $ssl_chain = pick($pulp::crane::ssl_chain, $pulp::crane::ca_cert)
