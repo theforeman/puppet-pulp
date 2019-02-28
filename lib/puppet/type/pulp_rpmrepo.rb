@@ -187,7 +187,14 @@ Puppet::Type.newtype(:pulp_rpmrepo) do
   end
 
   newproperty(:gpg_key) do
-    desc "GPG key used to sign and verify packages in the repository"
+    desc <<-DESC
+File containing public GPG keys used to validate the signatures of RPMs and metadata in this repository.
+These keys will be made available to consumers to use for verifying content in the repository.
+The value provided to this option must be the full path to a GPG key file containing one or more ASCII armored public keys.
+DESC
+    validate do |value|
+      raise Puppet::Error, "'gpg_key' must be an absolute path" unless Puppet::Util.absolute_path?(value)
+    end
   end
 
   newproperty(:generate_sqlite) do
