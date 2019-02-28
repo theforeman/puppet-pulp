@@ -15,7 +15,7 @@ describe Puppet::Type.type(:pulp_rpmrepo) do
     it_behaves_like 'a boolean parameter', param
   end
 
-  ['conf_file', 'feed_ca_cert', 'feed_cert', 'feed_key', 'host_ca', 'auth_ca', 'auth_cert'].each do |param|
+  ['conf_file', 'feed_ca_cert', 'feed_cert', 'feed_key', 'host_ca', 'auth_ca', 'auth_cert', 'gpg_key'].each do |param|
     it_behaves_like 'a path parameter', param
   end
 
