@@ -200,9 +200,6 @@
 #
 # $enable_crane::               Whether to enable crane docker repository
 #
-# $max_tasks_per_child::        Number of tasks after which the worker is restarted and the memory it allocated is
-#                               returned to the system
-#
 # $enable_rpm::                 Whether to enable rpm plugin.
 #
 # $enable_deb::                 Whether to enable deb plugin.
@@ -360,7 +357,6 @@ class pulp (
   Boolean $enable_admin = $pulp::params::enable_admin,
   Boolean $enable_katello = $pulp::params::enable_katello,
   Boolean $enable_crane = $pulp::params::enable_crane,
-  Optional[Integer[0]] $max_tasks_per_child = $pulp::params::max_tasks_per_child,
   Boolean $enable_deb = $pulp::params::enable_deb,
   Boolean $enable_docker = $pulp::params::enable_docker,
   Boolean $enable_rpm = $pulp::params::enable_rpm,
