@@ -6,6 +6,7 @@ fixtures:
     concat:  "https://github.com/puppetlabs/puppetlabs-concat.git"
     mongodb: "https://github.com/voxpupuli/puppet-mongodb.git"
     qpid:    "https://github.com/theforeman/puppet-qpid.git"
+    selinux: "https://github.com/voxpupuli/puppet-selinux.git"
     squid:   "https://github.com/voxpupuli/puppet-squid.git"
     systemd: 'https://github.com/camptocamp/puppet-systemd.git'
     yumrepo_core:
