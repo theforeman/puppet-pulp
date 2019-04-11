@@ -1,5 +1,13 @@
 # Changelog
 
+## [5.8.1](https://github.com/theforeman/puppet-pulp/tree/5.8.1) (2019-04-11)
+
+[Full Changelog](https://github.com/theforeman/puppet-pulp/compare/5.8.0...5.8.1)
+
+**Fixed bugs:**
+
+- Fixes [\#26563](https://projects.theforeman.org/issues/26563) - Remove reference of tasks in config [\#363](https://github.com/theforeman/puppet-pulp/pull/363) ([chris1984](https://github.com/chris1984))
+
 ## [5.8.0](https://github.com/theforeman/puppet-pulp/tree/5.8.0) (2019-01-14)
 
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/5.7.0...5.8.0)
