@@ -4,8 +4,6 @@
 matrix:
   fast_finish: true
   include:
-    - rvm: 2.1.9
-      env: PUPPET_VERSION=4.9
     - rvm: 2.4.1
       env: PUPPET_VERSION=5.0
     - rvm: 2.5.1
@@ -34,8 +32,4 @@ matrix:
         - sudo service docker restart
 
 bundler_args: --without system_tests development
-before_install:
-  - if [ $TRAVIS_RUBY_VERSION = 2.1.9 ] ; then
-      gem install -v 1.17.3 bundler --no-rdoc --no-ri;
-    fi
-sudo: false
+dist: xenial
