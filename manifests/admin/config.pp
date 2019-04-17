@@ -1,4 +1,5 @@
 # Pulp Admin Configuration
+# @api private
 class pulp::admin::config {
   file { '/etc/pulp/admin/admin.conf':
     ensure  => 'file',

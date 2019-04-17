@@ -1,96 +1,136 @@
-#
-# == Class: pulp::consumer
-#
 # Install and configure Pulp consumers
 #
-# === Parameters:
+# @param ca_path
+#   Path to use for the CA
 #
-# $ca_path::                       Path to use for the CA
+# @param version
+#   pulp admin package version, it's passed to ensure parameter of package
+#   resource can be set to specific version number, 'latest', 'present' etc.
 #
-# $version::                       pulp admin package version, it's passed to ensure parameter of package resource
-#                                  can be set to specific version number, 'latest', 'present' etc.
+# @param enable_puppet
+#   Install puppet extension
 #
-# $enable_puppet::                 Install puppet extension. Only available on pulp 2.6 and higher
+# @param enable_nodes
+#   Install nodes extension
 #
-# $enable_nodes::                  Install nodes extension
+# @param enable_rpm
+#   Install rpm extension
 #
-# $enable_rpm::                    Install rpm extension
+# @param host
+#   The pulp server hostname
 #
-# $host::                          The pulp server hostname
+# @param port
+#   The port providing the RESTful API
 #
-# $port::                          The port providing the RESTful API
+# @param api_prefix
+#   The REST API prefix.
 #
-# $api_prefix::                    The REST API prefix.
+# @param verify_ssl
+#   Set this to False to configure the client not to verify that the server's
+#   SSL cert is signed by a trusted authority
 #
-# $verify_ssl::                    Set this to False to configure the client not to verify that the server's SSL cert is signed by
-#                                  a trusted authority
+# @param rsa_server_pub
+#   The pulp server public key used for authentication.
 #
-# $rsa_server_pub::                The pulp server public key used for authentication.
+# @param rsa_key
+#   The RSA private key used for authentication.
 #
-# $rsa_key::                       The RSA private key used for authentication.
+# @param rsa_pub
+#   The RSA public key used for authentication.
 #
-# $rsa_pub::                       The RSA public key used for authentication.
+# @param role
+#   The client role.
 #
-# $role::                          The client role.
+# @param extensions_dir
+#   The location of consumer client extensions.
 #
-# $extensions_dir::                The location of consumer client extensions.
+# @param repo_file
+#   The location of the YUM repository file managed by pulp.
 #
-# $repo_file::                     The location of the YUM repository file managed by pulp.
+# @param mirror_list_dir
+#   The location of the directory containing YUM mirror list files that are
+#   managed by Pulp.
 #
-# $mirror_list_dir::               The location of the directory containing YUM mirror list files that are managed by Pulp.
+# @param gpg_keys_dir
+#   The location of downloaded GPG keys stored by Pulp. The path to the keys
+#   stored here are referenced by Pulp's YUM repository file.
 #
-# $gpg_keys_dir::                  The location of downloaded GPG keys stored by Pulp. The path to the
-#                                  keys stored here are referenced by Pulp's YUM repository file.
+# @param cert_dir
+#   The location of downloaded X.509 certificates stored by Pulp. The path to
+#   the certificates stored here are referenced by Pulp's YUM repository file.
 #
-# $cert_dir::                      The location of downloaded X.509 certificates stored by Pulp. The path to
-#                                  the certificates stored here are referenced by Pulp's YUM repository file.
+# @param id_cert_dir
+#   The location of the directory where the Pulp consumer ID certificate is stored.
 #
-# $id_cert_dir::                   The location of the directory where the Pulp consumer ID certificate is stored.
+# @param id_cert_filename
+#   The name of the file containing the PEM encoded consumer private key and
+#   X.509 certificate. This file is downloaded and stored here during
+#   registration.
 #
-# $id_cert_filename::              The name of the file containing the PEM encoded consumer private key and X.509
-#                                  certificate. This file is downloaded and stored here during registration.
+# @param reboot_permit
+#   Permit reboots after package installs if requested.
 #
-# $reboot_permit::                 Permit reboots after package installs if requested.
+# @param reboot_delay
+#   The reboot delay (minutes).
 #
-# $reboot_delay::                  The reboot delay (minutes).
+# @param logging_filename
+#   The location of the consumer client log file.
 #
-# $logging_filename::              The location of the consumer client log file.
+# @param logging_call_log_filename
+#   If present, the raw REST responses will be logged to the given file.
 #
-# $logging_call_log_filename::     If present, the raw REST responses will be logged to the given file.
+# @param poll_frequency_in_seconds
+#   Number of seconds between requests for any operation that repeatedly polls
+#   the server for data.
 #
-# $poll_frequency_in_seconds::     Number of seconds between requests for any operation that repeatedly polls
-#                                  the server for data.
+# @param enable_color
+#   Set this to false to disable all color escape sequences
 #
-# $enable_color::                  Set this to false to disable all color escape sequences
+# @param wrap_to_terminal
+#   If wrap_to_terminal is true, any text wrapping will use the current width
+#   of the terminal. If false, the value in wrap_width is used.
 #
-# $wrap_to_terminal::              If wrap_to_terminal is true, any text wrapping will use the current width of
-#                                  the terminal. If false, the value in wrap_width is used.
+# @param wrap_width
+#   The number of characters written before wrapping to the next line.
 #
-# $wrap_width::                    The number of characters written before wrapping to the next line.
+# @param messaging_scheme
+#   The broker URL scheme. Either 'tcp' or 'ssl' can be used. The default is 'tcp'.
 #
-# $messaging_scheme::              The broker URL scheme. Either 'tcp' or 'ssl' can be used. The default is 'tcp'.
+# @param messaging_host
+#   The broker host (default: host defined in [server]).
 #
-# $messaging_host::                The broker host (default: host defined in [server]).
+# @param messaging_port
+#   The broker port number. The default is 5672.
 #
-# $messaging_port::                The broker port number. The default is 5672.
+# @param messaging_transport
+#   The AMQP transport name. Valid options are 'qpid' or 'rabbitmq'. The
+#   default is 'qpid'.
 #
-# $messaging_transport::           The AMQP transport name. Valid options are 'qpid' or 'rabbitmq'. The default is 'qpid'.
+# @param messaging_vhost
+#   The (optional) broker vhost. This is only valid when using 'rabbitmq' as
+#   the messaging_transport.
 #
-# $messaging_vhost::               The (optional) broker vhost. This is only valid when using 'rabbitmq' as the messaging_transport.
+# @param messaging_version
+#   Determines the version of packages related to the 'messaging transport
+#   protocol'.
 #
-# $messaging_version::             Determines the version of packages related to the 'messaging transport protocol'.
+# @param messaging_cacert
+#   The (optional) absolute path to a PEM encoded CA certificate to validate
+#   the identity of the broker.
 #
-# $messaging_cacert::              The (optional) absolute path to a PEM encoded CA certificate to validate the identity of the
-#                                  broker.
+# @param messaging_clientcert
+#   The optional absolute path to PEM encoded key & certificate used to
+#   authenticate to the broker with. The id_cert_dir and id_cert_filename are
+#   used if this is not defined.
 #
-# $messaging_clientcert::          The optional absolute path to PEM encoded key & certificate used to authenticate to the broker
-#                                  with. The id_cert_dir and id_cert_filename are used if this is not defined.
+# @param profile_minutes
+#   The interval in minutes for reporting the installed content profiles.
 #
-# $profile_minutes::               The interval in minutes for reporting the installed content profiles.
+# @param package_profile_enabled
+#   Updates package profile information for a registered consumer on pulp server
 #
-# $package_profile_enabled::       Updates package profile information for a registered consumer on pulp server
-#
-# $package_profile_verbose::       Set logging level
+# @param package_profile_verbose
+#   Set logging level
 #
 class pulp::consumer (
   String $version = $pulp::consumer::params::version,

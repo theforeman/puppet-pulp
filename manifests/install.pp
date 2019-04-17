@@ -1,5 +1,5 @@
 # Pulp Installation Packages
-# Private class
+# @api private
 class pulp::install {
   package { ['pulp-server', 'pulp-selinux', 'python-pulp-streamer']: ensure => $pulp::version, }
 

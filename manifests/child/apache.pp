@@ -1,3 +1,5 @@
+# Define an Apache config for a Pulp node deployment
+# @api private
 class pulp::child::apache (
   $servername = $facts['fqdn'],
   $ssl_cert = $pulp::child::ssl_cert,

@@ -1,6 +1,3 @@
-#
-# == Class: pulp::child
-#
 # Install and configure Pulp node
 #
 class pulp::child (

@@ -1,4 +1,5 @@
 # Pulp Admin Install Packages
+# @api private
 class pulp::admin::install {
   package { 'pulp-admin-client':
     ensure => $pulp::admin::version,

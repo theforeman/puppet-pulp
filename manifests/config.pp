@@ -1,5 +1,5 @@
 # Pulp Master Configuration
-# Private class
+# @api private
 class pulp::config {
   file { '/var/lib/pulp/packages':
     ensure => directory,

@@ -1,4 +1,5 @@
 # Pulp Consumer Params
+# @api private
 class pulp::consumer::params {
   $version = 'installed'
   $enable_puppet = false

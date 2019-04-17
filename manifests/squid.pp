@@ -1,4 +1,5 @@
 # The class to manage squid. This is used by pulp streamer.
+# @api private
 class pulp::squid(
   Stdlib::Port $port = 3128,
   Stdlib::Host $streamer_host = '127.0.0.1',

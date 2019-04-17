@@ -1,9 +1,11 @@
-# provides the ability to specify fragments for the ssl 
-#   virtual host defined for a pulp node
+# provides the ability to specify fragments for the ssl virtual host defined
+# for a pulp node
 #
-#  === Parameters:
+# @param ssl_content
+#   Content of the ssl virtual host fragment
 #
-#  $ssl_content:: content of the ssl virtual host fragment
+# @param order
+#   The relative order compared to other fragments
 define pulp::child::fragment(
   $ssl_content = undef,
   $order       = 15,

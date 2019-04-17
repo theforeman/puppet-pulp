@@ -1,3 +1,5 @@
+# Ensure the user is logged in to execute commands
+# @api private
 class pulp::admin::login (
   $login_method = $pulp::admin::login_method,
   $username = $pulp::admin::username,

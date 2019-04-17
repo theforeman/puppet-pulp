@@ -1,3 +1,5 @@
+# Define a the Apache config for a plugin
+# @api private
 define pulp::apache_plugin ($confd = true, $vhosts80 = true) {
   include apache
 

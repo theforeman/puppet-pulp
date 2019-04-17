@@ -1,4 +1,5 @@
 # Pulp Node Service
+# @api private
 class pulp::child::service(
   $service = 'goferd',
   $ensure = 'running',

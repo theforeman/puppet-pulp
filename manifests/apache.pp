@@ -1,4 +1,5 @@
 # configure apache
+# @api private
 class pulp::apache {
   include apache
   include apache::mod::proxy
