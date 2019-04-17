@@ -1,26 +1,34 @@
-# == Class: pulp::crane
-#
 # Install and configure Crane
 #
-# === Parameters:
+# @param debug
+#   Enable debug logging
 #
-# $debug::                      Enable debug logging
+# @param server_name
+#   The server name on the vhost
 #
-# $key::                        Path to the SSL key for https
+# @param key
+#   Path to the SSL key for https
 #
-# $cert::                       Path to the SSL certificate for https
+# @param cert
+#   Path to the SSL certificate for https
 #
-# $ca_cert::                    Path to the SSL CA cert for https
+# @param ca_cert
+#   Path to the SSL CA cert for https
 #
-# $ssl_chain::                  Path to the SSL chain file for https
+# @param ssl_chain
+#   Path to the SSL chain file for https
 #
-# $port::                       Port for Crane to run on
+# @param port
+#   Port for Crane to run on
 #
-# $data_dir::                   Directory containing docker v1/v2 artifacts published by pulp
+# @param data_dir
+#   Directory containing docker v1/v2 artifacts published by pulp
 #
-# $data_dir_polling_interval::  The number of seconds between checks for updates to metadata files in the data_dir
+# @param data_dir_polling_interval
+#   The number of seconds between checks for updates to metadata files in the data_dir
 #
-# $ssl_protocol::               SSLProtocol configuration to use
+# @param ssl_protocol
+#   SSLProtocol configuration to use
 class pulp::crane (
   Stdlib::Absolutepath $key,
   Stdlib::Absolutepath $cert,

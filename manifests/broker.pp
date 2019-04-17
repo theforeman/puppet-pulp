@@ -1,4 +1,5 @@
 # Set up the broker
+# @api private
 class pulp::broker {
   if $pulp::messaging_transport == 'qpid' {
     $broker_service = 'qpidd'

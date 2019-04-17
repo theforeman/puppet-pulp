@@ -1,4 +1,5 @@
 # Set up the pulp database
+# @api private
 class pulp::database {
   if $pulp::manage_db {
     include mongodb::server

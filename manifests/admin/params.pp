@@ -1,4 +1,5 @@
 # Pulp Admin Params
+# @api private
 class pulp::admin::params {
   $version            = 'installed'
   $host               = $facts['fqdn']

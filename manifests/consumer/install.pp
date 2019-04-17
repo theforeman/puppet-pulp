@@ -1,4 +1,5 @@
 # Pulp Consumer Install Packages
+# @api private
 class pulp::consumer::install {
   if $pulp::consumer::messaging_transport == 'qpid' {
     ensure_packages(['python-gofer-qpid'], {

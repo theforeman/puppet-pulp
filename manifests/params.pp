@@ -1,5 +1,5 @@
 # Pulp Master Params
-# Private class
+# @api private
 class pulp::params {
   $version = 'installed'
 

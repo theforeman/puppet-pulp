@@ -1,77 +1,106 @@
-#
-# == Class: pulp::admin
-#
 # Install and configure Pulp admin
 #
-# === Parameters:
+# @param version
+#   Pulp admin package version, it's passed to ensure parameter of package
+#   resource can be set to specific version number, 'latest', 'present' etc.
 #
-# $version::                       pulp admin package version, it's passed to ensure parameter of package resource
-#                                  can be set to specific version number, 'latest', 'present' etc.
+# @param host
+#   The pulp server hostname
 #
-# $host::                          The pulp server hostname
+# @param port
+#   The port providing the RESTful API
 #
-# $port::                          The port providing the RESTful API
+# @param api_prefix
+#   The REST API prefix.
 #
-# $api_prefix::                    The REST API prefix.
+# @param verify_ssl
+#   Set this to False to configure the client not to verify that the server's
+#   SSL cert is signed by a trusted authority
 #
-# $verify_ssl::                    Set this to False to configure the client not to verify that the server's SSL cert is signed by
-#                                  a trusted authority
+# @param ca_path
+#   This is a path to a file of concatenated trusted CA certificates, or to a
+#   directory of trusted CA certificates (with openssl-style hashed symlinks,
+#   one certificate per file).
 #
-# $ca_path::                       This is a path to a file of concatenated trusted CA certificates, or to a directory of trusted
-#                                  CA certificates (with openssl-style hashed symlinks, one certificate per file).
+# @param upload_chunk_size
+#   upload_chunk_size
 #
-# $upload_chunk_size::             upload_chunk_size
+# @param role
+#   The client role.
 #
-# $role::                          The client role.
+# @param extensions_dir
+#   The location of admin client extensions.
 #
-# $extensions_dir::                The location of admin client extensions.
+# @param id_cert_dir
+#   The location of the directory where the Pulp user ID certificate is stored.
 #
-# $id_cert_dir::                   The location of the directory where the Pulp user ID certificate is stored.
+# @param id_cert_filename
+#   The name of the file containing the PEM encoded client private key and
+#   X.509 certificate. This file is downloaded and stored here during login.
 #
-# $id_cert_filename::              The name of the file containing the PEM encoded client private key and X.509
-#                                  certificate. This file is downloaded and stored here during login.
+# @param upload_working_dir
+#   Directory where status files for in progress uploads will be stored
 #
-# $upload_working_dir::            Directory where status files for in progress uploads will be stored
+# @param log_filename
+#   The location of the admin client log file.
 #
-# $log_filename::                  The location of the admin client log file.
+# @param call_log_filename
+#   If present, the raw REST responses will be logged to the given file.
 #
-# $call_log_filename::             If present, the raw REST responses will be logged to the given file.
+# @param poll_frequency_in_seconds
+#   Number of seconds between requests for any operation that repeatedly polls
+#   the server for data.
 #
-# $poll_frequency_in_seconds::     Number of seconds between requests for any operation that repeatedly polls
-#                                  the server for data.
+# @param enable_color
+#   Set this to false to disable all color escape sequences
 #
-# $enable_color::                  Set this to false to disable all color escape sequences
+# @param wrap_to_terminal
+#   If wrap_to_terminal is true, any text wrapping will use the current width
+#   of the terminal. If false, the value in wrap_width is used.
 #
-# $wrap_to_terminal::              If wrap_to_terminal is true, any text wrapping will use the current width of
-#                                  the terminal. If false, the value in wrap_width is used.
+# @param wrap_width
+#   The number of characters written before wrapping to the next line.
 #
-# $wrap_width::                    The number of characters written before wrapping to the next line.
+# @param enable_puppet
+#   Install puppet extension. Defaults to false.
 #
-# $enable_puppet::                 Install puppet extension. Defaults to false.
+# @param enable_deb
+#   Install deb extension. Defaults to false.
 #
-# $enable_deb::                    Install deb extension. Defaults to false.
+# @param enable_docker
+#   Install docker extension. Defaults to false.
 #
-# $enable_docker::                 Install docker extension. Defaults to false.
+# @param enable_nodes
+#   Install nodes extension. Defaults to false.
 #
-# $enable_nodes::                  Install nodes extension. Defaults to false.
+# @param enable_python
+#   Install python extension. Defaults to false.
 #
-# $enable_python::                 Install python extension. Defaults to false.
+# @param enable_ostree
+#   Install ostree extension. Defaults to false.
 #
-# $enable_ostree::                 Install ostree extension. Defaults to false.
+# @param enable_rpm
+#   Install rpm extension. Defaults to true.
 #
-# $enable_rpm::                    Install rpm extension. Defaults to true.
+# @param enable_iso
+#   Install ISO extension. Defaults to true.
 #
-# $enable_iso::                    Install ISO extension. Defaults to true.
+# @param puppet_upload_working_dir
+#   Directory where status files for in progress uploads will be stored
 #
-# $puppet_upload_working_dir::     Directory where status files for in progress uploads will be stored
+# @param puppet_upload_chunk_size
+#   Maximum amount of data (in bytes) sent for an upload in a single request
 #
-# $puppet_upload_chunk_size::      Maximum amount of data (in bytes) sent for an upload in a single request
+# @param login_method
+#   The method to ensure root can use pulp-admin. Choose none to disable this
+#   behaviour.
 #
-# $login_method::                  The method to ensure root can use pulp-admin. Choose none to disable this behaviour.
+# @param username
+#   The username to login with
 #
-# $username::                      The username to login with
-#
-# $password::                      The password to login with. If left undefined then no login will be performed.
+# @param password
+#   The password to login with. If left undefined then no login will be
+#   performed.
 #
 class pulp::admin (
   String $version = $pulp::admin::params::version,

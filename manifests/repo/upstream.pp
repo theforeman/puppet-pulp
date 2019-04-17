@@ -1,3 +1,5 @@
+# Create the yum repo definition for the upstream repository
+# @api private
 class pulp::repo::upstream(
   $version = 2,
 ) {

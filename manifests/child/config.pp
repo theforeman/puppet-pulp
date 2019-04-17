@@ -1,4 +1,5 @@
 # Pulp Node Configuration
+# @api private
 class pulp::child::config(
   $node_certificate = $pulp::node_certificate,
   $verify_ssl = $pulp::node_verify_ssl,

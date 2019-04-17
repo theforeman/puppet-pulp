@@ -1,4 +1,5 @@
 # Configure Crane
+# @api private
 class pulp::crane::config {
   file { '/etc/crane.conf':
     ensure  => 'file',

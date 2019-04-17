@@ -1,4 +1,5 @@
 # Sets up Apache for Crane
+# @api private
 class pulp::crane::apache {
 
   include apache

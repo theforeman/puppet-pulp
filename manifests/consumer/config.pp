@@ -1,4 +1,5 @@
 # Pulp Consumer Configuration
+# @api private
 class pulp::consumer::config {
   file { '/etc/pulp/consumer/consumer.conf':
     ensure  => 'file',

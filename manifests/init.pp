@@ -1,281 +1,405 @@
-# == Class: pulp
-#
 # Install and configure pulp
 #
-# === Parameters:
+# @param version
+#   pulp package version, it's passed to ensure parameter of package resource
+#   can be set to specific version number, 'latest', 'present' etc.
 #
-# $version::                    pulp package version, it's passed to ensure parameter of package resource can be set to
-#                               specific version number, 'latest', 'present' etc.
+# @param crane_debug
+#   Whether to enable crane debug logging
 #
-# $crane_debug::                Whether to enable crane debug logging
+# @param crane_port
+#   Port for Crane to run on
 #
-# $crane_port::                 Port for Crane to run on
+# @param crane_data_dir
+#   Directory containing docker v1/v2 artifacts published by pulp
 #
-# $crane_data_dir::             Directory containing docker v1/v2 artifacts published by pulp
+# @param manage_repo
+#   Whether to manage the pulp repository
 #
-# $manage_repo::                Whether to manage the pulp repository
+# @param oauth_key
+#   Key to enable OAuth style authentication
 #
-# $oauth_key::                  Key to enable OAuth style authentication
+# @param oauth_secret
+#   Shared secret that can be used for OAuth style authentication
 #
-# $oauth_secret::               Shared secret that can be used for OAuth style authentication
+# @param oauth_enabled
+#   Controls whether OAuth authentication is enabled
 #
-# $oauth_enabled::              Controls whether OAuth authentication is enabled
+# @param messaging_url
+#   the url used to contact the broker:
+#   <protocol>://<host>:<port>/<virtual-host> Supported <protocol>  values are
+#   'tcp' or 'ssl' depending on if SSL should be used or not. The
+#   <virtual-host> is optional, and is only applicable to RabbitMQ broker
+#   environments.
 #
-# $messaging_url::              the url used to contact the broker: <protocol>://<host>:<port>/<virtual-host>
-#                               Supported <protocol>  values are 'tcp' or 'ssl' depending on if SSL should be used or not.
-#                               The <virtual-host> is optional, and is only applicable to RabbitMQ broker environments.
+# @param messaging_transport
+#   The type of broker you are connecting to.
 #
-# $messaging_transport::        The type of broker you are connecting to.
+# @param messaging_ca_cert
+#   Absolute path to PEM encoded CA certificate file, used by Pulp to validate
+#   the identity of the broker using SSL.
 #
-# $messaging_ca_cert::          Absolute path to PEM encoded CA certificate file, used by Pulp to validate the identity
-#                               of the broker using SSL.
+# @param messaging_client_cert
+#   Absolute path to PEM encoded file containing both the private key and
+#   certificate Pulp should present to the broker to be authenticated by the
+#   broker.
 #
-# $messaging_client_cert::      Absolute path to PEM encoded file containing both the private key and certificate Pulp
-#                               should present to the broker to be authenticated by the broker.
+# @param messaging_version
+#   Determines the version of packages related to the 'messaging transport protocol'.
 #
-# $messaging_version::          Determines the version of packages related to the 'messaging transport protocol'.
+# @param broker_url
+#   A URL to a broker that Celery can use to queue tasks:
+#   qpid://<username>:<password>@<hostname>:<port>/
 #
-# $broker_url::                 A URL to a broker that Celery can use to queue tasks:
-#                               qpid://<username>:<password>@<hostname>:<port>/
+# @param broker_use_ssl
+#   Whether to require SSL.
 #
-# $broker_use_ssl::             Whether to require SSL.
+# @param tasks_login_method
+#   Select the SASL login method used to connect to the broker. This should be
+#   left unset except in special cases such as SSL client certificate
+#   authentication.
 #
-# $tasks_login_method::         Select the SASL login method used to connect to the broker. This should be left unset
-#                               except in special cases such as SSL client certificate authentication.
+# @param ca_cert
+#   Full path to the CA certificate that will be used to sign consumer and
+#   admin identification certificates; this must match the value of
+#   SSLCACertificateFile in Apache.
 #
-# $ca_cert::                    Full path to the CA certificate that will be used to sign consumer and admin
-#                               identification certificates; this must match the value of SSLCACertificateFile in
-#                               Apache.
+# @param ca_key
+#   Path to the private key for the above CA certificate
 #
-# $ca_key::                     Path to the private key for the above CA certificate
+# @param db_name
+#   Name of the database to use
 #
-# $db_name::                    Name of the database to use
+# @param db_seeds
+#   Comma-separated list of hostname:port of database replica seed hosts
 #
-# $db_seeds::                   Comma-separated list of hostname:port of database replica seed hosts
+# @param db_username
+#   The user name to use for authenticating to the MongoDB server
 #
-# $db_username::                The user name to use for authenticating to the MongoDB server
+# @param db_password
+#   The password to use for authenticating to the MongoDB server
 #
-# $db_password::                The password to use for authenticating to the MongoDB server
+# @param db_replica_set
+#   The name of replica set configured in MongoDB, if one is in use
 #
-# $db_replica_set::             The name of replica set configured in MongoDB, if one is in use
+# @param db_ssl
+#   Whether to connect to the database server using SSL.
 #
-# $db_ssl::                     Whether to connect to the database server using SSL.
+# @param db_ssl_keyfile
+#   A path to the private keyfile used to identify the local connection
+#   against mongod. If included with the certfile then only the ssl_certfile
+#   is needed.
 #
-# $db_ssl_keyfile::             A path to the private keyfile used to identify the local connection against mongod. If
-#                               included with the certfile then only the ssl_certfile is needed.
+# @param db_ssl_certfile
+#   The certificate file used to identify the local connection against mongod.
 #
-# $db_ssl_certfile::            The certificate file used to identify the local connection against mongod.
+# @param db_verify_ssl
+#   Specifies whether a certificate is required from the other side of the
+#   connection, and whether it will be validated if provided. If it is true,
+#   then the ca_certs parameter must point to a file of CA certificates used
+#   to validate the connection.
 #
-# $db_verify_ssl::              Specifies whether a certificate is required from the other side of the connection, and
-#                               whether it will be validated if provided. If it is true, then the ca_certs parameter
-#                               must point to a file of CA certificates used to validate the connection.
+# @param db_ca_path
+#   The ca_certs file contains a set of concatenated "certification authority"
+#   certificates, which are used to validate certificates passed from the
+#   other end of the connection.
 #
-# $db_ca_path::                 The ca_certs file contains a set of concatenated "certification authority" certificates,
-#                               which are used to validate certificates passed from the other end of the connection.
+# @param db_unsafe_autoretry
+#   If true, retry commands to the database if there is a connection error.
+#   Warning: if set to true, this setting can result in duplicate records.
 #
-# $db_unsafe_autoretry::        If true, retry commands to the database if there is a connection error.
-#                               Warning: if set to true, this setting can result in duplicate records.
+# @param db_write_concern
+#   Write concern of 'majority' or 'all'. When 'all' is specified, 'w' is set
+#   to number of seeds specified. For version of MongoDB < 2.6, replica_set
+#   must also be specified. Please note that 'all' will cause Pulp to halt if
+#   any of the replica set members is not available. 'majority' is used by
+#   default
 #
-# $db_write_concern::           Write concern of 'majority' or 'all'. When 'all' is specified, 'w' is set to number of
-#                               seeds specified. For version of MongoDB < 2.6, replica_set must also be specified.
-#                               Please note that 'all' will cause Pulp to halt if any of the replica set members is not
-#                               available. 'majority' is used by default
+# @param server_name
+#   Hostname the admin client and consumers should use when accessing the server
 #
-# $server_name::                Hostname the admin client and consumers should use when accessing the server
+# @param key_url
+#   Path within the URL to use for GPG keys
 #
-# $key_url::                    Path within the URL to use for GPG keys
+# @param ks_url
+#   Path within the URL to use for kickstart trees
 #
-# $ks_url::                     Path within the URL to use for kickstart trees
+# @param debugging_mode
+#   Whether to enable Pulp's debugging capabilities
 #
-# $debugging_mode::             Whether to enable Pulp's debugging capabilities
+# @param log_level
+#   The desired logging level.
 #
-# $log_level::                  The desired logging level. Options are: CRITICAL, ERROR, WARNING, INFO, DEBUG, and
-#                               NOTSET.
+# @param log_type
+#   The desired logging type: Options are: syslog, console
 #
-# $log_type::                   The desired logging type: Options are: syslog, console
+# @param server_working_directory
+#   Path to where pulp workers can create working directories needed to complete tasks
 #
-# $server_working_directory::   Path to where pulp workers can create working directories needed to complete tasks
+# @param rsa_key
+#   The RSA private key used for authentication.
 #
-# $rsa_key::                    The RSA private key used for authentication.
+# @param rsa_pub
+#   The RSA public key used for authentication.
 #
-# $rsa_pub::                    The RSA public key used for authentication.
+# @param https_cert
+#   Apache public certificate for ssl
 #
-# $https_cert::                 Apache public certificate for ssl
+# @param https_key
+#   Apache private certificate for ssl
 #
-# $https_key::                  Apache private certificate for ssl
+# @param https_chain
+#   apache chain file for ssl
 #
-# $https_chain::                apache chain file for ssl
+# @param ssl_username
+#   Value to use for SSLUsername directive in apache vhost. Defaults to
+#   SSL_CLIENT_S_DN_CN. Set an empty string or false to unset directive.
 #
-# $ssl_username::               Value to use for SSLUsername directive in apache vhost. Defaults to SSL_CLIENT_S_DN_CN.
-#                               Set an empty string or false to unset directive.
+# @param consumers_crl
+#   Certificate revocation list for consumers which are no valid (have had
+#   their client certs revoked)
 #
-# $consumers_crl::              Certificate revocation list for consumers which are no valid (have had their client
-#                               certs revoked)
+# @param user_cert_expiration
+#   Number of days a user certificate is valid
 #
-# $user_cert_expiration::       Number of days a user certificate is valid
+# @param default_login
+#   Default admin username of the Pulp server; this user will be the first
+#   time the server is started
 #
-# $default_login::              Default admin username of the Pulp server; this user will be the first time the server
-#                               is started
+# @param default_password
+#   Default password for admin when it is first created; this should be
+#   changed once the server is operational
 #
-# $default_password::           Default password for admin when it is first created; this should be changed once the
-#                               server is operational
+# @param repo_auth
+#   Whether to determine whether repos managed by pulp will require authentication.
 #
-# $repo_auth::                  Whether to determine whether repos managed by pulp will require authentication.
+# @param consumer_cert_expiration
+#   Number of days a consumer certificate is valid
 #
-# $consumer_cert_expiration::   Number of days a consumer certificate is valid
+# @param disabled_authenticators
+#   List of repo authenticators to disable.
 #
-# $disabled_authenticators::    List of repo authenticators to disable.
+# @param additional_wsgi_scripts
+#   Hash of additional paths and WSGI script locations for Pulp vhost
 #
-# $additional_wsgi_scripts::    Hash of additional paths and WSGI script locations for Pulp vhost
+# @param reset_cache
+#   Whether to force a cache flush. Not recommend in a regular puppet environment.
 #
-# $reset_cache::                Whether to force a cache flush. Not recommend in a regular puppet environment.
+# @param ssl_verify_client
+#   Enforce use of SSL authentication for yum repos access
 #
-# $ssl_verify_client::          Enforce use of SSL authentication for yum repos access
+# @param ssl_protocol
+#   Versions of the SSL/TLS protocol will be accepted in new connections
 #
-# $ssl_protocol::               Versions of the SSL/TLS protocol will be accepted in new connections
+# @param serial_number_path
+#   Path to the serial number file
 #
-# $serial_number_path::         Path to the serial number file
+# @param consumer_history_lifetime
+#   number of days to store consumer events; events older than this will be
+#   purged; set to -1 to disable
 #
-# $consumer_history_lifetime::  number of days to store consumer events; events older
-#                               than this will be purged; set to -1 to disable
+# @param messaging_url
+#   the url used to contact the broker:
+#   <protocol>://<host>:<port>/<virtual-host> Supported <protocol>  values are
+#   'tcp' or 'ssl' depending on if SSL should be used or not.  The
+#   <virtual-host> is optional, and is only applicable to RabbitMQ broker
+#   environments.
 #
-# $messaging_url::              the url used to contact the broker: <protocol>://<host>:<port>/<virtual-host>
-#                               Supported <protocol>  values are 'tcp' or 'ssl' depending on if SSL should be used or not.
-#                               The <virtual-host> is optional, and is only applicable to RabbitMQ broker environments.
+# @param messaging_auth_enabled
+#   Whether to enable message authentication.
 #
-# $messaging_auth_enabled::     Whether to enable message authentication.
+# @param messaging_topic_exchange
+#   The name of the exchange to use. The exchange must be a topic exchange.
+#   The default 'amq.topic' is a default exchange that is guaranteed to exist
+#   on a Qpid broker.
 #
-# $messaging_topic_exchange::   The name of the exchange to use. The exchange must be a topic exchange. The
-#                               default 'amq.topic' is a default exchange that is guaranteed to exist on a Qpid broker.
+# @param messaging_event_notifications_enabled
+#   Whether to enable Pulp event notfications on the message bus.
 #
-# $messaging_event_notifications_enabled:: Whether to enable Pulp event notfications on the message bus.
+# @param messaging_event_notification_url
+#   The AMQP URL for event notifications.
 #
-# $messaging_event_notification_url:: The AMQP URL for event notifications.
+# @param email_host
+#   Hostname of the MTA pulp should relay through
 #
-# $email_host::                 Hostname of the MTA pulp should relay through
+# @param email_port
+#   Port of the MTA relay
 #
-# $email_port::                 Port of the MTA relay
+# @param email_from
+#   The "From" address of each email the system sends
 #
-# $email_from::                 The "From" address of each email the system sends
+# @param email_enabled
+#   Whether emails will be sent
 #
-# $email_enabled::              Whether emails will be sent
+# @param manage_squid
+#   Whether the Squid configuration is managed. This is used by Pulp Streamer.
+#   Requires the squid module.
 #
-# $manage_squid::               Whether the Squid configuration is managed. This is used by Pulp Streamer.
-#                               Requires the squid module.
+# @param lazy_redirect_host
+#   The host FQDN or IP to which requests are redirected.
 #
-# $lazy_redirect_host::         The host FQDN or IP to which requests are redirected.
+# @param lazy_redirect_port
+#   The TCP port to which requests are redirected
 #
-# $lazy_redirect_port::         The TCP port to which requests are redirected
+# @param lazy_redirect_path
+#   The base path to which requests are redirected
 #
-# $lazy_redirect_path::         The base path to which requests are redirected
+# @param lazy_https_retrieval
+#   Controls whether Pulp uses HTTPS or HTTP to retrieve content from the streamer.
+#   WARNING: Setting this to 'false' is not safe if you wish to use Pulp to
+#   provide repository entitlement enforcement.  It is strongly recommended to
+#   keep this set to 'true' and use certificates that are signed by a trusted
+#   authority on the web server that serves as the streamer reverse proxy.
 #
-# $lazy_https_retrieval::       controls whether Pulp uses HTTPS or HTTP to retrieve content from the streamer.
-#                               WARNING: Setting this to 'false' is not safe if you wish to use Pulp to provide
-#                               repository entitlement enforcement.  It is strongly recommended to keep this set to
-#                               'true' and use certificates that are signed by a trusted authority on the web server
-#                               that serves as the streamer reverse proxy.
+# @param lazy_download_interval
+#   The interval in minutes between checks for content cached by the Squid proxy.
 #
-# $lazy_download_interval::     The interval in minutes between checks for content cached by the Squid proxy.
+# @param lazy_download_concurrency
+#   The number of downloads to perform concurrently when downloading content
+#   from the Squid cache.
 #
-# $lazy_download_concurrency::  The number of downloads to perform concurrently when downloading content from the Squid
-#                               cache.
+# @param proxy_url
+#   URL of the proxy server
 #
-# $proxy_url::                  URL of the proxy server
+# @param proxy_port
+#   Port the proxy is running on
 #
-# $proxy_port::                 Port the proxy is running on
+# @param proxy_username
+#   Proxy username for authentication
 #
-# $proxy_username::             Proxy username for authentication
+# @param proxy_password
+#   Proxy password for authentication
 #
-# $proxy_password::             Proxy password for authentication
+# @param yum_max_speed
+#   The maximum download speed for RPM & ISO Pulp tasks, such as a sync. (e.g.
+#   "4 kb" or "1 Gb")
 #
-# $yum_max_speed::              The maximum download speed for RPM & ISO Pulp tasks, such as a sync. (e.g. "4 kb" or "1 Gb")
+# @param yum_gpg_sign_repo_metadata
+#   Whether yum repo metadata GPG signing will be enabled
 #
-# $yum_gpg_sign_repo_metadata:: Whether yum repo metadata GPG signing will be enabled
+# @param num_workers
+#   Number of Pulp workers to use.
 #
-# $num_workers::                Number of Pulp workers to use.
+# @param enable_admin
+#   Whether to install and configure the admin command
 #
-# $enable_admin::               Whether to install and configure the admin command
+# @param enable_katello
+#   Whether to enable pulp katello plugin.
 #
-# $enable_katello::             Whether to enable pulp katello plugin.
+# @param enable_crane
+#   Whether to enable crane docker repository
 #
-# $enable_crane::               Whether to enable crane docker repository
+# @param max_tasks_per_child
+#   Number of tasks after which the worker is restarted and the memory it
+#   allocated is returned to the system
 #
-# $max_tasks_per_child::        Number of tasks after which the worker is restarted and the memory it allocated is
-#                               returned to the system
+# @param enable_rpm
+#   Whether to enable rpm plugin.
 #
-# $enable_rpm::                 Whether to enable rpm plugin.
+# @param enable_deb
+#   Whether to enable deb plugin.
 #
-# $enable_deb::                 Whether to enable deb plugin.
+# @param enable_iso
+#   Whether to enable iso plugin.
 #
-# $enable_iso::                 Whether to enable iso plugin.
+# @param enable_docker
+#   Whether to enable docker plugin.
 #
-# $enable_docker::              Whether to enable docker plugin.
+# @param enable_puppet
+#   Whether to enable puppet plugin.
 #
-# $enable_puppet::              Whether to enable puppet plugin.
+# @param enable_python
+#   Whether to enable python plugin.
 #
-# $enable_python::              Whether to enable python plugin.
+# @param enable_ostree
+#   Whether to enable ostree plugin.
 #
-# $enable_ostree::              Whether to enable ostree plugin.
+# @param enable_parent_node
+#   Whether to enable pulp parent nodes.
 #
-# $enable_parent_node::         Whether to enable pulp parent nodes.
+# @param enable_http
+#   Whether to enable http access to deb/rpm repos.
 #
-# $enable_http::                Whether to enable http access to deb/rpm repos.
+# @param http_port
+#   HTTP port Apache will listen
 #
-# $http_port::                  HTTP port Apache will listen
+# @param https_port
+#   HTTPS port Apache will listen
 #
-# $https_port::                 HTTPS port Apache will listen
+# @param manage_httpd
+#   Whether to install and configure the httpd server.
 #
-# $manage_httpd::               Whether to install and configure the httpd server.
+# @param manage_plugins_httpd
+#   Whether to install the enabled pulp plugins apache configs even if
+#   $manage_httpd is false.
 #
-# $manage_plugins_httpd::       Whether to install the enabled pulp plugins apache configs even if $manage_httpd is
-#                               false.
+# @param manage_broker
+#   Whether install and configure the qpid or rabbitmq broker.
 #
-# $manage_broker::              Whether install and configure the qpid or rabbitmq broker.
+# @param manage_db
+#   Boolean to install and configure the mongodb.
 #
-# $manage_db::                  Boolean to install and configure the mongodb.
+# @param node_certificate
+#   The absolute path to the node SSL certificate
 #
-# $node_certificate::           The absolute path to the node SSL certificate
+# @param node_verify_ssl
+#   Whether to verify node SSL
 #
-# $node_verify_ssl::            Whether to verify node SSL
+# @param node_server_ca_cert
+#   Server cert for pulp node
 #
-# $node_server_ca_cert::        Server cert for pulp node
+# @param node_oauth_effective_user
+#   Effective user for node OAuth
 #
-# $node_oauth_effective_user::  Effective user for node OAuth
+# @param node_oauth_key
+#   The oauth key used to authenticate to the parent node
 #
-# $node_oauth_key::             The oauth key used to authenticate to the parent node
+# @param node_oauth_secret
+#   The oauth secret used to authenticate to the parent node
 #
-# $node_oauth_secret::          The oauth secret used to authenticate to the parent node
+# @param max_keep_alive
+#   Configuration value for apache MaxKeepAliveRequests
 #
-# $max_keep_alive::             Configuration value for apache MaxKeepAliveRequests
+# @param wsgi_processes
+#   Number of WSGI processes to spawn for pulp itself
 #
-# $wsgi_processes::             Number of WSGI processes to spawn for pulp itself
+# @param wsgi_max_requests
+#   Maximum number of requests for each wsgi worker to process before shutting
+#   down and restarting, useful to combat memory leaks.
 #
-# $wsgi_max_requests::          Maximum number of requests for each wsgi worker to process before
-#                               shutting down and restarting, useful to combat memory leaks.
+# @param puppet_wsgi_processes
+#   Number of WSGI processes to spawn for the puppet webapp
 #
-# $puppet_wsgi_processes::      Number of WSGI processes to spawn for the puppet webapp
+# @param migrate_db_timeout
+#   Change the timeout for pulp-manage-db
 #
-# $migrate_db_timeout::         Change the timeout for pulp-manage-db
+# @param show_conf_diff
+#   Allow showing diff for changes in server.conf and importer.json.
+#   Warning: may display and log passwords contained in these files.
 #
-# $show_conf_diff::             Allow showing diff for changes in server.conf and importer.json;
-#                               Warning: may display and log passwords contained in these files.
+# @param enable_profiling
+#   Turns on cProfiling of tasks in Pulp
 #
-# $enable_profiling::           Turns on cProfiling of tasks in Pulp
+# @param profiling_directory
+#   Directory to store task profiling data in
 #
-# $profiling_directory::        Directory to store task profiling data in
+# @param ldap_url
+#   URL to use for LDAP authentication. Defaults to undef (internal
+#   authentication is used)
 #
-# $ldap_url::                   URL to use for LDAP authentication. Defaults
-#                               to undef (internal authentication is used)
+# @param ldap_bind_dn
+#   LDAP Bind DN
 #
-# $ldap_bind_dn::               LDAP Bind DN
+# @param ldap_bind_password
+#   LDAP Password
 #
-# $ldap_bind_password::         LDAP Password
+# @param ldap_remote_user_attribute
+#   LDAP Remote User Attribute. Defaults to 'sAMAccountName'
 #
-# $ldap_remote_user_attribute:: LDAP Remote User Attribute. Defaults to 'sAMAccountName'
-#
-# $worker_timeout::             The amount of time (in seconds) before considering a worker as missing. If Pulp's
-#                               mongo database has slow I/O, then setting a higher number may resolve issues where workers are
-#                               going missing incorrectly. Defaults to 30.
+# @param worker_timeout
+#   The amount of time (in seconds) before considering a worker as missing. If
+#   Pulp's mongo database has slow I/O, then setting a higher number may
+#   resolve issues where workers are going missing incorrectly. Defaults to 30.
 #
 class pulp (
   String $version = $pulp::params::version,
