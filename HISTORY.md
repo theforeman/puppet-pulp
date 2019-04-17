@@ -1,3 +1,64 @@
+## [6.0.0](https://github.com/theforeman/puppet-pulp/tree/6.0.0) (2019-04-17)
+
+[Full Changelog](https://github.com/theforeman/puppet-pulp/compare/5.8.1...6.0.0)
+
+**Breaking changes:**
+
+- Drop Puppet 4 [\#364](https://github.com/theforeman/puppet-pulp/pull/364) ([ekohl](https://github.com/ekohl))
+- Move vhosts80 to httpd conf.d [\#350](https://github.com/theforeman/puppet-pulp/pull/350) ([ehelms](https://github.com/ehelms))
+- Fixes [\#22746](https://projects.theforeman.org/issues/22746) - Switch to voxpupuli/squid [\#331](https://github.com/theforeman/puppet-pulp/pull/331) ([ekohl](https://github.com/ekohl))
+
+**Implemented enhancements:**
+
+- Add `scheduled\_repo` wrapper defined type [\#361](https://github.com/theforeman/puppet-pulp/pull/361) ([alexjfisher](https://github.com/alexjfisher))
+- Improve pulp\_rpmrepo gpg\_key validation and docs [\#360](https://github.com/theforeman/puppet-pulp/pull/360) ([alexjfisher](https://github.com/alexjfisher))
+- Refs [\#26103](https://projects.theforeman.org/issues/26103) - Make the crane server name configurable [\#358](https://github.com/theforeman/puppet-pulp/pull/358) ([ekohl](https://github.com/ekohl))
+
+**Merged pull requests:**
+
+- Allow katello/qpid 5.x [\#365](https://github.com/theforeman/puppet-pulp/pull/365) ([ekohl](https://github.com/ekohl))
+
+## [5.8.1](https://github.com/theforeman/puppet-pulp/tree/5.8.1) (2019-04-11)
+
+[Full Changelog](https://github.com/theforeman/puppet-pulp/compare/5.8.0...5.8.1)
+
+**Fixed bugs:**
+
+- Fixes [\#26563](https://projects.theforeman.org/issues/26563) - Remove reference of tasks in config [\#363](https://github.com/theforeman/puppet-pulp/pull/363) ([chris1984](https://github.com/chris1984))
+
+## [5.8.0](https://github.com/theforeman/puppet-pulp/tree/5.8.0) (2019-01-14)
+
+[Full Changelog](https://github.com/theforeman/puppet-pulp/compare/5.7.0...5.8.0)
+
+**Implemented enhancements:**
+
+- Allow puppetlabs/apache 4.x [\#355](https://github.com/theforeman/puppet-pulp/pull/355) ([ekohl](https://github.com/ekohl))
+- Use extlib namespaced functions [\#354](https://github.com/theforeman/puppet-pulp/pull/354) ([ekohl](https://github.com/ekohl))
+- Allow extlib 3.x [\#351](https://github.com/theforeman/puppet-pulp/pull/351) ([ekohl](https://github.com/ekohl))
+- Add log\_type parameter [\#349](https://github.com/theforeman/puppet-pulp/pull/349) ([ehelms](https://github.com/ehelms))
+- Add Puppet 6 support [\#348](https://github.com/theforeman/puppet-pulp/pull/348) ([ekohl](https://github.com/ekohl))
+- Add max\_speed to iso\_importer [\#338](https://github.com/theforeman/puppet-pulp/pull/338) ([sean797](https://github.com/sean797))
+
+## [5.7.0](https://github.com/theforeman/puppet-pulp/tree/5.7.0) (2018-10-31)
+
+[Full Changelog](https://github.com/theforeman/puppet-pulp/compare/5.6.0...5.7.0)
+
+**Implemented enhancements:**
+
+- Add remove\_missing to pulp\_deb [\#344](https://github.com/theforeman/puppet-pulp/pull/344) ([mdellweg](https://github.com/mdellweg))
+- don't set a default lazy\_redirect\_host [\#343](https://github.com/theforeman/puppet-pulp/pull/343) ([evgeni](https://github.com/evgeni))
+
+## [5.6.0](https://github.com/theforeman/puppet-pulp/tree/5.6.0) (2018-10-08)
+
+[Full Changelog](https://github.com/theforeman/puppet-pulp/compare/5.5.0...5.6.0)
+
+**Implemented enhancements:**
+
+- Make crane use `$pulp::https\_chain` if specified [\#341](https://github.com/theforeman/puppet-pulp/pull/341) ([alexjfisher](https://github.com/alexjfisher))
+- Allow stdlib & concat 5.x [\#339](https://github.com/theforeman/puppet-pulp/pull/339) ([ekohl](https://github.com/ekohl))
+- Remove Katello repos [\#336](https://github.com/theforeman/puppet-pulp/pull/336) ([ekohl](https://github.com/ekohl))
+- Massively speed up providers and fix timeouts [\#334](https://github.com/theforeman/puppet-pulp/pull/334) ([alexjfisher](https://github.com/alexjfisher))
+
 # Changelog
 
 ## [5.5.0](https://github.com/theforeman/puppet-pulp/tree/5.5.0) (2018-07-16)

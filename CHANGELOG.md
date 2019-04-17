@@ -1,5 +1,33 @@
 # Changelog
 
+## [6.0.0](https://github.com/theforeman/puppet-pulp/tree/6.0.0) (2019-04-17)
+
+[Full Changelog](https://github.com/theforeman/puppet-pulp/compare/5.8.1...6.0.0)
+
+**Breaking changes:**
+
+- Drop Puppet 4 [\#364](https://github.com/theforeman/puppet-pulp/pull/364) ([ekohl](https://github.com/ekohl))
+- Move vhosts80 to httpd conf.d [\#350](https://github.com/theforeman/puppet-pulp/pull/350) ([ehelms](https://github.com/ehelms))
+- Fixes [\#22746](https://projects.theforeman.org/issues/22746) - Switch to voxpupuli/squid [\#331](https://github.com/theforeman/puppet-pulp/pull/331) ([ekohl](https://github.com/ekohl))
+
+**Implemented enhancements:**
+
+- Add `scheduled\_repo` wrapper defined type [\#361](https://github.com/theforeman/puppet-pulp/pull/361) ([alexjfisher](https://github.com/alexjfisher))
+- Improve pulp\_rpmrepo gpg\_key validation and docs [\#360](https://github.com/theforeman/puppet-pulp/pull/360) ([alexjfisher](https://github.com/alexjfisher))
+- Refs [\#26103](https://projects.theforeman.org/issues/26103) - Make the crane server name configurable [\#358](https://github.com/theforeman/puppet-pulp/pull/358) ([ekohl](https://github.com/ekohl))
+
+**Merged pull requests:**
+
+- Allow katello/qpid 5.x [\#365](https://github.com/theforeman/puppet-pulp/pull/365) ([ekohl](https://github.com/ekohl))
+
+## [5.8.1](https://github.com/theforeman/puppet-pulp/tree/5.8.1) (2019-04-11)
+
+[Full Changelog](https://github.com/theforeman/puppet-pulp/compare/5.8.0...5.8.1)
+
+**Fixed bugs:**
+
+- Fixes [\#26563](https://projects.theforeman.org/issues/26563) - Remove reference of tasks in config [\#363](https://github.com/theforeman/puppet-pulp/pull/363) ([chris1984](https://github.com/chris1984))
+
 ## [5.8.0](https://github.com/theforeman/puppet-pulp/tree/5.8.0) (2019-01-14)
 
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/5.7.0...5.8.0)
