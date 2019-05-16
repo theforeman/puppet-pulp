@@ -3,15 +3,20 @@
 class pulp::install {
   package { ['pulp-server', 'pulp-selinux', 'python-pulp-streamer']: ensure => $pulp::version, }
 
+  $python_package_prefix = $facts['operatingsystemmajrelease'] ? {
+    '7'     => 'python',
+    default => 'python2',
+  }
+
   if $pulp::messaging_transport == 'qpid' {
-    ensure_packages(['python-gofer-qpid'], {
+    ensure_packages(["${python_package_prefix}-gofer-qpid"], {
         ensure => $pulp::messaging_version,
       }
     )
   }
 
   if $pulp::messaging_transport == 'rabbitmq' {
-    ensure_packages(['python-gofer-amqp'], {
+    ensure_packages(["${python_package_prefix}-gofer-amqp"], {
         ensure => $pulp::messaging_version,
       }
     )
