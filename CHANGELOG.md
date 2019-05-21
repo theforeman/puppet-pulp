@@ -1,5 +1,18 @@
 # Changelog
 
+## [6.1.0](https://github.com/theforeman/puppet-pulp/tree/6.1.0) (2019-05-21)
+
+[Full Changelog](https://github.com/theforeman/puppet-pulp/compare/6.0.0...6.1.0)
+
+**Implemented enhancements:**
+
+- Allow puppet/mongodb 3.x [\#370](https://github.com/theforeman/puppet-pulp/pull/370) ([ekohl](https://github.com/ekohl))
+- Update gofer package names for EL8 [\#369](https://github.com/theforeman/puppet-pulp/pull/369) ([ehelms](https://github.com/ehelms))
+
+**Merged pull requests:**
+
+- Convert documentation to yardoc [\#367](https://github.com/theforeman/puppet-pulp/pull/367) ([ekohl](https://github.com/ekohl))
+
 ## [6.0.0](https://github.com/theforeman/puppet-pulp/tree/6.0.0) (2019-04-17)
 
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/5.8.1...6.0.0)
