@@ -401,6 +401,22 @@
 #   Pulp's mongo database has slow I/O, then setting a higher number may
 #   resolve issues where workers are going missing incorrectly. Defaults to 30.
 #
+# @param enable_passthrough_pulp
+#   Enable passthrough mode to pulp master via squid
+#
+# @param passthrough_pulp_http_port
+#   Port at squid for the passthrough pulp mode
+#   Can not be 3128
+#   Example: 3129
+#
+# @param passthrough_pulp_allowed_net
+#   Allowed network to access squid for the passthrough pulp mode
+#   Format: network/CIDR
+#   Example: 192.168.2.0/24
+#
+# @param passthrough_pulp_master_host
+#   Pulp master hostname to be used for the passhthrough pulp mode via squid
+#
 class pulp (
   String $version = $pulp::params::version,
   Boolean $crane_debug = $pulp::params::crane_debug,
@@ -517,6 +533,11 @@ class pulp (
   Optional[String] $ldap_bind_dn = $pulp::params::ldap_bind_dn,
   Optional[String] $ldap_bind_password = $pulp::params::ldap_bind_password,
   String $ldap_remote_user_attribute = $pulp::params::ldap_remote_user_attribute,
+  Boolean $enable_passthrough_pulp = $pulp::params::enable_passthrough_pulp,
+  Stdlib::Port $passthrough_pulp_http_port = $pulp::params::passthrough_pulp_http_port,
+  Optional[String] $passthrough_pulp_allowed_net = $pulp::params::passthrough_pulp_allowed_net,
+  Optional[Stdlib::Host] $passthrough_pulp_master_host = $pulp::params::passthrough_pulp_master_host,
+
 ) inherits pulp::params {
   if $yum_max_speed {
     $real_yum_max_speed = to_bytes($yum_max_speed)

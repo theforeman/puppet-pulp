@@ -141,4 +141,9 @@ class pulp::params {
   $ldap_bind_dn = undef
   $ldap_bind_password = undef
   $ldap_remote_user_attribute = 'sAMAccountName'
+
+  $enable_passthrough_pulp = false
+  $passthrough_pulp_http_port = 3139
+  $passthrough_pulp_allowed_net = undef
+  $passthrough_pulp_master_host = undef
 }

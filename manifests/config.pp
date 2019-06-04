@@ -145,6 +145,12 @@ class pulp::config {
   }
 
   if $pulp::manage_squid {
+    class { 'pulp::squid':
+      passthrough_pulp_enabled     => $pulp::enable_passthrough_pulp,
+      passthrough_pulp_http_port   => $pulp::passthrough_pulp_http_port,
+      passthrough_pulp_allowed_net => $pulp::passthrough_pulp_allowed_net,
+      passthrough_pulp_master_host => $pulp::passthrough_pulp_master_host,
+    }
     contain pulp::squid
   }
 
