@@ -24,11 +24,7 @@ WSGIScriptAlias /pulp/api /usr/share/pulp/wsgi/webservices.wsgi
 WSGIImportScript /usr/share/pulp/wsgi/webservices.wsgi process-group=pulp application-group=pulp
 
 <Directory /usr/share/pulp/wsgi>
-<%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
   Require all granted
-<% else -%>
-  Allow from all
-<% end -%>
 </Directory>
 
 <Files webservices.wsgi>
@@ -47,9 +43,5 @@ Alias /pulp/static /var/lib/pulp/static
 <Location /pulp/static>
     SSLRequireSSL
     Options +Indexes
-<%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
-     Require all granted
-<% else -%>
-     Allow from all
-<% end -%>
+    Require all granted
 </Location>
