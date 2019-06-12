@@ -8,8 +8,6 @@ class pulp::apache {
   include apache::mod::ssl
   include apache::mod::xsendfile
 
-  $apache_version = $apache::apache_version
-
   if $pulp::manage_httpd {
     if $pulp::enable_http or $pulp::enable_puppet {
       apache::vhost { 'pulp-http':
