@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.1.1](https://github.com/theforeman/puppet-pulp/tree/6.1.1) (2019-06-13)
+
+[Full Changelog](https://github.com/theforeman/puppet-pulp/compare/6.1.0...6.1.1)
+
+**Merged pull requests:**
+
+- Update dependencies to allow latest versions [\#368](https://github.com/theforeman/puppet-pulp/pull/368) ([alexjfisher](https://github.com/alexjfisher))
+
 ## [6.1.0](https://github.com/theforeman/puppet-pulp/tree/6.1.0) (2019-05-21)
 
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/6.0.0...6.1.0)
