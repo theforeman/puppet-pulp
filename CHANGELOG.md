@@ -1,5 +1,17 @@
 # Changelog
 
+## [6.2.0](https://github.com/theforeman/puppet-pulp/tree/6.2.0) (2019-07-30)
+
+[Full Changelog](https://github.com/theforeman/puppet-pulp/compare/6.1.1...6.2.0)
+
+**Implemented enhancements:**
+
+- Use selboolean [\#307](https://github.com/theforeman/puppet-pulp/pull/307) ([ekohl](https://github.com/ekohl))
+
+**Merged pull requests:**
+
+- Drop support for Apache 2.2 [\#374](https://github.com/theforeman/puppet-pulp/pull/374) ([ekohl](https://github.com/ekohl))
+
 ## [6.1.1](https://github.com/theforeman/puppet-pulp/tree/6.1.1) (2019-06-13)
 
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/6.1.0...6.1.1)
