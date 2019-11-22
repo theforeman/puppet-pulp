@@ -38,7 +38,7 @@ describe 'pulp::apache' do
         :ssl_chain               => nil,
         :ssl_ca                  => '/etc/pki/pulp/ca.crt',
         :ssl_verify_client       => 'optional',
-        :ssl_protocol            => ['all', '-SSLv2', '-SSLv3'],
+        :ssl_protocol            => nil,
         :ssl_options             => '+StdEnvVars +ExportCertData',
         :ssl_verify_depth        => '3',
         :wsgi_process_group      => 'pulp',

@@ -40,7 +40,7 @@ class pulp::crane (
   Stdlib::Absolutepath $data_dir = '/var/lib/crane/metadata',
   Integer[0] $data_dir_polling_interval = 60,
   Optional[Stdlib::Absolutepath] $ssl_chain = undef,
-  Optional[String] $ssl_protocol = undef,
+  Optional[Variant[Array[String], String]] $ssl_protocol = undef,
 ){
 
   contain pulp::crane::install
