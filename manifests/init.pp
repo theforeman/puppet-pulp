@@ -481,7 +481,7 @@ class pulp (
   Optional[Stdlib::Absolutepath] $consumers_crl = $pulp::params::consumers_crl,
   Boolean $reset_cache = $pulp::params::reset_cache,
   Enum['none', 'optional', 'require', 'optional_no_ca'] $ssl_verify_client = $pulp::params::ssl_verify_client,
-  Variant[Array[String], String] $ssl_protocol = $pulp::params::ssl_protocol,
+  Optional[Variant[Array[String], String]] $ssl_protocol = $pulp::params::ssl_protocol,
   Boolean $repo_auth = $pulp::params::repo_auth,
   Optional[String] $proxy_url = $pulp::params::proxy_url,
   Optional[Integer[1, 65535]] $proxy_port = $pulp::params::proxy_port,
@@ -552,13 +552,14 @@ class pulp (
 
   if $enable_crane {
     class { 'pulp::crane':
-      cert      => $https_cert,
-      key       => $https_key,
-      ca_cert   => pick($pulp::https_ca_cert, $pulp::ca_cert),
-      ssl_chain => $https_chain,
-      port      => $crane_port,
-      data_dir  => $crane_data_dir,
-      debug     => $crane_debug,
+      cert         => $https_cert,
+      key          => $https_key,
+      ca_cert      => pick($pulp::https_ca_cert, $pulp::ca_cert),
+      ssl_chain    => $https_chain,
+      port         => $crane_port,
+      data_dir     => $crane_data_dir,
+      debug        => $crane_debug,
+      ssl_protocol => $ssl_protocol,
     }
     contain pulp::crane
   }

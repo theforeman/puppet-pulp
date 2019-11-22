@@ -64,7 +64,7 @@ class pulp::params {
   $http_port = 80
   $https_port = 443
   $ssl_verify_client = 'require'
-  $ssl_protocol = ['all', '-SSLv2', '-SSLv3']
+  $ssl_protocol = undef
 
   $crane_debug = false
   $crane_port = 5000
