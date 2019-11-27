@@ -431,6 +431,7 @@ class pulp (
   String $default_login = $pulp::params::default_login,
   String $default_password = $pulp::params::default_password,
   Boolean $debugging_mode = $pulp::params::debugging_mode,
+  Enum['console', 'syslog'] $log_type = $pulp::params::log_type,
   Enum['CRITICAL', 'ERROR', 'WARNING', 'INFO', 'DEBUG', 'NOTSET'] $log_level = $pulp::params::log_level,
   Optional[Stdlib::Absolutepath] $server_working_directory = $pulp::params::server_working_directory,
   Stdlib::Absolutepath $rsa_key = $pulp::params::rsa_key,
