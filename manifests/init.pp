@@ -131,7 +131,7 @@
 #   The desired logging level.
 #
 # @param log_type
-#   The desired logging type: 
+#   The desired logging type 
 #
 # @param server_working_directory
 #   Path to where pulp workers can create working directories needed to complete tasks
