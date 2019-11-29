@@ -61,8 +61,7 @@
 #
 # @param ca_cert
 #   Full path to the CA certificate that will be used to sign consumer and
-#   admin identification certificates; this must match the value of
-#   SSLCACertificateFile in Apache.
+#   admin identification certificates
 #
 # @param ca_key
 #   Path to the private key for the above CA certificate
@@ -147,6 +146,9 @@
 #
 # @param https_key
 #   Apache private certificate for ssl
+#
+# @param https_ca_cert
+#   Apache CA certificate for client authentication. Defaults to $ca_cert 
 #
 # @param https_chain
 #   apache chain file for ssl
@@ -439,6 +441,7 @@ class pulp (
   Stdlib::Absolutepath $ca_key = $pulp::params::ca_key,
   Optional[Stdlib::Absolutepath] $https_cert = $pulp::params::https_cert,
   Optional[Stdlib::Absolutepath] $https_key = $pulp::params::https_key,
+  Optional[Stdlib::Absolutepath] $https_ca_cert = $pulp::params::https_ca_cert,
   Optional[Stdlib::Absolutepath] $https_chain = $pulp::params::https_chain,
   Variant[String, Boolean] $ssl_username = $pulp::params::ssl_username,
   Integer $user_cert_expiration = $pulp::params::user_cert_expiration,
@@ -550,7 +553,7 @@ class pulp (
     class { 'pulp::crane':
       cert      => $https_cert,
       key       => $https_key,
-      ca_cert   => $ca_cert,
+      ca_cert   => $https_ca_cert,
       ssl_chain => $https_chain,
       port      => $crane_port,
       data_dir  => $crane_data_dir,

@@ -4,7 +4,7 @@ class pulp::child::apache (
   $servername = $facts['fqdn'],
   $ssl_cert = $pulp::child::ssl_cert,
   $ssl_key = $pulp::child::ssl_key,
-  $ssl_ca = $pulp::ca_cert,
+  $ssl_ca = $pulp::https_ca_cert,
   $max_keep_alive = $pulp::max_keep_alive,
   $ssl_username = $pulp::ssl_username,
 ) {
