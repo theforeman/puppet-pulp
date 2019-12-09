@@ -57,7 +57,7 @@ class pulp::params {
   $ca_key = '/etc/pki/pulp/ca.key'
   $https_cert = $ca_cert
   $https_key = $ca_key
-  $https_ca_cert = $ca_cert
+  $https_ca_cert = undef
   $https_chain = undef
   $ssl_username = 'SSL_CLIENT_S_DN_CN'
   $enable_http = false

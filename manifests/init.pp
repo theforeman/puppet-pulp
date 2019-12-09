@@ -553,7 +553,7 @@ class pulp (
     class { 'pulp::crane':
       cert      => $https_cert,
       key       => $https_key,
-      ca_cert   => $https_ca_cert,
+      ca_cert   => pick($pulp::https_ca_cert, $pulp::ca_cert),
       ssl_chain => $https_chain,
       port      => $crane_port,
       data_dir  => $crane_data_dir,
