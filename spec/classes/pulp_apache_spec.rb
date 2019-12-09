@@ -50,26 +50,6 @@ describe 'pulp::apache' do
     end
   end
 
-  context 'with https_ca_cert on ::pulp class set' do
-    let :pre_condition do
-      "class { 'pulp':
-        https_ca_cert => '/path/to/ca.crt',
-      }"
-    end
-
-    let :facts do
-      default_facts
-    end
-
-    it 'should configure apache server with ssl' do
-      is_expected.to contain_apache__vhost('pulp-https').with({
-        :ssl_cert  => '/etc/pki/pulp/ca.crt',
-        :ssl_key   => '/etc/pki/pulp/ca.key',
-        :ssl_chain => nil,
-        :ssl_ca    => '/path/to/ca.crt',
-      })
-    end
-  end
 
   context 'with parameters' do
     let :facts do
@@ -474,6 +454,40 @@ Alias /pulp/nodes/content /var/www/pulp/nodes/content
       end
 
     end
-  end
+    
+    describe 'with https_ca_cert on ::pulp class set' do
+      let :pre_condition do
+        "class { 'pulp':
+          https_ca_cert => '/path/to/https_ca.crt',
+        }"
+      end
 
+      it 'should configure apache server with ssl' do
+        is_expected.to contain_apache__vhost('pulp-https').with({
+          :ssl_cert      => '/etc/pki/pulp/ca.crt',
+          :ssl_key       => '/etc/pki/pulp/ca.key',
+          :ssl_chain     => nil,
+          :ssl_ca        => '/path/to/https_ca.crt',
+        })
+      end
+    end
+    
+    describe 'with https_ca_cert unset and ca_cert set on ::pulp class' do
+      let :pre_condition do
+        "class { 'pulp':
+          ca_cert => '/path/to/ca.crt',
+        }"
+      end
+      
+      it 'should configure apache server with ssl' do
+        is_expected.to contain_apache__vhost('pulp-https').with({
+          :ssl_cert   => '/etc/pki/pulp/ca.crt',
+          :ssl_key    => '/etc/pki/pulp/ca.key',
+          :ssl_chain  => nil,
+          :ssl_ca     => '/path/to/ca.crt',
+        })
+      end
+    end
+
+  end
 end
