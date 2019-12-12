@@ -20,7 +20,7 @@ WSGIDaemonProcess pulp user=apache group=apache processes=3 display-name=%{GROUP
 #WSGIRestrictStdout Off
 
 WSGISocketPrefix run/wsgi
-WSGIScriptAlias /pulp/api/v2 /usr/share/pulp/wsgi/webservices.wsgi
+WSGIScriptAlias /pulp/api /usr/share/pulp/wsgi/webservices.wsgi
 WSGIImportScript /usr/share/pulp/wsgi/webservices.wsgi process-group=pulp application-group=pulp
 
 <Directory /usr/share/pulp/wsgi>
