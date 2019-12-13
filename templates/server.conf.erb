@@ -123,7 +123,7 @@ rsa_pub = <%= scope['pulp::rsa_pub'] %>
 #
 # cacert: full path to the CA certificate that will be used to sign consumer
 #     and admin identification certificates; this must match the value of
-#     SSLCACertificateFile in /etc/httpd/conf.d/pulp.conf
+#     SSLCACertificateFile in /etc/httpd/conf.d/10-pulp.conf
 #     Deprecated! - Please note that both cacert and cakey settings will be
 #     removed in the next major release since Pulp will not sign certificates.
 #     However, Pulp will continue to support client certificates generated

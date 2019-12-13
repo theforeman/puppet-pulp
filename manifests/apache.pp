@@ -125,7 +125,7 @@ class pulp::apache {
       notify  => Service['httpd'],
     }
   } else {
-    file {'/etc/httpd/conf.d/pulp.conf':
+    file {'/etc/httpd/conf.d/10-pulp.conf':
       ensure  => file,
       content => template('pulp/pulp.conf.erb'),
       owner   => 'root',
