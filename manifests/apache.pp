@@ -8,6 +8,16 @@ class pulp::apache {
   include apache::mod::ssl
   include apache::mod::xsendfile
 
+  # This file is installed by pulp-server but we have everything in the above vhost
+  file {'/etc/httpd/conf.d/pulp.conf':
+    ensure  => file,
+    content => "# This file is managed by puppet, do not alter.\n",
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    notify  => Service['httpd'],
+  }
+
   if $pulp::manage_httpd {
     if $pulp::enable_http or $pulp::enable_puppet {
       apache::vhost { 'pulp-http':
@@ -113,16 +123,6 @@ class pulp::apache {
       add_default_charset        => 'UTF-8',
       # allow older yum clients to connect, see bz 647828
       custom_fragment            => 'SSLInsecureRenegotiation On',
-    }
-
-    # This file is installed by pulp-server but we have everything in the above vhost
-    file {'/etc/httpd/conf.d/pulp.conf':
-      ensure  => file,
-      content => "# This file is managed by puppet, do not alter.\n",
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0644',
-      notify  => Service['httpd'],
     }
   } else {
     file {'/etc/httpd/conf.d/10-pulp.conf':
