@@ -108,7 +108,7 @@ describe 'pulp::apache' do
         :content => 'WSGISocketPrefix run/wsgi
 WSGIProcessGroup pulp-content
 WSGIApplicationGroup pulp-content
-WSGIScriptAlias /pulp/content /usr/share/pulp/wsgi/content.wsgi
+WSGIScriptAlias /pulp2/content /usr/share/pulp/wsgi/content.wsgi
 WSGIDaemonProcess pulp-content user=apache group=apache processes=3 display-name=%{GROUP}
 WSGIImportScript /usr/share/pulp/wsgi/content.wsgi process-group=pulp-content application-group=pulp-content
 
@@ -122,7 +122,7 @@ WSGIImportScript /usr/share/pulp/wsgi/content.wsgi process-group=pulp-content ap
     SSLVerifyClient require
 </Files>
 
-<Location /pulp/content/>
+<Location /pulp2/content/>
     XSendFile on
     XSendFilePath /var/lib/pulp/content
     XSendFilePath /var/lib/pulp/published
@@ -155,9 +155,9 @@ AddType application/x-x509-ca-cert .crt
 <Location /pulp/repos/>
   RewriteEngine On
   RewriteCond %{HTTPS} on
-  RewriteRule (.+/pulp/repos/)(.*) /pulp/content/var/www/pub/yum/https/repos/$2 [DPI]
+  RewriteRule (.+/pulp/repos/)(.*) /pulp2/content/var/www/pub/yum/https/repos/$2 [DPI]
   RewriteCond %{HTTPS} off
-  RewriteRule (.+/pulp/repos/)(.*) /pulp/content/var/www/pub/yum/http/repos/$2 [DPI]
+  RewriteRule (.+/pulp/repos/)(.*) /pulp2/content/var/www/pub/yum/http/repos/$2 [DPI]
 </Location>
 
 # -- HTTPS Exports

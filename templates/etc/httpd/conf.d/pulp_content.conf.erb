@@ -1,7 +1,7 @@
 WSGISocketPrefix run/wsgi
 WSGIProcessGroup pulp-content
 WSGIApplicationGroup pulp-content
-WSGIScriptAlias /pulp/content /usr/share/pulp/wsgi/content.wsgi
+WSGIScriptAlias /pulp2/content /usr/share/pulp/wsgi/content.wsgi
 WSGIDaemonProcess pulp-content user=apache group=apache processes=3 display-name=%{GROUP}
 WSGIImportScript /usr/share/pulp/wsgi/content.wsgi process-group=pulp-content application-group=pulp-content
 
@@ -15,7 +15,7 @@ WSGIImportScript /usr/share/pulp/wsgi/content.wsgi process-group=pulp-content ap
     SSLVerifyClient <%= scope['pulp::ssl_verify_client'] %>
 </Files>
 
-<Location /pulp/content/>
+<Location /pulp2/content/>
     XSendFile on
     XSendFilePath /var/lib/pulp/content
     XSendFilePath /var/lib/pulp/published
