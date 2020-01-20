@@ -2,9 +2,9 @@
 <Location /pulp/deb/>
   RewriteEngine On
   RewriteCond %{HTTPS} on
-  RewriteRule (.+/pulp/deb/)(.*) /pulp/content/var/www/pub/deb/https/repos/$2 [DPI]
+  RewriteRule (.+/pulp/deb/)(.*) /pulp2/content/var/www/pub/deb/https/repos/$2 [DPI]
   RewriteCond %{HTTPS} off
-  RewriteRule (.+/pulp/deb/)(.*) /pulp/content/var/www/pub/deb/http/repos/$2 [DPI]
+  RewriteRule (.+/pulp/deb/)(.*) /pulp2/content/var/www/pub/deb/http/repos/$2 [DPI]
 </Location>
 
 # -- HTTPS Repositories ----------
