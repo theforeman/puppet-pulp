@@ -1,7 +1,7 @@
 {
   "name": "katello-pulp",
   "version": "7.0.0",
-  "author": "Katello",
+  "author": "katello",
   "summary": "Configure and install a Pulp server or node.",
   "license": "GPL-3.0+",
   "source": "https://github.com/theforeman/puppet-pulp.git",
