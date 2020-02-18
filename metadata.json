@@ -35,6 +35,10 @@
     {
       "name": "puppet/squid",
       "version_requirement": ">= 2.0.0 < 3.0.0"
+    },
+    {
+      "name": "puppetlabs/transition",
+      "version_requirement": ">= 0.1.0 < 1.0.0"
     }
   ],
   "requirements": [

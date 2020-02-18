@@ -8,6 +8,16 @@ class pulp::database {
     Service['mongodb'] -> Exec['migrate_pulp_db']
   }
 
+  $pulp::services.each |$service| {
+    transition { "stop ${service}":
+      resource   => Service[$service],
+      attributes => { ensure => 'stopped' },
+      prior_to   => Exec['migrate_pulp_db'],
+    }
+
+    Exec['migrate_pulp_db'] ~> Service[$service]
+  }
+
   exec { 'migrate_pulp_db':
     command   => 'pulp-manage-db',
     path      => '/bin:/usr/bin',
