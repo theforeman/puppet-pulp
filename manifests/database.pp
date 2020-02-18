@@ -9,11 +9,11 @@ class pulp::database {
   }
 
   exec { 'migrate_pulp_db':
-    command   => 'pulp-manage-db && touch /var/lib/pulp/init.flag',
+    command   => 'pulp-manage-db',
     path      => '/bin:/usr/bin',
     logoutput => 'on_failure',
     user      => 'apache',
-    creates   => '/var/lib/pulp/init.flag',
     timeout   => $pulp::migrate_db_timeout,
+    unless    => 'pulp-manage-db --dry-run',
   }
 }
