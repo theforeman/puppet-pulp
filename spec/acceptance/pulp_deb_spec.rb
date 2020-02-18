@@ -9,12 +9,6 @@ describe 'Scenario: pulp-deb' do
       enable_admin => true,
       enable_deb => true,
     }
-    exec { 'stop services':
-      command     => '/bin/systemctl stop pulp_celerybeat pulp_workers pulp_resource_manager pulp_streamer',
-      subscribe   => Class['pulp::install'],
-      before      => Class['pulp::database'],
-      refreshonly => true,
-    }
     EOS
   end
 

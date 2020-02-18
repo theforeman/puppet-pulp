@@ -5,6 +5,8 @@ class pulp::params {
 
   $manage_repo = false
 
+  $services = ['pulp_celerybeat', 'pulp_workers', 'pulp_resource_manager', 'pulp_streamer']
+
   $db_name = 'pulp_database'
   $db_seeds = 'localhost:27017'
   $db_username = undef

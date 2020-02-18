@@ -5,7 +5,7 @@ class pulp::service {
     command     => '/bin/systemctl daemon-reload',
     refreshonly => true,
   } ->
-  service { ['pulp_celerybeat', 'pulp_workers', 'pulp_resource_manager', 'pulp_streamer']:
+  service { $pulp::services:
     ensure => running,
     enable => true,
   }
