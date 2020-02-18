@@ -10,7 +10,7 @@ class { '::pulp':
 # we need to migrate the database. This requires the services to be
 # stopped. https://github.com/theforeman/puppet-pulp/issues/197
 exec { 'stop services':
-  command     => '/bin/systemctl stop pulp_celerybeat pulp_workers pulp_resource_manager pulp_streamer && rm /var/lib/pulp/init.flag',
+  command     => '/bin/systemctl stop pulp_celerybeat pulp_workers pulp_resource_manager pulp_streamer',
   subscribe   => Class['pulp::install'],
   before      => Class['pulp::database'],
   refreshonly => true,
