@@ -5,7 +5,6 @@
 .travis.yml:
   beaker_sets:
     - centos7-64
-  test_all_rvms: false
 Rakefile:
   param_docs_pattern:
     - manifests/admin.pp
@@ -16,5 +15,3 @@ spec/spec_helper.rb:
     - name: systemd
       value: true
       source: puppet-systemd
-spec/spec_helper_acceptance.rb:
-  install_epel: true
