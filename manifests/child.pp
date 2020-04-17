@@ -1,5 +1,7 @@
-# Install and configure Pulp node
+# @summary Install and configure Pulp node
 #
+# @api private
+# @deprecated
 class pulp::child (
   String[1] $parent_fqdn,
   String $oauth_effective_user = 'admin',
