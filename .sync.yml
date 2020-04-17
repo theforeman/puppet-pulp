@@ -7,6 +7,9 @@
     - centos7-64
 spec/spec_helper.rb:
   custom_facts:
+    - name: root_home
+      value: /root
+      source: puppetlabs-stdlib
     - name: systemd
       value: true
       source: puppet-systemd
