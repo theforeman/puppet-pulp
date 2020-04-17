@@ -88,7 +88,7 @@ class pulp::config {
   }
 
   if $pulp::enable_puppet {
-    if $::selinux {
+    if $facts['os']['selinux']['enabled'] {
       selboolean { 'pulp_manage_puppet':
         persistent => true,
         value      => 'on',

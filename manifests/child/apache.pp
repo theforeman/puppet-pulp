@@ -1,7 +1,7 @@
 # Define an Apache config for a Pulp node deployment
 # @api private
 class pulp::child::apache (
-  $servername = $facts['fqdn'],
+  $servername = $facts['networking']['fqdn'],
   $ssl_cert = $pulp::child::ssl_cert,
   $ssl_key = $pulp::child::ssl_key,
   $ssl_ca = $pulp::https_ca_cert,
@@ -22,8 +22,8 @@ class pulp::child::apache (
 
   if $ssl_ca {
     $_ssl_ca = $ssl_ca
-  } elsif $::pulp::ca_cert {
-    $_ssl_ca = $::pulp::ca_cert
+  } elsif $pulp::ca_cert {
+    $_ssl_ca = $pulp::ca_cert
   } else {
     $_ssl_ca = $pulp::child::server_ca_cert
   }

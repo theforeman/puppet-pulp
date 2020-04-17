@@ -1,4 +1,4 @@
-class { '::pulp':
+class { 'pulp':
   manage_repo  => true,
   # https://github.com/theforeman/puppet-pulp/issues/138
   ssl_username => '',

@@ -3,7 +3,7 @@
 class pulp::install {
   package { ['pulp-server', 'pulp-selinux', 'python-pulp-streamer']: ensure => $pulp::version, }
 
-  $python_package_prefix = $facts['operatingsystemmajrelease'] ? {
+  $python_package_prefix = $facts['os']['release']['major'] ? {
     '7'     => 'python',
     default => 'python2',
   }
