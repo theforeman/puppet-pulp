@@ -1,5 +1,5 @@
 # The resources in this file serve as examples and are also used in the automated acceptance testing
-class { '::pulp':
+class { 'pulp':
   manage_repo  => true,
   # https://github.com/theforeman/puppet-pulp/issues/138
   ssl_username => '',

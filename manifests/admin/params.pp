@@ -2,7 +2,7 @@
 # @api private
 class pulp::admin::params {
   $version            = 'installed'
-  $host               = $facts['fqdn']
+  $host               = $facts['networking']['fqdn']
   $port               = 443
   $api_prefix         = '/pulp/api'
   $verify_ssl         = true

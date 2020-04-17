@@ -25,8 +25,8 @@ class pulp::apache {
         priority            => '05',
         docroot             => '/usr/share/pulp/wsgi',
         port                => $pulp::http_port,
-        servername          => $facts['fqdn'],
-        serveraliases       => [$facts['hostname']],
+        servername          => $facts['networking']['fqdn'],
+        serveraliases       => [$facts['networking']['hostname']],
         additional_includes => "${apache::confd_dir}/pulp-vhosts80/*.conf",
       }
     }
@@ -84,8 +84,8 @@ class pulp::apache {
       priority                   => '05',
       docroot                    => '/usr/share/pulp/wsgi',
       port                       => $pulp::https_port,
-      servername                 => $facts['fqdn'],
-      serveraliases              => [$facts['hostname']],
+      servername                 => $facts['networking']['fqdn'],
+      serveraliases              => [$facts['networking']['hostname']],
       keepalive                  => 'on',
       max_keepalive_requests     => $pulp::max_keep_alive,
       ssl                        => true,
