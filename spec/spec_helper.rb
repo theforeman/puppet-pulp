@@ -3,6 +3,7 @@
 
 require 'voxpupuli/test/spec_helper'
 
+add_custom_fact :root_home, "/root" # puppetlabs-stdlib
 add_custom_fact :systemd, true # puppet-systemd
 
 def get_content(subject, title)
