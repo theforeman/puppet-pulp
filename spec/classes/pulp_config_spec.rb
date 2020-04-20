@@ -1,8 +1,7 @@
 require 'spec_helper'
 
-
 describe 'pulp::config' do
-  let :default_facts do
+  let :facts do
     on_supported_os['redhat-7-x86_64'].merge(:processorcount => 3)
   end
 
@@ -11,32 +10,19 @@ describe 'pulp::config' do
       "class {'pulp':}"
     end
 
-    let :facts do
-      default_facts
-    end
-
     it "should configure pulp_workers" do
       should contain_file('/etc/default/pulp_workers').with({
         'ensure'  => 'file',
         'owner'   => 'root',
         'group'   => 'root',
         'mode'    => '0644',
+        'content' => /^PULP_CONCURRENCY=3$/,
       })
     end
 
-    describe 'with processor count less than 8' do
-
-      it "should set the PULP_CONCURRENCY to the processor count" do
-        should contain_file('/etc/default/pulp_workers').with_content(/^PULP_CONCURRENCY=3$/)
-      end
-
-    end
-
     describe 'with processor count more than 8' do
-      let :facts do
-        default_facts.merge({
-          :processorcount => 12
-        })
+      let(:facts) do
+        super().merge(:processorcount => 12)
       end
 
       it "should set the PULP_CONCURRENCY to 8" do
@@ -65,10 +51,6 @@ describe 'pulp::config' do
        }"
     end
 
-    let :facts do
-      default_facts
-    end
-
     it "should configure auth" do
       should contain_file('/etc/pulp/server.conf').
         with_content(/^username: rspec$/).
@@ -81,10 +63,6 @@ describe 'pulp::config' do
       "class {'pulp':
         worker_timeout => 80,
        }"
-    end
-
-    let :facts do
-      default_facts
     end
 
     it "should configure worker timeout param" do
@@ -102,10 +80,6 @@ describe 'pulp::config' do
         proxy_username => 'al',
         proxy_password => 'beproxyin'
       }"
-    end
-
-    let :facts do
-      default_facts
     end
 
     it "should produce valid json" do
@@ -138,10 +112,6 @@ describe 'pulp::config' do
         enable_docker  => true,
         enable_ostree  => true,
       }"
-    end
-
-    let :facts do
-      default_facts
     end
 
     it 'should configure server.conf' do
@@ -178,10 +148,6 @@ describe 'pulp::config' do
         "class {'pulp':}"
       end
 
-      let :facts do
-        default_facts
-      end
-
       it 'defaults to false' do
         should contain_file('/etc/pulp/repo_auth.conf').
           with_content(/^enabled: false$/)
@@ -194,10 +160,6 @@ describe 'pulp::config' do
         }"
       end
 
-      let :facts do
-        default_facts
-      end
-
       it 'sets enabled to true' do
         should contain_file('/etc/pulp/repo_auth.conf').
           with_content(/^enabled: true$/)
@@ -208,10 +170,6 @@ describe 'pulp::config' do
         "class {'pulp':
           repo_auth => false,
         }"
-      end
-
-      let :facts do
-        default_facts
       end
 
       it 'sets enabled to false' do
