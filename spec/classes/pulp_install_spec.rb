@@ -1,15 +1,11 @@
 require 'spec_helper'
 
 describe 'pulp::install' do
-  let :default_facts do
+  let :facts do
     on_supported_os['redhat-7-x86_64']
   end
 
   describe "with enable_parent_node" do
-    let :facts do
-      default_facts
-    end
-
     let :pre_condition do
       "class {'pulp': enable_parent_node => true}"
     end
@@ -18,10 +14,6 @@ describe 'pulp::install' do
   end
 
   describe "with enable_ostree" do
-    let :facts do
-      default_facts
-    end
-
     let :pre_condition do
       "class {'pulp': enable_ostree => true}"
     end

@@ -5,15 +5,11 @@ describe 'pulp::apache' do
     "class {'pulp':}"
   end
 
-  let :default_facts do
+  let :facts do
     on_supported_os['redhat-7-x86_64']
   end
 
   context 'with no parameters' do
-    let :facts do
-      default_facts
-    end
-
     it 'should include apache with modules' do
       is_expected.to contain_class('apache')
       is_expected.to contain_class('apache::mod::proxy')
@@ -52,10 +48,6 @@ describe 'pulp::apache' do
 
 
   context 'with parameters' do
-    let :facts do
-      default_facts
-    end
-
     describe 'with ssl_protocol some_string' do
       let :pre_condition do
         "class {'pulp': ssl_protocol => 'some_string'}"
