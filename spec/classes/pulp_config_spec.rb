@@ -1,8 +1,9 @@
 require 'spec_helper'
+require 'deep_merge'
 
 describe 'pulp::config' do
   let :facts do
-    on_supported_os['redhat-7-x86_64'].merge(:processorcount => 3)
+    {processors: {'count' => 3}}.deep_merge(on_supported_os['redhat-7-x86_64'])
   end
 
   context 'with no parameters' do
@@ -22,7 +23,7 @@ describe 'pulp::config' do
 
     describe 'with processor count more than 8' do
       let(:facts) do
-        super().merge(:processorcount => 12)
+        {processors: {'count' => 12}}.deep_merge(super())
       end
 
       it "should set the PULP_CONCURRENCY to 8" do
