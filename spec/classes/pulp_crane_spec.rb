@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'pulp::crane' do
 
- context 'on redhat' do
+  context 'on redhat' do
     context 'with parameters' do
       let :params do
         {

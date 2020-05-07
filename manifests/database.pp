@@ -2,7 +2,13 @@
 # @api private
 class pulp::database {
   if $pulp::manage_db {
-    include mongodb::server
+    class { 'mongodb::server':
+      bind_ip => $pulp::mongodb_bind_ip,
+      ipv6    => $pulp::mongodb_ipv6,
+      ssl     => $pulp::mongodb_server_ssl,
+      ssl_key => $pulp::mongodb_server_ssl_bundle,
+      ssl_ca  => $pulp::mongodb_server_ssl_ca,
+    }
 
     Service['mongodb'] -> Class['pulp::service']
     Service['mongodb'] -> Exec['migrate_pulp_db']

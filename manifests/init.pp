@@ -148,7 +148,7 @@
 #   Apache private certificate for ssl
 #
 # @param https_ca_cert
-#   Apache CA certificate for client authentication. Defaults to $ca_cert 
+#   Apache CA certificate for client authentication. Defaults to $ca_cert
 #
 # @param https_chain
 #   apache chain file for ssl
@@ -529,6 +529,11 @@ class pulp (
   Optional[String] $ldap_bind_dn = $pulp::params::ldap_bind_dn,
   Optional[String] $ldap_bind_password = $pulp::params::ldap_bind_password,
   String $ldap_remote_user_attribute = $pulp::params::ldap_remote_user_attribute,
+  Array[Stdlib::Compat::Ip_address] $mongodb_bind_ip = $pulp::params::mongodb_bind_ip,
+  Boolean $mongodb_ipv6 = $pulp::params::mongodb_ipv6,
+  Boolean $mongodb_server_ssl = $pulp::params::mongodb_server_ssl,
+  Optional[Stdlib::Absolutepath] $mongodb_server_ssl_bundle = $pulp::params::mongodb_server_ssl_bundle,
+  Optional[Stdlib::Absolutepath] $mongodb_server_ssl_ca = $pulp::params::mongodb_server_ssl_ca,
 ) inherits pulp::params {
   if $yum_max_speed {
     $real_yum_max_speed = to_bytes($yum_max_speed)

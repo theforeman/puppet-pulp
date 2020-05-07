@@ -146,4 +146,10 @@ class pulp::params {
   $ldap_bind_dn = undef
   $ldap_bind_password = undef
   $ldap_remote_user_attribute = 'sAMAccountName'
+
+  $mongodb_bind_ip = ['127.0.0.1']
+  $mongodb_ipv6 = false
+  $mongodb_server_ssl = false
+  $mongodb_server_ssl_bundle = undef
+  $mongodb_server_ssl_ca = undef
 }
