@@ -1,3 +1,57 @@
+## [7.0.0](https://github.com/theforeman/puppet-pulp/tree/7.0.0) (2020-02-12)
+
+[Full Changelog](https://github.com/theforeman/puppet-pulp/compare/6.2.0...7.0.0)
+
+**Breaking changes:**
+
+- Fixes [\#28813](https://projects.theforeman.org/issues/28813) - use /pulp2/content to not conflict with pulp 3 [\#388](https://github.com/theforeman/puppet-pulp/pull/388) ([jlsherrill](https://github.com/jlsherrill))
+- Drop default ssl\_protocol and pass it to crane [\#378](https://github.com/theforeman/puppet-pulp/pull/378) ([ekohl](https://github.com/ekohl))
+
+**Implemented enhancements:**
+
+- Move /etc/httpd/conf.d/{,10-}pulp.conf [\#385](https://github.com/theforeman/puppet-pulp/pull/385) ([wbclark](https://github.com/wbclark))
+- Add support for different CA certificates for apache and pulp [\#381](https://github.com/theforeman/puppet-pulp/pull/381) ([laugmanuel](https://github.com/laugmanuel))
+- Fix log\_type parameter in init.pp [\#380](https://github.com/theforeman/puppet-pulp/pull/380) ([lambda123](https://github.com/lambda123))
+- Add support for yum gpg\_key\_id and gpg\_cmd parameters [\#321](https://github.com/theforeman/puppet-pulp/pull/321) ([PaulSD](https://github.com/PaulSD))
+
+**Fixed bugs:**
+
+- Always manage pulp.conf in Apache [\#386](https://github.com/theforeman/puppet-pulp/pull/386) ([ekohl](https://github.com/ekohl))
+- Fix https\_ca\_cert if a different location for ca\_cert is used [\#382](https://github.com/theforeman/puppet-pulp/pull/382) ([laugmanuel](https://github.com/laugmanuel))
+
+## [6.2.0](https://github.com/theforeman/puppet-pulp/tree/6.2.0) (2019-07-30)
+
+[Full Changelog](https://github.com/theforeman/puppet-pulp/compare/6.1.1...6.2.0)
+
+**Implemented enhancements:**
+
+- Use selboolean [\#307](https://github.com/theforeman/puppet-pulp/pull/307) ([ekohl](https://github.com/ekohl))
+
+**Merged pull requests:**
+
+- Drop support for Apache 2.2 [\#374](https://github.com/theforeman/puppet-pulp/pull/374) ([ekohl](https://github.com/ekohl))
+
+## [6.1.1](https://github.com/theforeman/puppet-pulp/tree/6.1.1) (2019-06-13)
+
+[Full Changelog](https://github.com/theforeman/puppet-pulp/compare/6.1.0...6.1.1)
+
+**Merged pull requests:**
+
+- Update dependencies to allow latest versions [\#368](https://github.com/theforeman/puppet-pulp/pull/368) ([alexjfisher](https://github.com/alexjfisher))
+
+## [6.1.0](https://github.com/theforeman/puppet-pulp/tree/6.1.0) (2019-05-21)
+
+[Full Changelog](https://github.com/theforeman/puppet-pulp/compare/6.0.0...6.1.0)
+
+**Implemented enhancements:**
+
+- Allow puppet/mongodb 3.x [\#370](https://github.com/theforeman/puppet-pulp/pull/370) ([ekohl](https://github.com/ekohl))
+- Update gofer package names for EL8 [\#369](https://github.com/theforeman/puppet-pulp/pull/369) ([ehelms](https://github.com/ehelms))
+
+**Merged pull requests:**
+
+- Convert documentation to yardoc [\#367](https://github.com/theforeman/puppet-pulp/pull/367) ([ekohl](https://github.com/ekohl))
+
 ## [6.0.0](https://github.com/theforeman/puppet-pulp/tree/6.0.0) (2019-04-17)
 
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/5.8.1...6.0.0)
