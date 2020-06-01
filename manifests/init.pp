@@ -536,10 +536,8 @@ class pulp (
     $real_yum_max_speed = undef
   }
 
-  if $ldap_url {
-    assert_type(String, $ldap_url)
-    assert_type(String, $ldap_bind_dn)
-    assert_type(String, $ldap_bind_password)
+  if $ldap_url or $ldap_bind_dn or $ldap_bind_password {
+    assert_type(Array[NotUndef], [$ldap_url, $ldap_bind_dn, $ldap_bind_password])
   }
 
   if $manage_repo {
