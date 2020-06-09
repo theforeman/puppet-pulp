@@ -17,6 +17,13 @@ class pulp::config {
     show_diff => $pulp::show_conf_diff,
   }
 
+  file { '/etc/pki/pulp/content':
+    ensure => directory,
+    owner  => 'apache',
+    group  => 'apache',
+    mode   => '0755',
+  }
+
   file { '/etc/pki/pulp/content/pulp-global-repo.ca':
     ensure => link,
     target => $pulp::ca_cert,
