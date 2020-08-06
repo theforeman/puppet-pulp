@@ -1,6 +1,6 @@
 {
   "name": "katello-pulp",
-  "version": "8.0.0",
+  "version": "8.1.0",
   "author": "katello",
   "summary": "Configure and install a Pulp server or node.",
   "license": "GPL-3.0+",

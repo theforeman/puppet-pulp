@@ -1,3 +1,17 @@
+## [8.0.0](https://github.com/theforeman/puppet-pulp/tree/8.0.0) (2020-05-15)
+
+[Full Changelog](https://github.com/theforeman/puppet-pulp/compare/7.0.0...8.0.0)
+
+**Breaking changes:**
+
+- Use modern facts [\#401](https://github.com/theforeman/puppet-pulp/issues/401)
+
+**Implemented enhancements:**
+
+- Allow extlib 5.x [\#393](https://github.com/theforeman/puppet-pulp/pull/393) ([mmoll](https://github.com/mmoll))
+- Refs [\#29052](https://projects.theforeman.org/issues/29052): Stop services before running database migrations [\#391](https://github.com/theforeman/puppet-pulp/pull/391) ([ehelms](https://github.com/ehelms))
+- Fixes [\#29054](https://projects.theforeman.org/issues/29054): Run pulp migrations if any are pending [\#390](https://github.com/theforeman/puppet-pulp/pull/390) ([ehelms](https://github.com/ehelms))
+
 ## [7.0.0](https://github.com/theforeman/puppet-pulp/tree/7.0.0) (2020-02-12)
 
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/6.2.0...7.0.0)
