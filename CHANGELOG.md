@@ -1,5 +1,17 @@
 # Changelog
 
+## [8.1.0](https://github.com/theforeman/puppet-pulp/tree/8.1.0) (2020-08-06)
+
+[Full Changelog](https://github.com/theforeman/puppet-pulp/compare/8.0.0...8.1.0)
+
+**Implemented enhancements:**
+
+- Improve validation of ldap parameters [\#403](https://github.com/theforeman/puppet-pulp/pull/403) ([alexjfisher](https://github.com/alexjfisher))
+
+**Fixed bugs:**
+
+- Fixes [\#30075](https://projects.theforeman.org/issues/30075): Ensure /etc/pki/pulp/content exists [\#404](https://github.com/theforeman/puppet-pulp/pull/404) ([ehelms](https://github.com/ehelms))
+
 ## [8.0.0](https://github.com/theforeman/puppet-pulp/tree/8.0.0) (2020-05-15)
 
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/7.0.0...8.0.0)
