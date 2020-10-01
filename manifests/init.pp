@@ -200,13 +200,6 @@
 #   number of days to store consumer events; events older than this will be
 #   purged; set to -1 to disable
 #
-# @param messaging_url
-#   the url used to contact the broker:
-#   <protocol>://<host>:<port>/<virtual-host> Supported <protocol>  values are
-#   'tcp' or 'ssl' depending on if SSL should be used or not.  The
-#   <virtual-host> is optional, and is only applicable to RabbitMQ broker
-#   environments.
-#
 # @param messaging_auth_enabled
 #   Whether to enable message authentication.
 #
