@@ -127,8 +127,6 @@
 - Remove Katello repos [\#336](https://github.com/theforeman/puppet-pulp/pull/336) ([ekohl](https://github.com/ekohl))
 - Massively speed up providers and fix timeouts [\#334](https://github.com/theforeman/puppet-pulp/pull/334) ([alexjfisher](https://github.com/alexjfisher))
 
-# Changelog
-
 ## [5.5.0](https://github.com/theforeman/puppet-pulp/tree/5.5.0) (2018-07-16)
 
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/5.4.2...5.5.0)

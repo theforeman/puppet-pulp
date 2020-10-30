@@ -1,5 +1,14 @@
 # Changelog
 
+## [8.1.1](https://github.com/theforeman/puppet-pulp/tree/8.1.1) (2021-06-09)
+
+[Full Changelog](https://github.com/theforeman/puppet-pulp/compare/8.1.0...8.1.1)
+
+**Fixed bugs:**
+
+- Fixes [\#32762](https://projects.theforeman.org/issues/32762) - Disable SSLInsecureRenegotiation [\#413](https://github.com/theforeman/puppet-pulp/pull/413) ([pdudley](https://github.com/pdudley))
+- Remove duplicate parameter docs [\#407](https://github.com/theforeman/puppet-pulp/pull/407) ([alexjfisher](https://github.com/alexjfisher))
+
 ## [8.1.0](https://github.com/theforeman/puppet-pulp/tree/8.1.0) (2020-08-06)
 
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/8.0.0...8.1.0)
@@ -140,8 +149,6 @@
 - Allow stdlib & concat 5.x [\#339](https://github.com/theforeman/puppet-pulp/pull/339) ([ekohl](https://github.com/ekohl))
 - Remove Katello repos [\#336](https://github.com/theforeman/puppet-pulp/pull/336) ([ekohl](https://github.com/ekohl))
 - Massively speed up providers and fix timeouts [\#334](https://github.com/theforeman/puppet-pulp/pull/334) ([alexjfisher](https://github.com/alexjfisher))
-
-# Changelog
 
 ## [5.5.0](https://github.com/theforeman/puppet-pulp/tree/5.5.0) (2018-07-16)
 
