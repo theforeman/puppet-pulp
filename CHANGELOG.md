@@ -1,5 +1,13 @@
 # Changelog
 
+## [8.1.1](https://github.com/theforeman/puppet-pulp/tree/8.1.1) (2020-10-30)
+
+[Full Changelog](https://github.com/theforeman/puppet-pulp/compare/8.1.0...8.1.1)
+
+**Fixed bugs:**
+
+- Remove duplicate parameter docs [\#407](https://github.com/theforeman/puppet-pulp/pull/407) ([alexjfisher](https://github.com/alexjfisher))
+
 ## [8.1.0](https://github.com/theforeman/puppet-pulp/tree/8.1.0) (2020-08-06)
 
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/8.0.0...8.1.0)
