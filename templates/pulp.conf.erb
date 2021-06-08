@@ -8,9 +8,6 @@
 AddType application/x-pkcs7-crl .crl
 AddType application/x-x509-ca-cert .crt
 
-# allow older yum clients to connect, see bz 647828
-SSLInsecureRenegotiation on
-
 WSGIProcessGroup pulp
 WSGIApplicationGroup pulp
 WSGIDaemonProcess pulp user=apache group=apache processes=3 display-name=%{GROUP}
