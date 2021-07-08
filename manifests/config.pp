@@ -59,6 +59,15 @@ class pulp::config {
       mode      => '0644',
       show_diff => $pulp::show_conf_diff,
     }
+
+    file { '/etc/pulp/server/plugins.conf.d/yum_distributor.json':
+      ensure    => file,
+      content   => template('pulp/yum_distributor.json.erb'),
+      owner     => 'root',
+      group     => 'root',
+      mode      => '0644',
+      show_diff => $pulp::show_conf_diff,
+    }
   }
 
   if $pulp::enable_iso {

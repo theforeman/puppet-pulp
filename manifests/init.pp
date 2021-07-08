@@ -278,6 +278,9 @@
 # @param yum_gpg_cmd
 #   Custom GPG command/script to use for yum repo metadata signing
 #
+# @param yum_remove_old_repodata_count
+#   Number of older yum repodata files to keep around after each publish
+#
 # @param num_workers
 #   Number of Pulp workers to use.
 #
@@ -484,6 +487,7 @@ class pulp (
   Boolean $yum_gpg_sign_repo_metadata = $pulp::params::yum_gpg_sign_repo_metadata,
   Optional[String] $yum_gpg_key_id = $pulp::params::yum_gpg_key_id,
   Optional[String] $yum_gpg_cmd = $pulp::params::yum_gpg_cmd,
+  Integer[0,65535] $yum_remove_old_repodata_count = $pulp::params::yum_remove_old_repodata_count,
   Integer[0] $num_workers = $pulp::params::num_workers,
   Integer[0] $worker_timeout = $pulp::params::worker_timeout,
   Boolean $enable_admin = $pulp::params::enable_admin,

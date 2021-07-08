@@ -72,6 +72,30 @@ describe 'pulp::config' do
     end
   end
 
+  context "with remove_old_repodata configuration" do
+    let :pre_condition do
+      "class {'pulp':
+        enable_rpm              => true,
+        yum_remove_old_repodata_count => 5
+      }"
+    end
+
+    it "should produce valid json" do
+      should contain_file("/etc/pulp/server/plugins.conf.d/yum_distributor.json").with_content(
+        /"remove_old_repodata": true,/
+      ).with_content(
+        /"remove_old_repodata_threshold": 5/
+      ).with({
+        'ensure'    => 'file',
+        'owner'     => 'root',
+        'group'     => 'root',
+        'mode'      => '0644',
+        'show_diff' => false,
+      })
+
+    end
+  end
+
   context "with proxy configuration" do
     let :pre_condition do
       "class {'pulp':
