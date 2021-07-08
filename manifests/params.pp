@@ -126,6 +126,7 @@ class pulp::params {
   $yum_gpg_sign_repo_metadata = false
   $yum_gpg_key_id = undef
   $yum_gpg_cmd = undef
+  $yum_remove_old_repodata_count = 0
 
   $wsgi_processes = 3
   $wsgi_max_requests = 0
