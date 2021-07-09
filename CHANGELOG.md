@@ -1,5 +1,13 @@
 # Changelog
 
+## [8.2.0](https://github.com/theforeman/puppet-pulp/tree/8.2.0) (2021-07-12)
+
+[Full Changelog](https://github.com/theforeman/puppet-pulp/compare/8.1.1...8.2.0)
+
+**Fixed bugs:**
+
+- Fixes [\#32966](https://projects.theforeman.org/issues/32966) - add remove_old_repodata option for yum [\#415](https://github.com/theforeman/puppet-pulp/pull/415) ([jlsherrill](https://github.com/jlsherrill))
+
 ## [8.1.1](https://github.com/theforeman/puppet-pulp/tree/8.1.1) (2021-06-09)
 
 [Full Changelog](https://github.com/theforeman/puppet-pulp/compare/8.1.0...8.1.1)
